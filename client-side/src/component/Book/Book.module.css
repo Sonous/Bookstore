@@ -1,0 +1,33 @@
+.book {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.image {
+    height: 80px;
+    width: 80px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 0;
+}
+.title {
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn hiển thị trong 2 dòng */
+    -webkit-box-orient: vertical; /* Thiết lập cách chia hộp theo chiều dọc */
+    overflow: hidden; /* Ẩn phần văn bản vượt quá */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+    white-space: normal; /* Đảm bảo văn bản có thể xuống dòng */
+}
+.current-price {
+    color: var(--main-color);
+    font-weight: 500;
+}
+.quantity {
+    margin-left: 5px;
+    font-size: 14px;
+}
