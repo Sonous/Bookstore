@@ -7,9 +7,11 @@ const cx = classNames.bind(styles);
 
 function Book({ image, title, currentPrice, quantity = 0, cart = false, home = false }) {
     return (
-        <li className={cx('book', {
-            home
-        })}>
+        <li
+            className={cx('book', {
+                home,
+            })}
+        >
             <Link to={`/books/${convertToSlug(title)}`}>
                 <img src={image} alt={title} className={cx('image')} />
             </Link>

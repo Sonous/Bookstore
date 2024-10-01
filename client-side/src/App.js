@@ -3,7 +3,7 @@ import Pages from './routes';
 
 function App() {
     return (
-        <div className="App">
+        <div className="App font-body">
             <Router>
                 <Routes>
                     {Pages.map((Page, index) => (
