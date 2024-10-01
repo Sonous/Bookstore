@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.ant-checkbox .ant-checkbox-inner {
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    border-color: gray;
+}
+
+.ant-checkbox-disabled .ant-checkbox-inner {
+    width: 25px;
+    height: 25px;
+    background-color: gray;
+    border-color: gray;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    width: 25px;
+    height: 25px;
+    background-color: #1677ff;
+    border-color: #1677ff;
+}
+.ant-checkbox .ant-checkbox-inner:after {
+    top: 45%;
+    width: 9px;
+    height: 13px;
+}
