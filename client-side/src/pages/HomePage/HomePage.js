@@ -14,7 +14,7 @@ function HomePage() {
     return (
         <>
             <Header />
-            <main>
+            <main className={cx('main-content')}>
                 <BannerSlider />
                 <article>
                     {topics.map((topic, index) => {
