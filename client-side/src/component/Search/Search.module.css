@@ -64,7 +64,7 @@
 
 /* search-popper */
 .search-container {
-    max-width: 452px;
+    width: 452px;
 }
 .result-header {
     padding-bottom: 10px;

@@ -1,0 +1,40 @@
+.container {
+    position: relative;
+    width: calc(var(--main-content-width) + 200px);
+}
+
+.banner-wrapper img {
+    height: 100%;
+    width: 100%;
+}
+
+.arrowLeft,
+.arrowRight {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    color: var(--main-color);
+    font-size: 20px;
+}
+
+.arrowLeft {
+    z-index: 100;
+    left: 0;
+}
+
+.arrowRight {
+    right: 0;
+}
+
+.arrowLeft:hover,
+.arrowRight:hover {
+    background-color: var(--main-color);
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+}

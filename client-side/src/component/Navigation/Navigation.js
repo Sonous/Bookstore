@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import styles from './Navigation.module.css';
 import { categories, news } from '~/dataTemorary';
 import PopperWrapper from '../Popper/Popper';
-import { convertToSlug } from '~/utils/functions';
+// import { convertToSlug } from '~/utils/functions';
 
 const cx = classNames.bind(styles);
 
@@ -31,19 +31,13 @@ function Navigation() {
                                 return (
                                     <div key={index}>
                                         <h4 className={cx('title')}>{category.title}</h4>
-                                        {category.genres.map((genre) => (
-                                            <li className={cx('genre')}>
-                                                <Link
-                                                    to={`/categories/${convertToSlug(category.title)}/${convertToSlug(
-                                                        genre,
-                                                    )}`}
-                                                >
-                                                    {genre}
-                                                </Link>
+                                        {category.genres.map((genre, index) => (
+                                            <li className={cx('genre')} key={index}>
+                                                <Link to={`/categories/${category.title}/${genre}`}>{genre}</Link>
                                             </li>
                                         ))}
                                         {category.isContinue ? (
-                                            <Link to={`/categories/${convertToSlug(category.title)}`}>
+                                            <Link to={`/categories/${category.title}`}>
                                                 <span className={cx('more')}>Xem thêm</span>
                                             </Link>
                                         ) : (
@@ -71,7 +65,7 @@ function Navigation() {
                     <div tabIndex="-1" {...attrs}>
                         <PopperWrapper className={cx('news-popper')}>
                             {news.map((title, index) => (
-                                <Link to={`/blogs/${convertToSlug(title)}`} key={index} className={cx('news-member')}>
+                                <Link to={`/blogs/${title}`} key={index} className={cx('news-member')}>
                                     <li>{title}</li>
                                 </Link>
                             ))}
