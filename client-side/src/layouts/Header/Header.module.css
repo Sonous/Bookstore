@@ -50,7 +50,7 @@
     border-radius: 10px;
 }
 .quantity span {
-    height: 14px;
+    font-size: 12px;
 }
 
 /* cart-popper */

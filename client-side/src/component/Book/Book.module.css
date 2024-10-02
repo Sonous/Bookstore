@@ -31,3 +31,19 @@
     margin-left: 5px;
     font-size: 14px;
 }
+
+/* collection */
+.collection {
+    flex-direction: column;
+    padding-top: 5px;
+    width: 202px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.collection img {
+    height: 100%;
+    width: 100%;
+}
+.collection:hover {
+    box-shadow: 0 4px 8px #0000001a;
+    transform: translateY(-5px);
+}

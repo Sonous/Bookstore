@@ -6,6 +6,9 @@ const images = {
     orderIcon: require('./order-icon.svg').default,
     heartIcon: require('./heart-icon.svg').default,
     logoutIcon: require('./logout-icon.svg').default,
+    onePieceBanner: require('./onePieceBanner.webp'),
+    trinhThamCoTrangBanner: require('./trinhThamCoTrangBanner.webp'),
+    boxSetTokyoBabylonBanner: require('./boxSetTokyoBabylonBanner.webp'),
 };
 
 export default images;

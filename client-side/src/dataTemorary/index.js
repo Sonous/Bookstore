@@ -14,28 +14,64 @@ const news = ['Hoạt động', 'Tin sách', 'Sự kiện'];
 const searchResult = [
     {
         title: 'Hồi Kí Vanitas - Tập 10',
-        image: images.searchResult1,
+        image: 'searchResult1',
         currentPrice: 36000,
         quantity: 3,
     },
     {
-        title: 'Hồi Kí Vanitas - Tập 14 (Tái bản) Hồi Kí Vanitas - Tập 14 (Tái bản) Hồi Kí Vanitas - Tập 14 (Tái bản)Hồi Kí Vanitas - Tập 14 (Tái bản) Hồi Kí Vanitas - Tập 14 (Tái bản)',
-        image: images.searchResult2,
+        title: 'Hồi Kí Vanitas - Tập 14 (Tái bản)',
+        image: 'searchResult2',
         currentPrice: 36000,
         quantity: 1,
     },
     {
         title: 'Hồi Kí Vanitas - Tập 10',
-        image: images.searchResult1,
+        image: 'searchResult1',
         currentPrice: 36000,
         quantity: 2,
     },
     {
         title: 'Hồi Kí Vanitas - Tập 14 (Tái bản)',
-        image: images.searchResult2,
+        image: 'searchResult2',
+        currentPrice: 36000,
+        quantity: 1,
+    },
+    {
+        title: 'Hồi Kí Vanitas - Tập 10',
+        image: 'searchResult1',
+        currentPrice: 36000,
+        quantity: 3,
+    },
+    {
+        title: 'Hồi Kí Vanitas - Tập 14 (Tái bản)',
+        image: 'searchResult2',
+        currentPrice: 36000,
+        quantity: 1,
+    },
+    {
+        title: 'Hồi Kí Vanitas - Tập 10',
+        image: 'searchResult1',
+        currentPrice: 36000,
+        quantity: 2,
+    },
+    {
+        title: 'Hồi Kí Vanitas - Tập 14 (Tái bản)',
+        image: 'searchResult2',
         currentPrice: 36000,
         quantity: 1,
     },
 ];
 
-export { categories, news, searchResult };
+const bannersSlider = [
+    {
+        title: 'onePieceBanner',
+    },
+    {
+        title: 'trinhThamCoTrangBanner',
+    },
+    {
+        title: 'boxSetTokyoBabylonBanner',
+    },
+];
+
+export { categories, news, searchResult, bannersSlider };
