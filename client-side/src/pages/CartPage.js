@@ -7,7 +7,7 @@ export default function CartPage() {
     return (
         <div className="">
             <Header />
-            <div className="px-24 bg-gray-100 h-[1000px]">
+            <div className="px-24 bg-gray-100 ">
                 <h2 className="pt-6 text-xl mb-4">GIỎ HÀNG (2 sản phẩm)</h2>
                 <div className="flex gap-4">
                     <div className="basis-[70%]">
@@ -25,7 +25,7 @@ export default function CartPage() {
                         <div className="mt-4 rounded-lg overflow-hidden ">
                             {[1, 2, 3].map((el, idx) => {
                                 return (
-                                    <>
+                                    <div key={idx}>
                                         <div className={`flex px-4 py-6 bg-white `}>
                                             <div className="basis-[60%] flex gap-4">
                                                 <Checkbox />
@@ -77,7 +77,7 @@ export default function CartPage() {
                                                 <div className="h-[1px] w-[90%] mx-auto bg-gray-200"></div>
                                             </div>
                                         )}
-                                    </>
+                                    </div>
                                 );
                             })}
                         </div>

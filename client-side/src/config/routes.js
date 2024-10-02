@@ -6,7 +6,8 @@ const routes = {
     signUp: '/signup',
     signIn: '/signIn',
     cart: '/cart',
-    bookDetail: '/bookdetails'
+    paying: '/paying',
+    bookDetail: '/bookdetails',
 };
 
 export default routes;
