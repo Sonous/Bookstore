@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 
 function Header() {
     const [cartInfo, setCartInfo] = useState([...cartResult]);
-
+const navigate = useNavigate();
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -84,7 +84,7 @@ function Header() {
                                     <img src={images.heartIcon} alt="heart icon" />
                                     <span className={cx('title')}>Xem sản phẩm yêu thích</span>
                                 </div>
-                                <div className={cx('menu-item', 'logout')}>
+                                <div className={cx('menu-item', 'logout')} onClick={() => navigate('/signIn')}>
                                     <img src={images.logoutIcon} alt="logout icon" />
                                     <span className={cx('title')}>Đăng xuất</span>
                                 </div>
