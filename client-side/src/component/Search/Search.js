@@ -3,30 +3,56 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
 import TippyHeadless from '@tippyjs/react/headless';
+import mapper from 'object-mapper';
 
 import styles from './Search.module.css';
 import PopperWrapper from '../Popper/Popper';
-import { searchResult as result } from '~/dataTemorary';
 import Book from '../Book/Book';
 import { Link } from 'react-router-dom';
+// import { useDebounce } from '~/hooks';
+// import callApi from '~/apis';
+import { searchResult as result } from '~/dataTemorary';
 
 const cx = classNames.bind(styles);
 
+// const map = {
+//     book_id: 'id',
+//     book_name: 'title',
+//     book_end_cost: 'currentPrice',
+//     book_image_name: 'image',
+// };
+
 function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState(result);
+    const [searchResult, setSearchResult] = useState(() => result.filter((book, index) => index < 4));
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
     const searchRef = useRef();
 
+    // const debounced = useDebounce(searchValue, 500);
+
     // useEffect(() => {
-    //     // if (!searchValue.trim()) {
-    //     //     setSearchResult([]);
-    //     //     return;
-    //     // }
-    //     // Call API
-    // }, [searchValue]);
+    //     if (!searchValue.trim()) {
+    //         setSearchResult([]);
+    //         return;
+    //     }
+
+    //     // Call Api
+    //     const fetchApi = async () => {
+    //         setLoading(true);
+
+    //         const res = await callApi.search(debounced);
+
+    //         setSearchResult(res.map((book) => mapper(book, map)));
+
+    //         setLoading(false);
+    //     };
+
+    //     fetchApi();
+
+    //     // eslint-disable-next-line no-use-before-define, react-hooks/exhaustive-deps
+    // }, [debounced]);
 
     const handleMouseOver = () => {
         searchRef.current.classList.add(cx('active'));
@@ -55,7 +81,6 @@ function Search() {
                         </PopperWrapper>
                     </div>
                 )}
-                hideOnClick={false}
                 onClickOutside={() => setShowResult(false)}
             >
                 <div className={cx('wrapper')} ref={searchRef}>
@@ -75,7 +100,13 @@ function Search() {
                     />
 
                     {searchValue && !loading && (
-                        <button className={cx('clear')} onClick={() => setSearchValue('')}>
+                        <button
+                            className={cx('clear')}
+                            onClick={() => {
+                                setSearchValue('');
+                                setSearchResult([]);
+                            }}
+                        >
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     )}

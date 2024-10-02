@@ -5,6 +5,8 @@
     --default--layout-width: 1140px;
     --main-color: #d51c24;
     --gray: #7a7e7f;
+    --light-gray: #f0f0f0;
+    --main-content-width: 1100px;
 }
 
 * {
@@ -13,8 +15,14 @@
     box-sizing: border-box;
 }
 
-body {
+html {
+    height: 100vh;
+}
+
+html body {
     font-family: Roboto, sans-serif;
+    overflow-y: auto;
+    height: 100vh;
 }
 
 input,
