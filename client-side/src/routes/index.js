@@ -2,7 +2,7 @@ import { routes } from '~/config';
 import BookDetail from '~/pages/BookDetail';
 import CartPage from '~/pages/CartPage';
 import HomePage from '~/pages/HomePage';
-import PayingPage from '~/pages/PayingPage';
+import PayingPage from '~/pages/PayingPage/PayingPage';
 import SignInPage from '~/pages/SignInPage';
 import SignUpPage from '~/pages/SignUpPage';
 
