@@ -27,3 +27,6 @@
     width: 7px;
     height: 10px;
 }
+.ant-form-item-label label:after {
+    display: none;
+}

@@ -1,8 +1,8 @@
 import { routes } from '~/config';
 import BookDetail from '~/pages/BookDetail';
 import CartPage from '~/pages/CartPage';
+import PayingPage from '~/pages/PayingPage/PayingPage';
 import HomePage from '~/pages/HomePage/HomePage';
-import PayingPage from '~/pages/PayingPage';
 import SignInPage from '~/pages/SignInPage';
 import SignUpPage from '~/pages/SignUpPage';
 
