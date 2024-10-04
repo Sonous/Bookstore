@@ -1,5 +1,7 @@
 import { Button } from 'antd';
 import React, {useState} from 'react'
+import Book from '~/component/Book/Book';
+import { searchResult } from '~/dataTemorary';
 
 import Header from '~/layouts/Header/Header';
 
@@ -17,7 +19,7 @@ function BookDetail() {
   return (
     <div>
       <Header />
-      <div className='bg-gray-200 rounded-xl flex flex-col'>
+      <div className='bg-white rounded-xl flex flex-col'>
       <section className='upperDetail  flex mt-10 mx-48  justify-between gap-5'>
             <div className='leftPicture flex w-5/12 justify-center gap-5 px-10 py-5'>
               <div className="smallPicture w-[80px] h-[120px] 2xl:w-[100px] 2xl:h-[150px] mt-5 bg-cover bg-center" style={{ backgroundImage: "url('https://product.hstatic.net/200000343865/product/hoi-ki-ve-bac-ho_mai-nho-on-nguoi_6a5ac11987ee49ceb288199915f78e6a_master.jpg')" }}>
@@ -114,44 +116,20 @@ function BookDetail() {
             </div>
           </div>
        </div>
-      
-        
-        <div className="same-author text-center items-center">
+       <div className="same-author text-center items-center w-3/12">
           <h1>Sach cung tac gia</h1>
-          <div className="item flex border border-gray-600 mx-3 rounded-xl gap-3 p-2 lg:flex-row lg:justify-between lg:px-5 md:flex-col md:items-center">
-                                <div className="pic bg-[url('https://product.hstatic.net/200000343865/product/tieu-dung-thong-minh_7b032c4e5fba402bbddd24310e88b38c_9bed2e346f1a4c9bb3846c80bcbf6b6f_master.jpg')] w-[100px] h-[150px] bg-cover mx-2">
-                                </div>
-                                <div className="content flex flex-col justify-center gap-2">
-                                    <div className="info  flex flex-col gap-5">
-                                        <h1 className=' font-semibold'>Tieu dung thong minh</h1>
-                                        <h1 className='price text-red-500'>22,500d</h1>
-                                    </div>
-                                    <Button>Add to cart</Button>
-                                </div>
-                            </div>
-                            <div className="item flex border border-gray-600 mx-3 rounded-xl gap-3 p-2 lg:flex-row lg:justify-between lg:px-5 md:flex-col md:items-center">
-                                <div className="pic bg-[url('https://product.hstatic.net/200000343865/product/tieu-dung-thong-minh_7b032c4e5fba402bbddd24310e88b38c_9bed2e346f1a4c9bb3846c80bcbf6b6f_master.jpg')] w-[100px] h-[150px] bg-cover mx-2">
-                                </div>
-                                <div className="content flex flex-col justify-center gap-2">
-                                    <div className="info  flex flex-col gap-5">
-                                        <h1 className=' font-semibold'>Tieu dung thong minh</h1>
-                                        <h1 className='price text-red-500'>22,500d</h1>
-                                    </div>
-                                    <Button>Add to cart</Button>
-                                </div>
-                            </div>
-                            <div className="item flex border border-gray-600 mx-3 rounded-xl gap-3 p-2 lg:flex-row lg:justify-between lg:px-5 md:flex-col md:items-center">
-                                <div className="pic bg-[url('https://product.hstatic.net/200000343865/product/tieu-dung-thong-minh_7b032c4e5fba402bbddd24310e88b38c_9bed2e346f1a4c9bb3846c80bcbf6b6f_master.jpg')] w-[100px] h-[150px] bg-cover mx-2">
-                                </div>
-                                <div className="content flex flex-col justify-center gap-2">
-                                    <div className="info  flex flex-col gap-5">
-                                        <h1 className=' font-semibold'>Tieu dung thong minh</h1>
-                                        <h1 className='price text-red-500'>22,500d</h1>
-                                    </div>
-                                    <Button>Add to cart</Button>
-                                </div>
-                            </div>
+          
+          {searchResult.map((item, index) => (
+                              <Book
+                                key={index}
+                                {...item}
+                              />
+                            ))}
+                            
+                            
         </div>
+        
+        
       </section>
     </div>
     </div>
