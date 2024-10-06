@@ -1,4 +1,4 @@
- .main-content {
+.main-content {
     background-color: var(--light-gray);
     padding: 20px;
     display: flex;
@@ -9,5 +9,5 @@
 article {
     display: flex;
     flex-direction: column;
-    width: var(--main-content-width);
+    width: var(--default--layout-width);
 }
