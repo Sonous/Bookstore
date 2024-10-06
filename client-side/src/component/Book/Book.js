@@ -3,6 +3,7 @@ import styles from './Book.module.css';
 import { Link } from 'react-router-dom';
 import { convertPriceToString } from '~/utils/functions';
 import images from '~/assets/images';
+import { Rate } from 'antd';
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +13,7 @@ function Book({
     title,
     currentPrice,
     quantity = 0,
+    rate = 0,
     cart = false,
     home = false,
     collection = false,
@@ -34,6 +36,7 @@ function Book({
                     <span className={cx('current-price')}>{convertPriceToString(currentPrice)} </span>
                     {cart && <span className={cx('quantity')}>x{quantity}</span>}
                 </div>
+                {collection && <Rate className={cx('rate')} disabled value={rate} />}
             </div>
         </li>
     );

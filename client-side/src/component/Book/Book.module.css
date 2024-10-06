@@ -11,7 +11,7 @@
 .info {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 5px;
     padding: 10px 0;
 }
 .title {
@@ -46,4 +46,18 @@
 .collection:hover {
     box-shadow: 0 4px 8px #0000001a;
     transform: translateY(-5px);
+}
+.collection .info {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+.collection .info a {
+    flex: 1;
+}
+.rate {
+    font-size: 12px;
+}
+.rate .ant-rate-star {
+    margin-inline-end: 5px;
 }

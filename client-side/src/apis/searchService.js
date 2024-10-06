@@ -2,7 +2,7 @@ import { request } from '~/config';
 
 const search = async (title, type = 'less') => {
     try {
-        const response = await request.get('/search', {
+        const response = await request.get('search', {
             params: {
                 title,
                 type,

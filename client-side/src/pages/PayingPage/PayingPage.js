@@ -95,6 +95,7 @@ export default function PayingPage() {
                         >
                             <Select
                                 placeholder="Chọn tỉnh/thành phố"
+                                defaultValue={'Thành phố Hà Nội'}
                                 style={{ width: '100%' }}
                                 onChange={(e) => {
                                     getDistrict(e);

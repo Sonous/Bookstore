@@ -19,86 +19,115 @@ const cx = classNames.bind(styles);
 
 function Header() {
     const [cartInfo, setCartInfo] = useState([...cartResult]);
-const navigate = useNavigate();
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const navigate = useNavigate();
+
+    window.addEventListener('resize', () => {
+        setWindowWidth(window.innerWidth);
+    });
     return (
         <header className={cx('wrapper')}>
-            <div className={cx('inner')}>
-                <Link to={routes.home}>
-                    <img src={images.logo} alt="logo" className={cx('logo')} />
-                </Link>
+            {windowWidth >= 1000 && (
+                <div className={cx('inner')}>
+                    <Link to={routes.home}>
+                        <img src={images.logo} alt="logo" className={cx('logo')} />
+                    </Link>
 
-                <Navigation />
+                    <Navigation />
 
-                <Search />
+                    <Search />
 
-                <div className={cx('action')}>
-                    <TippyHeadless
-                        interactive
-                        placement="bottom"
-                        render={() => (
-                            <PopperWrapper className={cx('cart-popper')}>
-                                <div className={cx('cart-header')}>
-                                    <span>{`Giỏ hàng (${sum(cartInfo, 'quantity')})`}</span>
-                                </div>
-                                <div className={cx('cart-items')}>
-                                    {cartInfo.map((item, index) => {
-                                        return <Book key={index} {...item} cart />;
-                                    })}
-                                </div>
-                                <div className={cx('cart-footer')}>
-                                    <div className={cx('total')}>
-                                        <span>Tổng cộng:</span>
-                                        <span className={cx('price')}>
-                                            {convertPriceToString(sum(cartInfo, 'currentPrice'))}
-                                        </span>
+                    <div className={cx('action')}>
+                        <TippyHeadless
+                            interactive
+                            placement="bottom"
+                            render={() => (
+                                <PopperWrapper className={cx('cart-popper')}>
+                                    <div className={cx('cart-header')}>
+                                        <span>{`Giỏ hàng (${sum(cartInfo, 'quantity')})`}</span>
                                     </div>
-                                    <button className={cx('more')}>Xem giỏ hàng</button>
+                                    <div className={cx('cart-items')}>
+                                        {cartInfo.map((item, index) => {
+                                            return <Book key={index} {...item} cart />;
+                                        })}
+                                    </div>
+                                    <div className={cx('cart-footer')}>
+                                        <div className={cx('total')}>
+                                            <span>Tổng cộng:</span>
+                                            <span className={cx('price')}>
+                                                {convertPriceToString(sum(cartInfo, 'currentPrice'))}
+                                            </span>
+                                        </div>
+                                        <button className={cx('more')}>Xem giỏ hàng</button>
+                                    </div>
+                                </PopperWrapper>
+                            )}
+                            hideOnClick={false}
+                        >
+                            <button className={cx('cart-btn')}>
+                                <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
+                                <span>Giỏ hàng</span>
+                                <div className={cx('quantity')}>
+                                    <span>{sum(cartInfo, 'quantity')}</span>
                                 </div>
-                            </PopperWrapper>
-                        )}
-                        hideOnClick={false}
-                    >
-                        <button className={cx('cart-btn')}>
-                            <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
-                            <span>Giỏ hàng</span>
-                            <div className={cx('quantity')}>
-                                <span>{sum(cartInfo, 'quantity')}</span>
-                            </div>
-                        </button>
-                    </TippyHeadless>
+                            </button>
+                        </TippyHeadless>
 
-                    <TippyHeadless
-                        interactive
-                        placement="bottom"
-                        render={() => (
-                            <PopperWrapper className={cx('user-popper')}>
-                                <div className={cx('menu-item')}>
-                                    <img src={images.userIcon} alt="user icon" />
-                                    <span className={cx('title')}>Xem thông tin tài khoản</span>
-                                </div>
-                                <div className={cx('menu-item')}>
-                                    <img src={images.orderIcon} alt="order icon" />
-                                    <span className={cx('title')}>Đơn hàng của tôi</span>
-                                </div>
-                                <div className={cx('menu-item')}>
-                                    <img src={images.heartIcon} alt="heart icon" />
-                                    <span className={cx('title')}>Xem sản phẩm yêu thích</span>
-                                </div>
-                                <div className={cx('menu-item', 'logout')} onClick={() => navigate('/signIn')}>
-                                    <img src={images.logoutIcon} alt="logout icon" />
-                                    <span className={cx('title')}>Đăng xuất</span>
-                                </div>
-                            </PopperWrapper>
-                        )}
-                        hideOnClick={false}
-                    >
-                        <button className={cx('user-btn')}>
-                            <FontAwesomeIcon className={cx('icon')} icon={faUser} />
-                            <span>Tài khoản</span>
-                        </button>
-                    </TippyHeadless>
+                        <TippyHeadless
+                            interactive
+                            placement="bottom"
+                            render={() => (
+                                <PopperWrapper className={cx('user-popper')}>
+                                    <div className={cx('menu-item')}>
+                                        <img src={images.userIcon} alt="user icon" />
+                                        <span className={cx('title')}>Xem thông tin tài khoản</span>
+                                    </div>
+                                    <div className={cx('menu-item')}>
+                                        <img src={images.orderIcon} alt="order icon" />
+                                        <span className={cx('title')}>Đơn hàng của tôi</span>
+                                    </div>
+                                    <div className={cx('menu-item')}>
+                                        <img src={images.heartIcon} alt="heart icon" />
+                                        <span className={cx('title')}>Xem sản phẩm yêu thích</span>
+                                    </div>
+                                    <div className={cx('menu-item', 'logout')} onClick={() => navigate('/signIn')}>
+                                        <img src={images.logoutIcon} alt="logout icon" />
+                                        <span className={cx('title')}>Đăng xuất</span>
+                                    </div>
+                                </PopperWrapper>
+                            )}
+                            hideOnClick={false}
+                        >
+                            <button className={cx('user-btn')}>
+                                <FontAwesomeIcon className={cx('icon')} icon={faUser} />
+                                <span>Tài khoản</span>
+                            </button>
+                        </TippyHeadless>
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {windowWidth < 1000 && (
+                <div className="flex flex-col items-center w-full p-4">
+                    <Link to={routes.home}>
+                        <img src={images.logo} alt="logo" className={cx('logo')} />
+                    </Link>
+                    <div className="flex justify-between mt-3 w-full">
+                        <Navigation burger /> 
+                        
+                        <Search />
+
+                        <div className='flex gap-3'>
+                            <span className='flex items-center'>
+                                <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
+                            </span>
+                            <span className='flex items-center'>
+                                <FontAwesomeIcon className={cx('icon')} icon={faUser} />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </header>
     );
 }
