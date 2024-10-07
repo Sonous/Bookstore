@@ -22,7 +22,7 @@ const cx = classNames.bind(styles);
 //     book_image_name: 'image',
 // };
 
-function Search() {
+function Search({ className }) {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState(() => result.filter((book, index) => index < 4));
     const [showResult, setShowResult] = useState(true);
@@ -62,10 +62,11 @@ function Search() {
     };
 
     return (
-        <div>
+        <div className={className}>
             <TippyHeadless
                 visible={showResult && searchResult.length}
                 interactive
+                // zIndex={49}
                 placement="bottom"
                 render={(attrs) => (
                     <div tabIndex="-1" {...attrs} className={cx('search-container')}>

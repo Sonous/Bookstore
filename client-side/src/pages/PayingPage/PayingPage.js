@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '~/layouts/Header/Header';
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { Checkbox, Form, Input, Select } from 'antd';
 import axios from 'axios';
 import PaymentMethod from './PaymentMethod';
 export default function PayingPage() {
@@ -58,7 +58,7 @@ export default function PayingPage() {
                     <h1 className="uppercase font-bold text-lg border-b-[1px] border-gray-300 pb-2">
                         Địa chỉ giao hàng
                     </h1>
-                    <Form form={form} className="my-4" name="basic" onFinish={onFinish} autoComplete="off">
+                    <Form form={form} className="my-4 max-w-none" name="basic" onFinish={onFinish} autoComplete="off">
                         <Form.Item
                             label={<p className="min-w-[170px] text-start text-sm">Họ và tên người nhận:</p>}
                             name="username"
@@ -95,6 +95,7 @@ export default function PayingPage() {
                         >
                             <Select
                                 placeholder="Chọn tỉnh/thành phố"
+                                defaultValue={'Thành phố Hà Nội'}
                                 style={{ width: '100%' }}
                                 onChange={(e) => {
                                     getDistrict(e);

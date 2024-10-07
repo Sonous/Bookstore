@@ -1,9 +1,9 @@
 import getBanners from './bannersService';
 import search from './searchService';
 
-const callApi = {
+const fetchApi = {
     search,
     getBanners,
 };
 
-export default callApi;
+export default fetchApi;
