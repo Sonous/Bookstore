@@ -2,18 +2,28 @@ import classNames from 'classnames/bind';
 import styles from './Footer.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import images from '~/assets/images';
+
+import { routes } from '~/config';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 const footerItems = [
     {
         title: 'Dịch vụ',
-        options: ['Điều khoản sử dụng', 'Chính sách bảo mật', 'Liên hệ'],
+        options: [
+            { name: 'Điều khoản sử dụng', path: routes.dieuKhoan },
+            { name: 'Chính sách bảo mật', path: routes.chinhSachBaoMat },
+            { name: 'Liên hệ', path: routes.lienHe },
+        ],
     },
     {
         title: 'Hỗ trợ',
-        options: ['Hướng dẫn đặt hàng', 'Chính sách đổi trả - hoàn tiền', 'Phương thức vận chuyển'],
+        options: [
+            { name: 'Hướng dẫn đặt hàng', path: routes.huongDanDatHang },
+            { name: 'Chính sách đổi trả', path: routes.chinhSachDoiTra },
+            { name: 'Phương thức vận chuyển', path: routes.phuongThucVanChuyen },
+        ],
     },
 ];
 
@@ -35,9 +45,11 @@ function Footer() {
                         <div key={index} className={cx('footer-nav')}>
                             <h3>{item.title}</h3>
                             <div className={cx('info', 'link')}>
-                                {item.options.map((option, index) => {
-                                    return <span key={index}>{option}</span>;
-                                })}
+                                {item.options.map((option, index) => (
+                                    <Link key={index} to={option.path}>
+                                        <span>{option.name}</span>
+                                    </Link>
+                                ))}
                             </div>
                         </div>
                     );

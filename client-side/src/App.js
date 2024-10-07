@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Pages from './routes';
+import NotFound from './pages/NotFound';
 
 function App() {
     return (
@@ -9,6 +10,7 @@ function App() {
                     {Pages.map((Page, index) => (
                         <Route key={index} path={Page.path} element={<Page.Component />} />
                     ))}
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Router>
         </div>
