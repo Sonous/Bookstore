@@ -15,7 +15,7 @@
     cursor: pointer;
 }
 
-.category:hover,
+/* .category:hover,
 .news:hover {
     color: var(--main-color);
 }
@@ -27,7 +27,7 @@
 .category:hover .icon,
 .news:hover .icon {
     transform: rotate(180deg);
-}
+} */
 /* category */
 .categories-popper {
     display: grid;

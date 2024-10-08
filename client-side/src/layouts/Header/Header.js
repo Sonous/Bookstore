@@ -27,7 +27,7 @@ function Header() {
     });
     return (
         <header className={cx('wrapper')}>
-            {windowWidth >= 1000 && (
+            {windowWidth >= 1000 ? (
                 <div className={cx('inner')}>
                     <Link to={routes.home}>
                         <img src={images.logo} alt="logo" className={cx('logo')} />
@@ -38,40 +38,42 @@ function Header() {
                     <Search />
 
                     <div className={cx('action')}>
-                        <TippyHeadless
-                            interactive
-                            placement="bottom"
-                            render={() => (
-                                <PopperWrapper className={cx('cart-popper')}>
-                                    <div className={cx('cart-header')}>
-                                        <span>{`Giỏ hàng (${sum(cartInfo, 'quantity')})`}</span>
-                                    </div>
-                                    <div className={cx('cart-items')}>
-                                        {cartInfo.map((item, index) => {
-                                            return <Book key={index} {...item} cart />;
-                                        })}
-                                    </div>
-                                    <div className={cx('cart-footer')}>
-                                        <div className={cx('total')}>
-                                            <span>Tổng cộng:</span>
-                                            <span className={cx('price')}>
-                                                {convertPriceToString(sum(cartInfo, 'currentPrice'))}
-                                            </span>
+                        <div>
+                            <TippyHeadless
+                                interactive
+                                placement="bottom"
+                                render={() => (
+                                    <PopperWrapper className={cx('cart-popper')}>
+                                        <div className={cx('cart-header')}>
+                                            <span>{`Giỏ hàng (${sum(cartInfo, 'quantity')})`}</span>
                                         </div>
-                                        <button className={cx('more')}>Xem giỏ hàng</button>
+                                        <div className={cx('cart-items')}>
+                                            {cartInfo.map((item, index) => {
+                                                return <Book key={index} {...item} cart />;
+                                            })}
+                                        </div>
+                                        <div className={cx('cart-footer')}>
+                                            <div className={cx('total')}>
+                                                <span>Tổng cộng:</span>
+                                                <span className={cx('price')}>
+                                                    {convertPriceToString(sum(cartInfo, 'currentPrice'))}
+                                                </span>
+                                            </div>
+                                            <button className={cx('more')}>Xem giỏ hàng</button>
+                                        </div>
+                                    </PopperWrapper>
+                                )}
+                                hideOnClick={false}
+                            >
+                                <button className={cx('cart-btn')}>
+                                    <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
+                                    <span>Giỏ hàng</span>
+                                    <div className={cx('quantity')}>
+                                        <span>{sum(cartInfo, 'quantity')}</span>
                                     </div>
-                                </PopperWrapper>
-                            )}
-                            hideOnClick={false}
-                        >
-                            <button className={cx('cart-btn')}>
-                                <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
-                                <span>Giỏ hàng</span>
-                                <div className={cx('quantity')}>
-                                    <span>{sum(cartInfo, 'quantity')}</span>
-                                </div>
-                            </button>
-                        </TippyHeadless>
+                                </button>
+                            </TippyHeadless>
+                        </div>
 
                         <TippyHeadless
                             interactive
@@ -105,23 +107,21 @@ function Header() {
                         </TippyHeadless>
                     </div>
                 </div>
-            )}
-
-            {windowWidth < 1000 && (
+            ) : (
                 <div className="flex flex-col items-center w-full p-4">
                     <Link to={routes.home}>
                         <img src={images.logo} alt="logo" className={cx('logo')} />
                     </Link>
                     <div className="flex justify-between mt-3 w-full">
-                        <Navigation burger /> 
-                        
+                        <Navigation burger />
+
                         <Search />
 
-                        <div className='flex gap-3'>
-                            <span className='flex items-center'>
+                        <div className="flex gap-3">
+                            <span className="flex items-center">
                                 <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
                             </span>
-                            <span className='flex items-center'>
+                            <span className="flex items-center">
                                 <FontAwesomeIcon className={cx('icon')} icon={faUser} />
                             </span>
                         </div>

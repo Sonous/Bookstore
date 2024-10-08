@@ -19,6 +19,7 @@ function Navigation({ burger = false }) {
     const [collections, setCollections] = useState(categories);
     const [showCollection, setShowCollection] = useState();
     const [showCollections, setShowCollections] = useState(false);
+    const [showNews, setShowNews] = useState(false);
 
     const menuRef = useRef();
 
@@ -41,44 +42,59 @@ function Navigation({ burger = false }) {
         <>
             {!burger && (
                 <nav className={cx('navigator')}>
-                    <TippyHeadless
-                        interactive
-                        offset={[50, 23]}
-                        placement="bottom"
-                        render={(attrs) => (
-                            <div tabIndex="-1" {...attrs}>
-                                <PopperWrapper className={cx('categories-popper')}>
-                                    {collections.map((collection, index) => {
-                                        return (
-                                            <div key={index}>
-                                                <h4 className={cx('title')}>{collection.title}</h4>
-                                                {collection.genres.map((genre, index) => (
-                                                    <li className={cx('genre')} key={index}>
-                                                        <Link to={`/collections/${collection.title}/${genre}`}>
-                                                            {genre}
+                    <div>
+                        <TippyHeadless
+                            interactive
+                            offset={[50, 23]}
+                            placement="bottom"
+                            render={(attrs) => (
+                                <div tabIndex="-1" {...attrs}>
+                                    <PopperWrapper className={cx('categories-popper')}>
+                                        {collections.map((collection, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <h4 className={cx('title')}>{collection.title}</h4>
+                                                    {collection.genres.map((genre, index) => (
+                                                        <li className={cx('genre')} key={index}>
+                                                            <Link to={`/collections/${collection.title}/${genre}`}>
+                                                                {genre}
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                    {collection.isContinue ? (
+                                                        <Link to={`/collections/${collection.title}`}>
+                                                            <span className={cx('more')}>Xem thêm</span>
                                                         </Link>
-                                                    </li>
-                                                ))}
-                                                {collection.isContinue ? (
-                                                    <Link to={`/collections/${collection.title}`}>
-                                                        <span className={cx('more')}>Xem thêm</span>
-                                                    </Link>
-                                                ) : (
-                                                    []
-                                                )}
-                                            </div>
-                                        );
+                                                    ) : (
+                                                        []
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </PopperWrapper>
+                                </div>
+                            )}
+                            hideOnClick={false}
+                            onShow={() => setShowCollections(true)}
+                            onHide={() => setShowCollections(false)}
+                        >
+                            <div className={cx('category')}>
+                                <span
+                                    className={classNames('transition-all', {
+                                        'text-primary-color': showCollections,
                                     })}
-                                </PopperWrapper>
+                                >
+                                    Danh mục
+                                </span>
+                                <FontAwesomeIcon
+                                    icon={faChevronDown}
+                                    className={cx('icon transition-all', {
+                                        'text-primary-color rotate-180': showCollections,
+                                    })}
+                                />
                             </div>
-                        )}
-                        hideOnClick={false}
-                    >
-                        <div className={cx('category')}>
-                            <span>Danh mục</span>
-                            <FontAwesomeIcon icon={faChevronDown} className={cx('icon')} />
-                        </div>
-                    </TippyHeadless>
+                        </TippyHeadless>
+                    </div>
 
                     <TippyHeadless
                         interactive
@@ -96,38 +112,53 @@ function Navigation({ burger = false }) {
                             </div>
                         )}
                         hideOnClick={false}
+                        onShow={() => setShowNews(true)}
+                        onHide={() => setShowNews(false)}
                     >
                         <div className={cx('news')}>
-                            <span>Tin tức</span>
-                            <FontAwesomeIcon icon={faChevronDown} className={cx('icon')} />
+                            <span
+                                className={classNames('transition-all', {
+                                    'text-primary-color': showNews,
+                                })}
+                            >
+                                Tin tức
+                            </span>
+                            <FontAwesomeIcon
+                                icon={faChevronDown}
+                                className={cx('icon transition-all', {
+                                    'text-primary-color rotate-180': showNews,
+                                })}
+                            />
                         </div>
                     </TippyHeadless>
                 </nav>
             )}
 
             {burger && (
-                <nav className='flex items-center'>
+                <nav className="flex items-center">
                     <span className="text-2xl flex items-center" onClick={() => setShowCollections(true)}>
                         <FontAwesomeIcon icon={faBars} />
                     </span>
                     {showCollections && (
                         <>
                             <div className="fixed z-50 top-0 left-0 h-full w-60 p-4 bg-white" ref={menuRef}>
-                                <div className='flex justify-end pb-4'>
+                                <div className="flex justify-end pb-4">
                                     <FontAwesomeIcon
                                         icon={faXmark}
                                         className="w-6 h-6"
                                         onClick={() => setShowCollections(false)}
                                     />
                                 </div>
-                                {[...collections, {title: 'Tin tức', genres: [...news]}].map((collection, index) => {
+                                {[...collections, { title: 'Tin tức', genres: [...news] }].map((collection, index) => {
                                     return (
                                         <div key={index}>
                                             <div
                                                 className={classNames('flex items-center', {
                                                     'text-primary-color': index === showCollection,
                                                 })}
-                                                onClick={() => setShowCollection((prev) => (prev === index ? null : index))}
+                                                onClick={() =>
+                                                    setShowCollection((prev) => (prev === index ? null : index))
+                                                }
                                             >
                                                 <span className="flex-1 text-lg font-semibold">{collection.title}</span>
                                                 {index === showCollection ? (
@@ -139,7 +170,9 @@ function Navigation({ burger = false }) {
                                             {index === showCollection && (
                                                 <div className="pl-4">
                                                     {collection.genres.map((genre, index) => (
-                                                        <div key={index} className='cursor-pointer'>{genre}</div>
+                                                        <div key={index} className="cursor-pointer">
+                                                            {genre}
+                                                        </div>
                                                     ))}
                                                 </div>
                                             )}
@@ -147,9 +180,8 @@ function Navigation({ burger = false }) {
                                     );
                                 })}
                             </div>
-                            <div className='fixed top-0 left-0 bottom-0 right-0 bg-outside-menu-bg z-40'></div>
+                            <div className="fixed top-0 left-0 bottom-0 right-0 bg-outside-menu-bg z-40"></div>
                         </>
-                        
                     )}
                 </nav>
             )}
