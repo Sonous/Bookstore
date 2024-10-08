@@ -19,6 +19,7 @@ const routes = {
 
     user: '/user',
     usercheck: '/check',
+    order: '/order',
     results: '/results',
 };
 

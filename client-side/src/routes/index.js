@@ -18,6 +18,7 @@ import CollectionsPage from '~/pages/CollectionsPage';
 import BlogPage from '~/pages/BlogPage/BlogPage';
 
 import SearchResultPage from '~/pages/SearchResultPage';
+import OrderPage from '~/pages/OrderDetail/OrderDetailPage';
 
 const Pages = [
     { path: routes.home, Component: HomePage },
@@ -26,6 +27,7 @@ const Pages = [
     { path: routes.bookDetail, Component: BookDetail },
     { path: routes.user, Component: User },
     { path: routes.usercheck, Component: UserPage },
+    { path: routes.order, Component: OrderPage },
     { path: routes.paying, Component: PayingPage },
 
     { path: routes.dieuKhoan, Component: DieuKhoan },
