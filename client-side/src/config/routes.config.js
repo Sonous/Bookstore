@@ -13,13 +13,13 @@ const routes = {
     dieuKhoan: '/dieu-khoan-dich-vu', // Điều khoản dịch vụ
     chinhSachBaoMat: '/chinh-sach-bao-mat', // Chính sách bảo mật
     huongDanDatHang: '/huong-dan-dat-hang', // Hướng dẫn đặt hàng
-    lienHe:'/lien-he', // Liên hệ
-    chinhSachDoiTra:'/chinh-sach-doi-tra',
-    phuongThucVanChuyen:'/phuong-thuc-van-chuyen',
+    lienHe: '/lien-he', // Liên hệ
+    chinhSachDoiTra: '/chinh-sach-doi-tra',
+    phuongThucVanChuyen: '/phuong-thuc-van-chuyen',
 
     user: '/user',
     usercheck: '/check',
-
+    results: '/results',
 };
 
 export default routes;

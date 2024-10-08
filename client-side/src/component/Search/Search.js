@@ -8,7 +8,7 @@ import mapper from 'object-mapper';
 import styles from './Search.module.css';
 import PopperWrapper from '../Popper/Popper';
 import Book from '../Book/Book';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { useDebounce } from '~/hooks';
 // import callApi from '~/apis';
 import { searchResult as result } from '~/dataTemorary';
@@ -24,9 +24,10 @@ const cx = classNames.bind(styles);
 
 function Search({ className }) {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState(() => result.filter((book, index) => index < 4));
+    const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const searchRef = useRef();
 
@@ -60,6 +61,11 @@ function Search({ className }) {
     const handleMouseLeave = () => {
         searchRef.current.classList.remove(cx('active'));
     };
+    const handleNavigateToSearchPage = (e) => {
+        if (e.key === 'Enter') {
+            navigate(`/results?q=${searchValue}&type=large`);
+        }
+    };
 
     return (
         <div className={className}>
@@ -84,7 +90,7 @@ function Search({ className }) {
                 )}
                 onClickOutside={() => setShowResult(false)}
             >
-                <div className={cx('wrapper')} ref={searchRef}>
+                <div className={cx('wrapper')} ref={searchRef} onKeyDown={handleNavigateToSearchPage}>
                     <button className={cx('search-btn')}>
                         <FontAwesomeIcon icon={faSearch} />
                     </button>
