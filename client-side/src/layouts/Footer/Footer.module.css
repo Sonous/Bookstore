@@ -13,6 +13,7 @@ footer {
 
 .footer-nav h3 {
     padding-bottom: 10px;
+    font-weight: 600;
     color: var(--main-color);
 }
 .info {
