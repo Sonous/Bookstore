@@ -5,11 +5,19 @@ import styles from './BookCollection.module.css';
 import { searchResult } from '~/dataTemorary';
 import Book from '../Book/Book';
 import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function BookCollection({ topic }) {
     const [enable, setEnable] = useState(true);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const sildes = windowWidth <= 500 ? 2 : windowWidth <= 850 ? 3 : windowWidth <= 1024 ? 4 : 5;
+
+    window.addEventListener('resize', () => {
+        setWindowWidth(window.innerWidth);
+    });
 
     return (
         <section className={cx('container')}>
@@ -18,8 +26,8 @@ function BookCollection({ topic }) {
                 <Carousel
                     dots={false}
                     draggable
-                    slidesToShow={5}
-                    slidesToScroll={4}
+                    slidesToShow={sildes}
+                    slidesToScroll={sildes - 1}
                     infinite={false}
                     beforeChange={() => setEnable(false)}
                     afterChange={() => setEnable(true)}
