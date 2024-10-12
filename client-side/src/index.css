@@ -9,6 +9,14 @@
     align-items: center;
 }
 
+.ant-rate .ant-rate-star-zero .ant-rate-star-second {
+    color: rgb(216, 216, 216);
+}
+
+:where(.css-dev-only-do-not-override-ccdg5a).ant-rate .ant-rate-star:not(:last-child) {
+    margin-inline-end: 5px;
+}
+
 .ant-checkbox .ant-checkbox-inner {
     width: 20px;
     height: 20px;

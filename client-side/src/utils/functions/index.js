@@ -19,5 +19,6 @@ export const sum = (input, property = null) => {
 };
 
 export const convertPriceToString = (price) => {
-    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    let number = parseFloat(price);
+    return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 };
