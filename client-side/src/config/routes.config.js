@@ -4,7 +4,6 @@ const routes = {
     blog: '/blog',
     blogdetail: '/blogs/:title',
     books: '/books/:name',
-    signUp: '/signup',
     signIn: '/signIn',
     cart: '/cart',
     paying: '/paying',

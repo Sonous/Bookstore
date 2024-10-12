@@ -1,7 +1,7 @@
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Pagination, Checkbox } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 
 import Book from '~/component/Book/Book';
@@ -63,10 +63,14 @@ const priceLables = prices.map((price) => price.label);
 
 function Result({ collection = '', searchPage = false, data = [] }) {
     const [sortedSelection, setSortedSelection] = useState(sortedList[0]);
-    const [books, setBooks] = useState(data);
+    const [books, setBooks] = useState([]);
     const [paging, setPaging] = useState({ page: 1, pageSize: 24 });
     const [genres, setGenres] = useState(mangaCommicGenres);
     const [checkedPrice, setCheckedPrice] = useState('');
+
+    useEffect(() => {
+        setBooks(data);
+    }, [data]);
 
     const dropdownItems = sortedList.map((item) => ({
         key: item.key,
@@ -132,7 +136,7 @@ function Result({ collection = '', searchPage = false, data = [] }) {
                     </div>
                 </div>
 
-                <ul className="main-collections grid grid-cols-4 gap-2 sm:max-md:grid-cols-3 max-sm:grid-cols-2">
+                <ul className="main-collections grid grid-cols-4 gap-4 sm:max-md:grid-cols-3 max-sm:grid-cols-2">
                     {books
                         .filter((book, index) => {
                             return (

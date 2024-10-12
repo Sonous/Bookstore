@@ -68,6 +68,7 @@
 }
 .result-header {
     padding-bottom: 10px;
+    font-weight: 700;
     /* color: var(--main-color); */
 }
 .search-popper {
@@ -80,7 +81,8 @@
 }
 
 @media (max-width: 648px) {
-    .wrapper, .search-container{
+    .wrapper,
+    .search-container {
         width: 280px;
     }
     .search-btn {

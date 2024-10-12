@@ -110,11 +110,11 @@ function Header() {
                         </div>
                     ) : (
                         <div>
-                            <span className="mr-2 py-2 px-5 bg-primary-color text-white rounded-lg font-bold cursor-pointer hover:opacity-85">
+                            <span
+                                className="mr-2 py-2 px-5 bg-primary-color text-white rounded-lg font-bold cursor-pointer hover:opacity-85"
+                                onClick={() => navigate('/signIn')}
+                            >
                                 Đăng nhập
-                            </span>
-                            <span className="py-2 px-5 border-2 border-primary-color text-primary-color rounded-lg font-bold cursor-pointer hover:opacity-85">
-                                Đăng kí
                             </span>
                         </div>
                     )}
@@ -145,11 +145,11 @@ function Header() {
                                 render={() => (
                                     <PopperWrapper className={cx('user-popper')}>
                                         <div className="flex flex-col p-2 gap-1 w-40">
-                                            <span className="py-2 bg-primary-color text-white rounded-lg font-bold cursor-pointer hover:opacity-85 text-center">
+                                            <span
+                                                className="py-2 bg-primary-color text-white rounded-lg font-bold cursor-pointer hover:opacity-85 text-center"
+                                                onClick={() => navigate('/signIn')}
+                                            >
                                                 Đăng nhập
-                                            </span>
-                                            <span className="py-2 px-5 border-2 border-primary-color text-primary-color rounded-lg font-bold cursor-pointer hover:opacity-85 text-center">
-                                                Đăng kí
                                             </span>
                                         </div>
                                     </PopperWrapper>

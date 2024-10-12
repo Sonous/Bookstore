@@ -10,7 +10,7 @@ export default function BlogLayout() {
     const navigate = useNavigate();
     const [typeSlt, setTypeSlt] = useState(0);
     const [showDetail, setShowDetail] = useState(false);
-    const [blogs, setBlogs] = useState();
+    const [blogs, setBlogs] = useState([]);
     const getBlog = async () => {
         const data = await request.get('/blog');
         setBlogs(data.data);

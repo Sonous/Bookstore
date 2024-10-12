@@ -7,11 +7,12 @@
 .image {
     height: 80px;
     width: 80px;
+    padding: 5px;
 }
 .info {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     padding: 10px 0;
 }
 .title {
@@ -56,8 +57,5 @@
     flex: 1;
 }
 .rate {
-    font-size: 12px;
-}
-.rate .ant-rate-star {
-    margin-inline-end: 5px;
+    font-size: 14px;
 }
