@@ -10,7 +10,7 @@ const Blog = sequelize.define(
         },
         blog_title: DataTypes.STRING,
         blog_content: DataTypes.TEXT,
-        blog_thumnail: DataTypes.STRING,
+        blog_thumbnail: DataTypes.STRING,
         type_id: DataTypes.INTEGER,
     },
     {

@@ -15,11 +15,10 @@ import PhuongThucVanChuyen from '~/pages/InformationPage/PhuongThucVanChuyen';
 import UserPage from '~/pages/User/UserCard';
 import User from '~/pages/User/UserPage';
 import CollectionsPage from '~/pages/CollectionsPage';
-import BlogPage from '~/pages/BlogPage/BlogPage';
 
 import SearchResultPage from '~/pages/SearchResultPage';
 import OrderPage from '~/pages/OrderDetail/OrderDetailPage';
-import BlogDetailPage from '~/pages/BlogPage/BlogDetailPage';
+import BlogLayout from '~/pages/BlogPage/BlogLayout';
 
 const Pages = [
     { path: routes.home, Component: HomePage },
@@ -40,8 +39,8 @@ const Pages = [
 
     { path: routes.collections, Component: CollectionsPage },
 
-    { path: routes.blog, Component: BlogPage },
-    { path: routes.blogdetail, Component: BlogDetailPage },
+    { path: routes.blog, Component: BlogLayout },
+    { path: routes.blogdetail, Component: BlogLayout },
 
     { path: routes.results, Component: SearchResultPage },
 ];

@@ -1,11 +1,10 @@
 import React from 'react';
-import BlogLayout from './BlogLayout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faCommentDots, faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function BlogDetailPage() {
     return (
-        <BlogLayout>
+        <div>
             <header className="uppercase font-bold text-lg">Bản quyền truyện tranh nhìn từ huyền thoại Doraemon</header>
             <div className="flex text-sm mt-2 gap-4 items-center">
                 <div className="flex items-center gap-1">
@@ -21,6 +20,6 @@ export default function BlogDetailPage() {
                     <p className="mt-1">Nhà xuất bản Kim Đồng</p>
                 </div>
             </div>
-        </BlogLayout>
+        </div>
     );
 }

@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '~/layouts/Footer/Footer';
 import Header from '~/layouts/Header/Header';
+import BlogPage from './BlogPage';
+import BlogDetailPage from './BlogDetailPage';
+import { request } from '~/config';
 const blogTypes = ['Hoạt động', 'Sự kiện', 'Điểm sách', 'Sách giả - Sách lậu', 'Lịch phát hành sách định kỳ'];
-export default function BlogLayout({ children }) {
+export default function BlogLayout() {
     const navigate = useNavigate();
     const [typeSlt, setTypeSlt] = useState(0);
+    const [showDetail, setShowDetail] = useState(false);
+    const [blogs, setBlogs] = useState();
+    const getBlog = async () => {
+        const data = await request.get('/blog');
+        setBlogs(data.data);
+    };
+    useEffect(() => {
+        getBlog();
+    }, []);
     return (
         <div>
             <Header />
@@ -52,7 +64,10 @@ export default function BlogLayout({ children }) {
                         </div>
                     </div>
                 </div>
-                <div className="basis-[80%]">{children}</div>
+                <div className="basis-[80%]">
+                    {!showDetail && <BlogPage blogs={blogs} />}
+                    {showDetail && <BlogDetailPage />}
+                </div>
             </div>
             <div className="my-12"></div>
             <Footer />

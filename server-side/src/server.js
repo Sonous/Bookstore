@@ -6,7 +6,6 @@ import routes from './routes/index.js';
 
 dotenv.config();
 const server = express();
-
 // Middleware
 server.use(
     express.urlencoded({
