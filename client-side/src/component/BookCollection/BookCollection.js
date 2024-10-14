@@ -22,7 +22,7 @@ function BookCollection({ topic }) {
     return (
         <section className={cx('container')}>
             <span className={cx('topic')}>{topic}</span>
-            <div className={cx('wrapper')}>
+            {/* <div className={cx('wrapper')}>
                 <Carousel
                     dots={false}
                     draggable
@@ -36,7 +36,7 @@ function BookCollection({ topic }) {
                         return <Book key={index} collection enable={enable} {...book} />;
                     })}
                 </Carousel>
-            </div>
+            </div> */}
             <div className={cx('more')}>
                 <span className={cx('more-btn')}>Xem thêm &gt;&gt;</span>
             </div>

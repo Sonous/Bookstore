@@ -1,15 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import images from '~/assets/images';
 import Result from '~/component/Result';
+import { request } from '~/config';
 import Footer from '~/layouts/Footer/Footer';
 import Header from '~/layouts/Header/Header';
-import { searchResult as temporaryData } from '~/dataTemorary';
 
 function SearchResultPage() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const [searchResult, setSearchResult] = useState(temporaryData);
+    const [searchResult, setSearchResult] = useState([]);
+
+    let q = queryParams.get('q');
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const res = await request.get('/book', {
+                params: {
+                    q,
+                    type: 'search',
+                },
+            });
+            console.log(res);
+            setSearchResult(res);
+        };
+
+        fetchApi();
+    }, [q]);
 
     return (
         <div>

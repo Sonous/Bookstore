@@ -266,11 +266,11 @@ ALTER TABLE UserAddress ADD CONSTRAINT User_Address_User FOREIGN KEY User_Addres
  
  -- Book
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
-(60001, N'Hồi Kí Vanitas - Tập 10', 36000.00, 4.00, 34560.00, 100, 40, 5, 0, N'Tôi sẽ không bao giờ để cậu được “tự do”. Vanitas và Noé đối đầu nhau đúng như kế hoạch của Mikhail. Một bên tuyệt đối không để kí ức về “Trăng Xanh” bị tước đoạt, bên lại không muốn một lần nữa đánh mất người mình trân quý. Kết cục của trận chiến giữa những nguyện vọng tương đồng này là… Răng nanh ấy, tiếng khóc ấy, ước muốn ấy, tất thảy liệu có đến được đúng nơi?', N'Jun Mochizuki', N'bìa mềm', 186, N'Hồi kí Vanitas', N'Còn hàng'),
-(60002, N'Hồi Kí Vanitas - Tập 4 (Tái Bản)', 36000.00, 4.00, 34560.00, 50, 20, 4, 0, N'Một đội quân chống Vampire “Chasseur”. Một “cái bóng của kẻ bị nguyền rủa” mang tính chất huỷ diệt. Trước hiểm họa đương chực chờ nơi hầm mộ dưới lòng đất, Vanitas và Noé đã chiến đấu vì lẽ gì, đã liều mình để cứu ai? Vai kề vai, chung lưng đấu cật... Dẫu rằng ngày nào đó, số mệnh nghiệt ngã sẽ khiến chiếc nanh ấy làm tổn thương cả hai người… “Vì tôi cứ vẽ một mạch tới đoạn mình muốn nên cuốn sách ra lần này cũng lại dày cui... Vậy là giảm cân thất bại rồi. Bắt đầu từ cuốn sau có lẽ số trang sẽ mỏng dần, nhưng tôi rất vui nếu có thể giữ được độ dày trung bình như mọi cuốn truyện bình thường khác.” (Jun Mochizuki)', N'Jun Mochizuki', N'bìa mềm', 200, N'Hồi kí Vanitas', N'Còn hàng'),
-(60003, N'Thám Tử Lừng Danh Conan - Tập 102', 25000.00, 4.00, 24000.00, 50, 20, 5, 0, N'Jugo Yokomizo tình cờ gặp Chihaya Hagiwara tại bữa tiệc mai mối! Điều gì hiện lên trong tâm trí Chihaya khi cô chăm chú nhìn Wataru Takagi!? Chí nguyện “hoa anh đào” được tiếp nối qua bao thế hệ... Và... Chẳng hề báo trước, tập truyện này sẽ mở ra những diễn biến đầy bất ngờ.', N'Gosho Aoyama', N'bìa mềm', 180, N'Thám tử lừng danh Conan', N'Còn hàng'),
-(60004, N'Thám Tử Lừng Danh Conan - Tập 101', 25000.00, 4.00, 24000.00, 50, 20, 0, 0, N'Mật mã Akemi Miyano để lại ẩn chứa gợi ý về vị trí chôn chiếc hộp thời gian ở trường tiểu học!? Conan dẽ cùng nhóm Haibara hợp sức giải mã!! Tiếng súng vang lên tại nhà hàng Pháp danh tiếng! Conan lần theo dấu viết của tiến sĩ vừa bị bắt đi, thế rồi “nữ thần gió” bất ngờ xuất hiện trước mặt cậu. Thân phận thực sự của cô là gì? Và lần này, Toru Amuro sẽ đối đầu với Kaito Kid khi hắn định trộm món bảo vật!', N'Gosho Aoyama', N'bìa mềm', 181, N'Thám tử lừng danh Conan', N'Còn hàng'),
-(60005, N'Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)', 189000.00, 22.00, 147420.00, 100, 40, 0, 0, N'<div>
+(60001, N'Hồi Kí Vanitas - Tập 10', 36000.00, 0.04, 34560.00, 100, 40, 5, 1, N'Tôi sẽ không bao giờ để cậu được “tự do”. Vanitas và Noé đối đầu nhau đúng như kế hoạch của Mikhail. Một bên tuyệt đối không để kí ức về “Trăng Xanh” bị tước đoạt, bên lại không muốn một lần nữa đánh mất người mình trân quý. Kết cục của trận chiến giữa những nguyện vọng tương đồng này là… Răng nanh ấy, tiếng khóc ấy, ước muốn ấy, tất thảy liệu có đến được đúng nơi?', N'Jun Mochizuki', N'bìa mềm', 186, N'Hồi kí Vanitas', N'Còn hàng'),
+(60002, N'Hồi Kí Vanitas - Tập 4 (Tái Bản)', 36000.00, 0.04, 34560.00, 50, 20, 4, 1, N'Một đội quân chống Vampire “Chasseur”. Một “cái bóng của kẻ bị nguyền rủa” mang tính chất huỷ diệt. Trước hiểm họa đương chực chờ nơi hầm mộ dưới lòng đất, Vanitas và Noé đã chiến đấu vì lẽ gì, đã liều mình để cứu ai? Vai kề vai, chung lưng đấu cật... Dẫu rằng ngày nào đó, số mệnh nghiệt ngã sẽ khiến chiếc nanh ấy làm tổn thương cả hai người… “Vì tôi cứ vẽ một mạch tới đoạn mình muốn nên cuốn sách ra lần này cũng lại dày cui... Vậy là giảm cân thất bại rồi. Bắt đầu từ cuốn sau có lẽ số trang sẽ mỏng dần, nhưng tôi rất vui nếu có thể giữ được độ dày trung bình như mọi cuốn truyện bình thường khác.” (Jun Mochizuki)', N'Jun Mochizuki', N'bìa mềm', 200, N'Hồi kí Vanitas', N'Còn hàng'),
+(60003, N'Thám Tử Lừng Danh Conan - Tập 102', 25000.00, 0.04, 24000.00, 50, 20, 5, 1, N'Jugo Yokomizo tình cờ gặp Chihaya Hagiwara tại bữa tiệc mai mối! Điều gì hiện lên trong tâm trí Chihaya khi cô chăm chú nhìn Wataru Takagi!? Chí nguyện “hoa anh đào” được tiếp nối qua bao thế hệ... Và... Chẳng hề báo trước, tập truyện này sẽ mở ra những diễn biến đầy bất ngờ.', N'Gosho Aoyama', N'bìa mềm', 180, N'Thám tử lừng danh Conan', N'Còn hàng'),
+(60004, N'Thám Tử Lừng Danh Conan - Tập 101', 25000.00, 0.04, 24000.00, 50, 20, 0, 0, N'Mật mã Akemi Miyano để lại ẩn chứa gợi ý về vị trí chôn chiếc hộp thời gian ở trường tiểu học!? Conan dẽ cùng nhóm Haibara hợp sức giải mã!! Tiếng súng vang lên tại nhà hàng Pháp danh tiếng! Conan lần theo dấu viết của tiến sĩ vừa bị bắt đi, thế rồi “nữ thần gió” bất ngờ xuất hiện trước mặt cậu. Thân phận thực sự của cô là gì? Và lần này, Toru Amuro sẽ đối đầu với Kaito Kid khi hắn định trộm món bảo vật!', N'Gosho Aoyama', N'bìa mềm', 181, N'Thám tử lừng danh Conan', N'Còn hàng'),
+(60005, N'Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)', 189000.00, 0.22, 147420.00, 100, 40, 0, 0, N'<div>
     <p><strong>Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)</strong></p>
     <p>• Wall Street Journal Bestseller, USA Today Bestseller, Publisher’s Weekly Bestseller</p>
     <p>• Nằm trong Top 20 tựa sách thể loại non-fiction bán chạy và được tìm đọc nhiều nhất của Amazon suốt 40 tuần tính đến tháng 9/2019</p>
@@ -284,7 +284,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'James Clear', N'bìa mềm', 385, NULL, N'Còn hàng'),
 
-(60006, N'Tư Duy Mở', 138000.00, 50.00, 69000.00, 100, 40, 0, 0, N'<div>
+(60006, N'Tư Duy Mở', 138000.00, 0.5, 69000.00, 100, 40, 0, 0, N'<div>
     <p><strong>Tư Duy Mở</strong></p>
     <p>Con người đang sống trong thời đại công nghệ, khi mọi thứ thay đổi chóng mặt, điều đó đòi hỏi chúng ta phải linh hoạt trong cách tư duy để bắt kịp xu hướng toàn cầu. Hay nói cách khác, chúng ta cần có một tư duy mở để đón nhận và khai phá kiến thức mới, bởi nếu chúng ta cứ khăng khăng giữ định kiến của mình thì sự phát triển sẽ đi vào ngõ cụt.</p>
     <p>Cụ thể hơn, người có tư duy mở tin rằng chỉ cần họ nỗ lực, thay đổi là có thể tiến bộ hơn. Họ sẽ vui vẻ chấp nhận thử thách, xem thử thách như cơ hội để học hỏi được những điều hay cái mới. Khi đối mặt với khó khăn hay không thành công, người có tư duy mở thường có thái độ: “Cách này không hiệu quả, vậy mình thử cách khác”. Đối với họ, thất bại chỉ là bài học giúp họ hoàn hảo hơn trên con đường khẳng định bản thân và phát triển sự nghiệp.</p>
@@ -299,7 +299,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'Nguyễn Anh Dũng', N'bìa mềm', 208, NULL, N'Còn hàng'),
 
-(60007, N'Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản 2021)', 179000.00, 27.00, 130670.00, 100, 40, 0, 0, N'<div>
+(60007, N'Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản 2021)', 179000.00, 0.27, 130670.00, 100, 40, 0, 0, N'<div>
     <p><strong>Thiên Tài Bên Trái, Kẻ Điên Bên Phải</strong></p>
     <p><strong>NẾU MỘT NGÀY ANH THẤY TÔI ĐIÊN, THỰC RA CHÍNH LÀ ANH ĐIÊN ĐẤY!</strong></p>
     <p>Hỡi những con người đang oằn mình trong cuộc sống, bạn biết gì về thế giới của mình? Là vô vàn thứ lý thuyết được các bậc vĩ nhân kiểm chứng, là luật lệ, là cả nghìn thứ sự thật bọc trong cái lốt hiển nhiên, hay những triết lý cứng nhắc của cuộc đời?</p>
@@ -314,7 +314,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'Cao Minh', N'bìa mềm', 424, NULL, N'Còn hàng'),
 
-(60008, N'Chúa tể bóng tối (Manga) - Tập 6', 40000.00, 10.00, 36000.00, 0, 40, 0, 0, N'<p>
+(60008, N'Chúa tể bóng tối (Manga) - Tập 6', 40000.00, 0.1, 36000.00, 0, 40, 0, 0, N'<p>
     TRUYỆN TRANH CHUYỂN THỂ TỪ BỘ LIGHT-NOVEL “CHÚA TỂ BÓNG TỐI” RẤT ĐƯỢC YÊU THÍCH!!<br />
     Cậu thiếu niên Cid sau khi chuyển sinh sang một thế giới khác vẫn tiếp tục chơi trò nhập vai Chúa tể Bóng tối, can thiệp vào mọi biến cố và bộc lộ sức mạnh thực sự của mình từ trong màn đêm. Sau khi che giấu thân phận để tham dự<br />
     Đại hội Bushin – sự kiện lớn hằng năm nhằm tìm ra kiếm sĩ mạnh nhất cả nước, Cid đã nhanh chóng lọt vào tầm ngắm của rất nhiều người, trong đó có cả đại diện của 5 học viện nổi tiếng của quốc gia. Vậy ai sẽ là kẻ chiến thắng cuối cùng?<br />
@@ -322,39 +322,54 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </p>
 ', N'Daisuke Takagi', N'bìa mềm', 228, NULL, N'Còn hàng'),
 
-(60009, N'Đọc Lại Những Nguyên Lý Cơ Bản Của Tư Duy', 155000.00, 0.00, 155000.00, 100, 40, 0, 0, N'<div>
-    <p>
-        <strong>Đọc Lại Những Nguyên Lý Cơ Bản Của Tư Duy</strong>
-    </p>
-    <p>
-        Thế giới quan của bạn đã bị ảnh hưởng bởi những nguyên lý nào? Những quan điểm bạn thường có trong cuộc sống đều bị chi phối bởi những nguyên lý mà bạn chấp nhận, bất kể bạn có biết hay không. Hãy cùng đọc cuốn sách này, những nguyên lý cơ bản mà bạn đã bỏ lỡ, chưa kịp xem xét hay không hiểu biết để khám phá ra thế giới của chính mình.
-    </p>
-    <p>
-        Chúng ta hãy cùng nhau thảo luận về những vấn đề không được coi trọng trong quá trình hình thành tư duy. Có nhiều quan điểm đáng giá mà những bậc thầy vĩ đại trong lĩnh vực triết học, tâm lý học hay nghệ thuật đã đưa ra và ảnh hưởng đến chúng ta. Tại sao bạn lại không cho mình một cơ hội để trải nghiệm những nguyên lý cơ bản của tư duy?
-    </p>
-    <p>
-        Hãy đi trên con đường tràn đầy trải nghiệm mà chỉ có bạn mới có thể hiểu. Nguyên lý của tư duy đang chờ đợi bạn!
-    </p>
+(60009, N'Dược sư tự sự (Light-novel) - Tập 5', 125000, 0.1, 112500, 0, 40, 0, 0, N'<div>
+  <p>
+    Cuộc nổi loạn của Tử tộc được dẹp yên, hoàng tử chào đời trong cung cấm, Ngọc Diệp trở thành chính cung hoàng hậu. 
+    Nhâm Thị tham gia xử lí chính sự với thân phận hoàng đệ thay vì hoạn quan. 
+    Thoạt nhìn, mọi việc tưởng chừng như đã yên bình, thế nhưng bầu không khí bất ổn lại lan toả khắp kinh thành. 
+    Miêu Miêu thì vẫn như mọi khi, dính dáng tới vụ án đồ ngọt có độc bí ẩn, mối lo ngại về nạn châu chấu, vấn đề quyền sở hữu ở ngôi làng làm giấy... và xía mũi vào mấy chuyện này.
+  </p>
+  <p>
+    Bên cạnh đó, theo mệnh lệnh của Nhâm Thị, cô cũng phải đi đến quê hương của Ngọc Diệp phi, địa điểm mang tên gọi Tây Đô. 
+    Tại buổi vũ hội nơi vô vàn đoá hoa rực rỡ nở rộ, âm mưu của kẻ nào đó đang lẩn khuất. 
+    Liệu Miêu Miêu có thể vạch trần ý đồ đó hay không!?
+  </p>
+  <p>
+    DƯỢC SƯ TỰ SỰ là series light-novel thể loại trinh thám vô cùng độc đáo lấy bối cảnh cung đình. 
+    Truyện đã được chuyển thể manga và anime ra mắt vào cuối năm 2023. 
+    Tính đến tháng 3/2024, toàn series đã vượt mốc 33 triệu bản tại thị trường Nhật Bản và luôn thống trị bảng xếp hạng bán chạy mỗi khi ra tập mới!
+  </p>
+  <p>Số tập: 15+ (on-going)</p>
 </div>
-', N'Vô Danh', N'bìa mềm', 218, NULL, N'Còn hàng'),
+', N'Natsu Hyuuga, Touco Shino', N'bìa mềm', 468, N'Dược sư tự sự (Light-novel)', N'Hết hàng'),
 
-(60010, N'Nhà Giả Kim', 180000.00, 15.00, 153000.00, 100, 50, 0, 0, N'<div>
+(60010, N'Nhà Giả Kim (Tái Bản 2020)', 79000, 0.22, 61620, 100, 40, 0, 0, N'<div>
     <p>
-        <strong>Nhà Giả Kim</strong>
+        <em>Tất cả những trải nghiệm trong chuyến phiêu du theo đuổi vận mệnh của mình đã giúp Santiago thấu hiểu được ý nghĩa sâu xa nhất của hạnh phúc, hòa hợp với vũ trụ và con người</em>.
     </p>
     <p>
-        "Nhà Giả Kim" (The Alchemist) là một cuốn tiểu thuyết nổi tiếng của tác giả Paulo Coelho, kể về hành trình của Santiago, một cậu bé chăn cừu người Tây Ban Nha, trong việc tìm kiếm kho báu ở Ai Cập. Qua những trải nghiệm của mình, Santiago học được nhiều bài học quý giá về ước mơ, tình yêu và sự tìm kiếm bản thân.
+        Tiểu thuyết <em>Nhà giả kim</em> của Paulo Coelho như một câu chuyện cổ tích giản dị, nhân ái, giàu chất thơ, thấm đẫm những minh triết huyền bí của phương Đông. Trong lần xuất bản đầu tiên tại Brazil vào năm 1988, sách chỉ bán được 900 bản. Nhưng, với số phận đặc biệt của cuốn sách dành cho toàn nhân loại, vượt ra ngoài biên giới quốc gia, <em>Nhà giả kim</em> đã làm rung động hàng triệu tâm hồn, trở thành một trong những cuốn sách bán chạy nhất mọi thời đại, và có thể làm thay đổi cuộc đời người đọc.
     </p>
     <p>
-        Cuốn sách khuyến khích người đọc theo đuổi ước mơ và không bao giờ từ bỏ khát khao tìm kiếm hạnh phúc.
+        “Nhưng nhà luyện kim đan không quan tâm mấy đến những điều ấy. Ông đã từng thấy nhiều người đến rồi đi, trong khi ốc đảo và sa mạc vẫn là ốc đảo và sa mạc. Ông đã thấy vua chúa và kẻ ăn xin đi qua biển cát này, cái biển cát thường xuyên thay hình đổi dạng vì gió thổi nhưng vẫn mãi mãi là biển cát mà ông đã biết từ thuở nhỏ. Tuy vậy, tự đáy lòng mình, ông không thể không cảm thấy vui trước hạnh phúc của mỗi người lữ khách, sau bao ngày chỉ có cát vàng với trời xanh nay được thấy chà là xanh tươi hiện ra trước mắt. ‘Có thể Thượng đế tạo ra sa mạc chỉ để cho con người biết quý trọng cây chà là,’ ông nghĩ.”
+    </p>
+    <p>- Trích <em>Nhà giả kim</em></p>
+    <p>
+        <strong>Nhận định</strong>
+    </p>
+    <p>
+        “Sau Garcia Márquez, đây là nhà văn Mỹ Latinh được đọc nhiều nhất thế giới.” <em>- The Economist</em>, London, Anh
+    </p>
+    <p>
+        “Santiago có khả năng cảm nhận bằng trái tim như <em>Hoàng tử bé</em> của Saint-Exupéry.” <em>- Frankfurter Allgemeine Zeitung, Đức</em>
     </p>
 </div>
-', N'Paulo Coelho', N'bìa mềm', 208, NULL, N'Còn hàng'),
-(60011, N'Hồi Kí Vanitas - Tập 10', 36000.00, 4.00, 34560.00, 100, 40, 5, 0, N'Tôi sẽ không bao giờ để cậu được “tự do”. Vanitas và Noé đối đầu nhau đúng như kế hoạch của Mikhail. Một bên tuyệt đối không để kí ức về “Trăng Xanh” bị tước đoạt, bên lại không muốn một lần nữa đánh mất người mình trân quý. Kết cục của trận chiến giữa những nguyện vọng tương đồng này là… Răng nanh ấy, tiếng khóc ấy, ước muốn ấy, tất thảy liệu có đến được đúng nơi?', N'Jun Mochizuki', N'bìa mềm', 186, N'Hồi kí Vanitas', N'Còn hàng'),
-(60012, N'Hồi Kí Vanitas - Tập 4 (Tái Bản)', 36000.00, 4.00, 34560.00, 50, 20, 4, 0, N'Một đội quân chống Vampire “Chasseur”. Một “cái bóng của kẻ bị nguyền rủa” mang tính chất huỷ diệt. Trước hiểm họa đương chực chờ nơi hầm mộ dưới lòng đất, Vanitas và Noé đã chiến đấu vì lẽ gì, đã liều mình để cứu ai? Vai kề vai, chung lưng đấu cật... Dẫu rằng ngày nào đó, số mệnh nghiệt ngã sẽ khiến chiếc nanh ấy làm tổn thương cả hai người… “Vì tôi cứ vẽ một mạch tới đoạn mình muốn nên cuốn sách ra lần này cũng lại dày cui... Vậy là giảm cân thất bại rồi. Bắt đầu từ cuốn sau có lẽ số trang sẽ mỏng dần, nhưng tôi rất vui nếu có thể giữ được độ dày trung bình như mọi cuốn truyện bình thường khác.” (Jun Mochizuki)', N'Jun Mochizuki', N'bìa mềm', 200, N'Hồi kí Vanitas', N'Còn hàng'),
-(60013, N'Thám Tử Lừng Danh Conan - Tập 102', 25000.00, 4.00, 24000.00, 50, 20, 5, 0, N'Jugo Yokomizo tình cờ gặp Chihaya Hagiwara tại bữa tiệc mai mối! Điều gì hiện lên trong tâm trí Chihaya khi cô chăm chú nhìn Wataru Takagi!? Chí nguyện “hoa anh đào” được tiếp nối qua bao thế hệ... Và... Chẳng hề báo trước, tập truyện này sẽ mở ra những diễn biến đầy bất ngờ.', N'Gosho Aoyama', N'bìa mềm', 180, N'Thám tử lừng danh Conan', N'Còn hàng'),
-(60014, N'Thám Tử Lừng Danh Conan - Tập 101', 25000.00, 4.00, 24000.00, 50, 20, 0, 0, N'Mật mã Akemi Miyano để lại ẩn chứa gợi ý về vị trí chôn chiếc hộp thời gian ở trường tiểu học!? Conan dẽ cùng nhóm Haibara hợp sức giải mã!! Tiếng súng vang lên tại nhà hàng Pháp danh tiếng! Conan lần theo dấu viết của tiến sĩ vừa bị bắt đi, thế rồi “nữ thần gió” bất ngờ xuất hiện trước mặt cậu. Thân phận thực sự của cô là gì? Và lần này, Toru Amuro sẽ đối đầu với Kaito Kid khi hắn định trộm món bảo vật!', N'Gosho Aoyama', N'bìa mềm', 181, N'Thám tử lừng danh Conan', N'Còn hàng'),
-(60015, N'Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)', 189000.00, 22.00, 147420.00, 100, 40, 0, 0, N'<div>
+', N'Paulo Coelho', N'bìa mềm', 227, NULL, N'Còn hàng'),
+(60011, N'Hồi Kí Vanitas - Tập 10', 36000.00, 0.04, 34560.00, 100, 40, 0, 0, N'Tôi sẽ không bao giờ để cậu được “tự do”. Vanitas và Noé đối đầu nhau đúng như kế hoạch của Mikhail. Một bên tuyệt đối không để kí ức về “Trăng Xanh” bị tước đoạt, bên lại không muốn một lần nữa đánh mất người mình trân quý. Kết cục của trận chiến giữa những nguyện vọng tương đồng này là… Răng nanh ấy, tiếng khóc ấy, ước muốn ấy, tất thảy liệu có đến được đúng nơi?', N'Jun Mochizuki', N'bìa mềm', 186, N'Hồi kí Vanitas', N'Còn hàng'),
+(60012, N'Hồi Kí Vanitas - Tập 4 (Tái Bản)', 36000.00, 0.04, 34560.00, 50, 20, 0, 0, N'Một đội quân chống Vampire “Chasseur”. Một “cái bóng của kẻ bị nguyền rủa” mang tính chất huỷ diệt. Trước hiểm họa đương chực chờ nơi hầm mộ dưới lòng đất, Vanitas và Noé đã chiến đấu vì lẽ gì, đã liều mình để cứu ai? Vai kề vai, chung lưng đấu cật... Dẫu rằng ngày nào đó, số mệnh nghiệt ngã sẽ khiến chiếc nanh ấy làm tổn thương cả hai người… “Vì tôi cứ vẽ một mạch tới đoạn mình muốn nên cuốn sách ra lần này cũng lại dày cui... Vậy là giảm cân thất bại rồi. Bắt đầu từ cuốn sau có lẽ số trang sẽ mỏng dần, nhưng tôi rất vui nếu có thể giữ được độ dày trung bình như mọi cuốn truyện bình thường khác.” (Jun Mochizuki)', N'Jun Mochizuki', N'bìa mềm', 200, N'Hồi kí Vanitas', N'Còn hàng'),
+(60013, N'Thám Tử Lừng Danh Conan - Tập 102', 25000.00, 0.04, 24000.00, 50, 20, 0, 0, N'Jugo Yokomizo tình cờ gặp Chihaya Hagiwara tại bữa tiệc mai mối! Điều gì hiện lên trong tâm trí Chihaya khi cô chăm chú nhìn Wataru Takagi!? Chí nguyện “hoa anh đào” được tiếp nối qua bao thế hệ... Và... Chẳng hề báo trước, tập truyện này sẽ mở ra những diễn biến đầy bất ngờ.', N'Gosho Aoyama', N'bìa mềm', 180, N'Thám tử lừng danh Conan', N'Còn hàng'),
+(60014, N'Thám Tử Lừng Danh Conan - Tập 101', 25000.00, 0.04, 24000.00, 50, 20, 0, 0, N'Mật mã Akemi Miyano để lại ẩn chứa gợi ý về vị trí chôn chiếc hộp thời gian ở trường tiểu học!? Conan dẽ cùng nhóm Haibara hợp sức giải mã!! Tiếng súng vang lên tại nhà hàng Pháp danh tiếng! Conan lần theo dấu viết của tiến sĩ vừa bị bắt đi, thế rồi “nữ thần gió” bất ngờ xuất hiện trước mặt cậu. Thân phận thực sự của cô là gì? Và lần này, Toru Amuro sẽ đối đầu với Kaito Kid khi hắn định trộm món bảo vật!', N'Gosho Aoyama', N'bìa mềm', 181, N'Thám tử lừng danh Conan', N'Còn hàng'),
+(60015, N'Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)', 189000.00, 0.22, 147420.00, 100, 40, 0, 0, N'<div>
     <p><strong>Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)</strong></p>
     <p>• Wall Street Journal Bestseller, USA Today Bestseller, Publisher’s Weekly Bestseller</p>
     <p>• Nằm trong Top 20 tựa sách thể loại non-fiction bán chạy và được tìm đọc nhiều nhất của Amazon suốt 40 tuần tính đến tháng 9/2019</p>
@@ -368,7 +383,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'James Clear', N'bìa mềm', 385, NULL, N'Còn hàng'),
 
-(60016, N'Tư Duy Mở', 138000.00, 50.00, 69000.00, 100, 40, 0, 0, N'<div>
+(60016, N'Tư Duy Mở', 138000.00, 0.5, 69000.00, 100, 40, 0, 0, N'<div>
     <p><strong>Tư Duy Mở</strong></p>
     <p>Con người đang sống trong thời đại công nghệ, khi mọi thứ thay đổi chóng mặt, điều đó đòi hỏi chúng ta phải linh hoạt trong cách tư duy để bắt kịp xu hướng toàn cầu. Hay nói cách khác, chúng ta cần có một tư duy mở để đón nhận và khai phá kiến thức mới, bởi nếu chúng ta cứ khăng khăng giữ định kiến của mình thì sự phát triển sẽ đi vào ngõ cụt.</p>
     <p>Cụ thể hơn, người có tư duy mở tin rằng chỉ cần họ nỗ lực, thay đổi là có thể tiến bộ hơn. Họ sẽ vui vẻ chấp nhận thử thách, xem thử thách như cơ hội để học hỏi được những điều hay cái mới. Khi đối mặt với khó khăn hay không thành công, người có tư duy mở thường có thái độ: “Cách này không hiệu quả, vậy mình thử cách khác”. Đối với họ, thất bại chỉ là bài học giúp họ hoàn hảo hơn trên con đường khẳng định bản thân và phát triển sự nghiệp.</p>
@@ -383,7 +398,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'Nguyễn Anh Dũng', N'bìa mềm', 208, NULL, N'Còn hàng'),
 
-(60017, N'Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản 2021)', 179000.00, 27.00, 130670.00, 100, 40, 0, 0, N'<div>
+(60017, N'Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản 2021)', 179000.00, 0.27, 130670.00, 100, 40, 0, 0, N'<div>
     <p><strong>Thiên Tài Bên Trái, Kẻ Điên Bên Phải</strong></p>
     <p><strong>NẾU MỘT NGÀY ANH THẤY TÔI ĐIÊN, THỰC RA CHÍNH LÀ ANH ĐIÊN ĐẤY!</strong></p>
     <p>Hỡi những con người đang oằn mình trong cuộc sống, bạn biết gì về thế giới của mình? Là vô vàn thứ lý thuyết được các bậc vĩ nhân kiểm chứng, là luật lệ, là cả nghìn thứ sự thật bọc trong cái lốt hiển nhiên, hay những triết lý cứng nhắc của cuộc đời?</p>
@@ -398,7 +413,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'Cao Minh', N'bìa mềm', 424, NULL, N'Còn hàng'),
 
-(60018, N'Chúa tể bóng tối (Manga) - Tập 6', 40000.00, 10.00, 36000.00, 0, 40, 0, 0, N'<p>
+(60018, N'Chúa tể bóng tối (Manga) - Tập 6', 40000.00, 0.1, 36000.00, 0, 40, 0, 0, N'<p>
     TRUYỆN TRANH CHUYỂN THỂ TỪ BỘ LIGHT-NOVEL “CHÚA TỂ BÓNG TỐI” RẤT ĐƯỢC YÊU THÍCH!!<br />
     Cậu thiếu niên Cid sau khi chuyển sinh sang một thế giới khác vẫn tiếp tục chơi trò nhập vai Chúa tể Bóng tối, can thiệp vào mọi biến cố và bộc lộ sức mạnh thực sự của mình từ trong màn đêm. Sau khi che giấu thân phận để tham dự<br />
     Đại hội Bushin – sự kiện lớn hằng năm nhằm tìm ra kiếm sĩ mạnh nhất cả nước, Cid đã nhanh chóng lọt vào tầm ngắm của rất nhiều người, trong đó có cả đại diện của 5 học viện nổi tiếng của quốc gia. Vậy ai sẽ là kẻ chiến thắng cuối cùng?<br />
@@ -406,40 +421,55 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </p>
 ', N'Daisuke Takagi', N'bìa mềm', 228, NULL, N'Còn hàng'),
 
-(60019, N'Đọc Lại Những Nguyên Lý Cơ Bản Của Tư Duy', 155000.00, 0.00, 155000.00, 100, 40, 0, 0, N'<div>
+(60019, N'Dược sư tự sự (Light-novel) - Tập 5', 125000, 0.1, 112500, 0, 40, 0, 0, N'<div>
+  <p>
+    Cuộc nổi loạn của Tử tộc được dẹp yên, hoàng tử chào đời trong cung cấm, Ngọc Diệp trở thành chính cung hoàng hậu. 
+    Nhâm Thị tham gia xử lí chính sự với thân phận hoàng đệ thay vì hoạn quan. 
+    Thoạt nhìn, mọi việc tưởng chừng như đã yên bình, thế nhưng bầu không khí bất ổn lại lan toả khắp kinh thành. 
+    Miêu Miêu thì vẫn như mọi khi, dính dáng tới vụ án đồ ngọt có độc bí ẩn, mối lo ngại về nạn châu chấu, vấn đề quyền sở hữu ở ngôi làng làm giấy... và xía mũi vào mấy chuyện này.
+  </p>
+  <p>
+    Bên cạnh đó, theo mệnh lệnh của Nhâm Thị, cô cũng phải đi đến quê hương của Ngọc Diệp phi, địa điểm mang tên gọi Tây Đô. 
+    Tại buổi vũ hội nơi vô vàn đoá hoa rực rỡ nở rộ, âm mưu của kẻ nào đó đang lẩn khuất. 
+    Liệu Miêu Miêu có thể vạch trần ý đồ đó hay không!?
+  </p>
+  <p>
+    DƯỢC SƯ TỰ SỰ là series light-novel thể loại trinh thám vô cùng độc đáo lấy bối cảnh cung đình. 
+    Truyện đã được chuyển thể manga và anime ra mắt vào cuối năm 2023. 
+    Tính đến tháng 3/2024, toàn series đã vượt mốc 33 triệu bản tại thị trường Nhật Bản và luôn thống trị bảng xếp hạng bán chạy mỗi khi ra tập mới!
+  </p>
+  <p>Số tập: 15+ (on-going)</p>
+</div>
+', N'Natsu Hyuuga, Touco Shino', N'bìa mềm', 468, N'Dược sư tự sự (Light-novel)', N'Hết hàng'),
+
+(60020, N'Nhà Giả Kim (Tái Bản 2020)', 79000, 0.22, 61620, 100, 50, 0, 0, N'<div>
     <p>
-        <strong>Đọc Lại Những Nguyên Lý Cơ Bản Của Tư Duy</strong>
+        <em>Tất cả những trải nghiệm trong chuyến phiêu du theo đuổi vận mệnh của mình đã giúp Santiago thấu hiểu được ý nghĩa sâu xa nhất của hạnh phúc, hòa hợp với vũ trụ và con người</em>.
     </p>
     <p>
-        Thế giới quan của bạn đã bị ảnh hưởng bởi những nguyên lý nào? Những quan điểm bạn thường có trong cuộc sống đều bị chi phối bởi những nguyên lý mà bạn chấp nhận, bất kể bạn có biết hay không. Hãy cùng đọc cuốn sách này, những nguyên lý cơ bản mà bạn đã bỏ lỡ, chưa kịp xem xét hay không hiểu biết để khám phá ra thế giới của chính mình.
+        Tiểu thuyết <em>Nhà giả kim</em> của Paulo Coelho như một câu chuyện cổ tích giản dị, nhân ái, giàu chất thơ, thấm đẫm những minh triết huyền bí của phương Đông. Trong lần xuất bản đầu tiên tại Brazil vào năm 1988, sách chỉ bán được 900 bản. Nhưng, với số phận đặc biệt của cuốn sách dành cho toàn nhân loại, vượt ra ngoài biên giới quốc gia, <em>Nhà giả kim</em> đã làm rung động hàng triệu tâm hồn, trở thành một trong những cuốn sách bán chạy nhất mọi thời đại, và có thể làm thay đổi cuộc đời người đọc.
     </p>
     <p>
-        Chúng ta hãy cùng nhau thảo luận về những vấn đề không được coi trọng trong quá trình hình thành tư duy. Có nhiều quan điểm đáng giá mà những bậc thầy vĩ đại trong lĩnh vực triết học, tâm lý học hay nghệ thuật đã đưa ra và ảnh hưởng đến chúng ta. Tại sao bạn lại không cho mình một cơ hội để trải nghiệm những nguyên lý cơ bản của tư duy?
+        “Nhưng nhà luyện kim đan không quan tâm mấy đến những điều ấy. Ông đã từng thấy nhiều người đến rồi đi, trong khi ốc đảo và sa mạc vẫn là ốc đảo và sa mạc. Ông đã thấy vua chúa và kẻ ăn xin đi qua biển cát này, cái biển cát thường xuyên thay hình đổi dạng vì gió thổi nhưng vẫn mãi mãi là biển cát mà ông đã biết từ thuở nhỏ. Tuy vậy, tự đáy lòng mình, ông không thể không cảm thấy vui trước hạnh phúc của mỗi người lữ khách, sau bao ngày chỉ có cát vàng với trời xanh nay được thấy chà là xanh tươi hiện ra trước mắt. ‘Có thể Thượng đế tạo ra sa mạc chỉ để cho con người biết quý trọng cây chà là,’ ông nghĩ.”
+    </p>
+    <p>- Trích <em>Nhà giả kim</em></p>
+    <p>
+        <strong>Nhận định</strong>
     </p>
     <p>
-        Hãy đi trên con đường tràn đầy trải nghiệm mà chỉ có bạn mới có thể hiểu. Nguyên lý của tư duy đang chờ đợi bạn!
+        “Sau Garcia Márquez, đây là nhà văn Mỹ Latinh được đọc nhiều nhất thế giới.” <em>- The Economist</em>, London, Anh
+    </p>
+    <p>
+        “Santiago có khả năng cảm nhận bằng trái tim như <em>Hoàng tử bé</em> của Saint-Exupéry.” <em>- Frankfurter Allgemeine Zeitung, Đức</em>
     </p>
 </div>
-', N'Vô Danh', N'bìa mềm', 218, NULL, N'Còn hàng'),
+', N'Paulo Coelho', N'bìa mềm', 227, NULL, N'Còn hàng'),
 
-(60020, N'Nhà Giả Kim', 180000.00, 15.00, 153000.00, 100, 50, 0, 0, N'<div>
-    <p>
-        <strong>Nhà Giả Kim</strong>
-    </p>
-    <p>
-        "Nhà Giả Kim" (The Alchemist) là một cuốn tiểu thuyết nổi tiếng của tác giả Paulo Coelho, kể về hành trình của Santiago, một cậu bé chăn cừu người Tây Ban Nha, trong việc tìm kiếm kho báu ở Ai Cập. Qua những trải nghiệm của mình, Santiago học được nhiều bài học quý giá về ước mơ, tình yêu và sự tìm kiếm bản thân.
-    </p>
-    <p>
-        Cuốn sách khuyến khích người đọc theo đuổi ước mơ và không bao giờ từ bỏ khát khao tìm kiếm hạnh phúc.
-    </p>
-</div>
-', N'Paulo Coelho', N'bìa mềm', 208, NULL, N'Còn hàng'),
-
-(60021, N'Hồi Kí Vanitas - Tập 10', 36000.00, 4.00, 34560.00, 100, 40, 5, 0, N'Tôi sẽ không bao giờ để cậu được “tự do”. Vanitas và Noé đối đầu nhau đúng như kế hoạch của Mikhail. Một bên tuyệt đối không để kí ức về “Trăng Xanh” bị tước đoạt, bên lại không muốn một lần nữa đánh mất người mình trân quý. Kết cục của trận chiến giữa những nguyện vọng tương đồng này là… Răng nanh ấy, tiếng khóc ấy, ước muốn ấy, tất thảy liệu có đến được đúng nơi?', N'Jun Mochizuki', N'bìa mềm', 186, N'Hồi kí Vanitas', N'Còn hàng'),
-(60022, N'Hồi Kí Vanitas - Tập 4 (Tái Bản)', 36000.00, 4.00, 34560.00, 50, 20, 4, 0, N'Một đội quân chống Vampire “Chasseur”. Một “cái bóng của kẻ bị nguyền rủa” mang tính chất huỷ diệt. Trước hiểm họa đương chực chờ nơi hầm mộ dưới lòng đất, Vanitas và Noé đã chiến đấu vì lẽ gì, đã liều mình để cứu ai? Vai kề vai, chung lưng đấu cật... Dẫu rằng ngày nào đó, số mệnh nghiệt ngã sẽ khiến chiếc nanh ấy làm tổn thương cả hai người… “Vì tôi cứ vẽ một mạch tới đoạn mình muốn nên cuốn sách ra lần này cũng lại dày cui... Vậy là giảm cân thất bại rồi. Bắt đầu từ cuốn sau có lẽ số trang sẽ mỏng dần, nhưng tôi rất vui nếu có thể giữ được độ dày trung bình như mọi cuốn truyện bình thường khác.” (Jun Mochizuki)', N'Jun Mochizuki', N'bìa mềm', 200, N'Hồi kí Vanitas', N'Còn hàng'),
-(60023, N'Thám Tử Lừng Danh Conan - Tập 102', 25000.00, 4.00, 24000.00, 50, 20, 5, 0, N'Jugo Yokomizo tình cờ gặp Chihaya Hagiwara tại bữa tiệc mai mối! Điều gì hiện lên trong tâm trí Chihaya khi cô chăm chú nhìn Wataru Takagi!? Chí nguyện “hoa anh đào” được tiếp nối qua bao thế hệ... Và... Chẳng hề báo trước, tập truyện này sẽ mở ra những diễn biến đầy bất ngờ.', N'Gosho Aoyama', N'bìa mềm', 180, N'Thám tử lừng danh Conan', N'Còn hàng'),
-(60024, N'Thám Tử Lừng Danh Conan - Tập 101', 25000.00, 4.00, 24000.00, 50, 20, 0, 0, N'Mật mã Akemi Miyano để lại ẩn chứa gợi ý về vị trí chôn chiếc hộp thời gian ở trường tiểu học!? Conan dẽ cùng nhóm Haibara hợp sức giải mã!! Tiếng súng vang lên tại nhà hàng Pháp danh tiếng! Conan lần theo dấu viết của tiến sĩ vừa bị bắt đi, thế rồi “nữ thần gió” bất ngờ xuất hiện trước mặt cậu. Thân phận thực sự của cô là gì? Và lần này, Toru Amuro sẽ đối đầu với Kaito Kid khi hắn định trộm món bảo vật!', N'Gosho Aoyama', N'bìa mềm', 181, N'Thám tử lừng danh Conan', N'Còn hàng'),
-(60025, N'Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)', 189000.00, 22.00, 147420.00, 100, 40, 0, 0, N'<div>
+(60021, N'Hồi Kí Vanitas - Tập 10', 36000.00, 0.04, 34560.00, 100, 40, 0, 0, N'Tôi sẽ không bao giờ để cậu được “tự do”. Vanitas và Noé đối đầu nhau đúng như kế hoạch của Mikhail. Một bên tuyệt đối không để kí ức về “Trăng Xanh” bị tước đoạt, bên lại không muốn một lần nữa đánh mất người mình trân quý. Kết cục của trận chiến giữa những nguyện vọng tương đồng này là… Răng nanh ấy, tiếng khóc ấy, ước muốn ấy, tất thảy liệu có đến được đúng nơi?', N'Jun Mochizuki', N'bìa mềm', 186, N'Hồi kí Vanitas', N'Còn hàng'),
+(60022, N'Hồi Kí Vanitas - Tập 4 (Tái Bản)', 36000.00, 0.04, 34560.00, 50, 20, 0, 0, N'Một đội quân chống Vampire “Chasseur”. Một “cái bóng của kẻ bị nguyền rủa” mang tính chất huỷ diệt. Trước hiểm họa đương chực chờ nơi hầm mộ dưới lòng đất, Vanitas và Noé đã chiến đấu vì lẽ gì, đã liều mình để cứu ai? Vai kề vai, chung lưng đấu cật... Dẫu rằng ngày nào đó, số mệnh nghiệt ngã sẽ khiến chiếc nanh ấy làm tổn thương cả hai người… “Vì tôi cứ vẽ một mạch tới đoạn mình muốn nên cuốn sách ra lần này cũng lại dày cui... Vậy là giảm cân thất bại rồi. Bắt đầu từ cuốn sau có lẽ số trang sẽ mỏng dần, nhưng tôi rất vui nếu có thể giữ được độ dày trung bình như mọi cuốn truyện bình thường khác.” (Jun Mochizuki)', N'Jun Mochizuki', N'bìa mềm', 200, N'Hồi kí Vanitas', N'Còn hàng'),
+(60023, N'Thám Tử Lừng Danh Conan - Tập 102', 25000.00, 0.04, 24000.00, 50, 20, 0, 0, N'Jugo Yokomizo tình cờ gặp Chihaya Hagiwara tại bữa tiệc mai mối! Điều gì hiện lên trong tâm trí Chihaya khi cô chăm chú nhìn Wataru Takagi!? Chí nguyện “hoa anh đào” được tiếp nối qua bao thế hệ... Và... Chẳng hề báo trước, tập truyện này sẽ mở ra những diễn biến đầy bất ngờ.', N'Gosho Aoyama', N'bìa mềm', 180, N'Thám tử lừng danh Conan', N'Còn hàng'),
+(60024, N'Thám Tử Lừng Danh Conan - Tập 101', 25000.00, 0.04, 24000.00, 50, 20, 0, 0, N'Mật mã Akemi Miyano để lại ẩn chứa gợi ý về vị trí chôn chiếc hộp thời gian ở trường tiểu học!? Conan dẽ cùng nhóm Haibara hợp sức giải mã!! Tiếng súng vang lên tại nhà hàng Pháp danh tiếng! Conan lần theo dấu viết của tiến sĩ vừa bị bắt đi, thế rồi “nữ thần gió” bất ngờ xuất hiện trước mặt cậu. Thân phận thực sự của cô là gì? Và lần này, Toru Amuro sẽ đối đầu với Kaito Kid khi hắn định trộm món bảo vật!', N'Gosho Aoyama', N'bìa mềm', 181, N'Thám tử lừng danh Conan', N'Còn hàng'),
+(60025, N'Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)', 189000.00, 0.22, 147420.00, 100, 40, 0, 0, N'<div>
     <p><strong>Atomic Habits - Thay Đổi Tí Hon Hiệu Quả Bất Ngờ (Tái Bản 2023)</strong></p>
     <p>• Wall Street Journal Bestseller, USA Today Bestseller, Publisher’s Weekly Bestseller</p>
     <p>• Nằm trong Top 20 tựa sách thể loại non-fiction bán chạy và được tìm đọc nhiều nhất của Amazon suốt 40 tuần tính đến tháng 9/2019</p>
@@ -453,7 +483,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'James Clear', N'bìa mềm', 385, NULL, N'Còn hàng'),
 
-(60026, N'Tư Duy Mở', 138000.00, 50.00, 69000.00, 100, 40, 0, 0, N'<div>
+(60026, N'Tư Duy Mở', 138000.00, 0.5, 69000.00, 100, 40, 0, 0, N'<div>
     <p><strong>Tư Duy Mở</strong></p>
     <p>Con người đang sống trong thời đại công nghệ, khi mọi thứ thay đổi chóng mặt, điều đó đòi hỏi chúng ta phải linh hoạt trong cách tư duy để bắt kịp xu hướng toàn cầu. Hay nói cách khác, chúng ta cần có một tư duy mở để đón nhận và khai phá kiến thức mới, bởi nếu chúng ta cứ khăng khăng giữ định kiến của mình thì sự phát triển sẽ đi vào ngõ cụt.</p>
     <p>Cụ thể hơn, người có tư duy mở tin rằng chỉ cần họ nỗ lực, thay đổi là có thể tiến bộ hơn. Họ sẽ vui vẻ chấp nhận thử thách, xem thử thách như cơ hội để học hỏi được những điều hay cái mới. Khi đối mặt với khó khăn hay không thành công, người có tư duy mở thường có thái độ: “Cách này không hiệu quả, vậy mình thử cách khác”. Đối với họ, thất bại chỉ là bài học giúp họ hoàn hảo hơn trên con đường khẳng định bản thân và phát triển sự nghiệp.</p>
@@ -468,7 +498,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'Nguyễn Anh Dũng', N'bìa mềm', 208, NULL, N'Còn hàng'),
 
-(60027, N'Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản 2021)', 179000.00, 27.00, 130670.00, 100, 40, 0, 0, N'<div>
+(60027, N'Thiên Tài Bên Trái, Kẻ Điên Bên Phải (Tái Bản 2021)', 179000.00, 0.27, 130670.00, 100, 40, 0, 0, N'<div>
     <p><strong>Thiên Tài Bên Trái, Kẻ Điên Bên Phải</strong></p>
     <p><strong>NẾU MỘT NGÀY ANH THẤY TÔI ĐIÊN, THỰC RA CHÍNH LÀ ANH ĐIÊN ĐẤY!</strong></p>
     <p>Hỡi những con người đang oằn mình trong cuộc sống, bạn biết gì về thế giới của mình? Là vô vàn thứ lý thuyết được các bậc vĩ nhân kiểm chứng, là luật lệ, là cả nghìn thứ sự thật bọc trong cái lốt hiển nhiên, hay những triết lý cứng nhắc của cuộc đời?</p>
@@ -483,7 +513,7 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </div>
 ', N'Cao Minh', N'bìa mềm', 424, NULL, N'Còn hàng'),
 
-(60028, N'Chúa tể bóng tối (Manga) - Tập 6', 40000.00, 10.00, 36000.00, 0, 40, 0, 0, N'<p>
+(60028, N'Chúa tể bóng tối (Manga) - Tập 6', 40000.00, 0.1, 36000.00, 0, 40, 0, 0, N'<p>
     TRUYỆN TRANH CHUYỂN THỂ TỪ BỘ LIGHT-NOVEL “CHÚA TỂ BÓNG TỐI” RẤT ĐƯỢC YÊU THÍCH!!<br />
     Cậu thiếu niên Cid sau khi chuyển sinh sang một thế giới khác vẫn tiếp tục chơi trò nhập vai Chúa tể Bóng tối, can thiệp vào mọi biến cố và bộc lộ sức mạnh thực sự của mình từ trong màn đêm. Sau khi che giấu thân phận để tham dự<br />
     Đại hội Bushin – sự kiện lớn hằng năm nhằm tìm ra kiếm sĩ mạnh nhất cả nước, Cid đã nhanh chóng lọt vào tầm ngắm của rất nhiều người, trong đó có cả đại diện của 5 học viện nổi tiếng của quốc gia. Vậy ai sẽ là kẻ chiến thắng cuối cùng?<br />
@@ -491,34 +521,49 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 </p>
 ', N'Daisuke Takagi', N'bìa mềm', 228, NULL, N'Còn hàng'),
 
-(60029, N'Đọc Lại Những Nguyên Lý Cơ Bản Của Tư Duy', 155000.00, 0.00, 155000.00, 100, 40, 0, 0, N'<div>
-    <p>
-        <strong>Đọc Lại Những Nguyên Lý Cơ Bản Của Tư Duy</strong>
-    </p>
-    <p>
-        Thế giới quan của bạn đã bị ảnh hưởng bởi những nguyên lý nào? Những quan điểm bạn thường có trong cuộc sống đều bị chi phối bởi những nguyên lý mà bạn chấp nhận, bất kể bạn có biết hay không. Hãy cùng đọc cuốn sách này, những nguyên lý cơ bản mà bạn đã bỏ lỡ, chưa kịp xem xét hay không hiểu biết để khám phá ra thế giới của chính mình.
-    </p>
-    <p>
-        Chúng ta hãy cùng nhau thảo luận về những vấn đề không được coi trọng trong quá trình hình thành tư duy. Có nhiều quan điểm đáng giá mà những bậc thầy vĩ đại trong lĩnh vực triết học, tâm lý học hay nghệ thuật đã đưa ra và ảnh hưởng đến chúng ta. Tại sao bạn lại không cho mình một cơ hội để trải nghiệm những nguyên lý cơ bản của tư duy?
-    </p>
-    <p>
-        Hãy đi trên con đường tràn đầy trải nghiệm mà chỉ có bạn mới có thể hiểu. Nguyên lý của tư duy đang chờ đợi bạn!
-    </p>
+(60029, N'Dược sư tự sự (Light-novel) - Tập 5', 125000, 0.1, 112500, 0, 40, 0, 0, N'<div>
+  <p>
+    Cuộc nổi loạn của Tử tộc được dẹp yên, hoàng tử chào đời trong cung cấm, Ngọc Diệp trở thành chính cung hoàng hậu. 
+    Nhâm Thị tham gia xử lí chính sự với thân phận hoàng đệ thay vì hoạn quan. 
+    Thoạt nhìn, mọi việc tưởng chừng như đã yên bình, thế nhưng bầu không khí bất ổn lại lan toả khắp kinh thành. 
+    Miêu Miêu thì vẫn như mọi khi, dính dáng tới vụ án đồ ngọt có độc bí ẩn, mối lo ngại về nạn châu chấu, vấn đề quyền sở hữu ở ngôi làng làm giấy... và xía mũi vào mấy chuyện này.
+  </p>
+  <p>
+    Bên cạnh đó, theo mệnh lệnh của Nhâm Thị, cô cũng phải đi đến quê hương của Ngọc Diệp phi, địa điểm mang tên gọi Tây Đô. 
+    Tại buổi vũ hội nơi vô vàn đoá hoa rực rỡ nở rộ, âm mưu của kẻ nào đó đang lẩn khuất. 
+    Liệu Miêu Miêu có thể vạch trần ý đồ đó hay không!?
+  </p>
+  <p>
+    DƯỢC SƯ TỰ SỰ là series light-novel thể loại trinh thám vô cùng độc đáo lấy bối cảnh cung đình. 
+    Truyện đã được chuyển thể manga và anime ra mắt vào cuối năm 2023. 
+    Tính đến tháng 3/2024, toàn series đã vượt mốc 33 triệu bản tại thị trường Nhật Bản và luôn thống trị bảng xếp hạng bán chạy mỗi khi ra tập mới!
+  </p>
+  <p>Số tập: 15+ (on-going)</p>
 </div>
-', N'Vô Danh', N'bìa mềm', 218, NULL, N'Còn hàng'),
+', N'Natsu Hyuuga, Touco Shino', N'bìa mềm', 468, N'Dược sư tự sự (Light-novel)', N'Hết hàng'),
 
-(60030, N'Nhà Giả Kim', 180000.00, 15.00, 153000.00, 100, 50, 0, 0, N'<div>
+(60030, N'Nhà Giả Kim (Tái Bản 2020)', 79000, 0.22, 61620, 100, 50, 0, 0, N'<div>
     <p>
-        <strong>Nhà Giả Kim</strong>
+        <em>Tất cả những trải nghiệm trong chuyến phiêu du theo đuổi vận mệnh của mình đã giúp Santiago thấu hiểu được ý nghĩa sâu xa nhất của hạnh phúc, hòa hợp với vũ trụ và con người</em>.
     </p>
     <p>
-        "Nhà Giả Kim" (The Alchemist) là một cuốn tiểu thuyết nổi tiếng của tác giả Paulo Coelho, kể về hành trình của Santiago, một cậu bé chăn cừu người Tây Ban Nha, trong việc tìm kiếm kho báu ở Ai Cập. Qua những trải nghiệm của mình, Santiago học được nhiều bài học quý giá về ước mơ, tình yêu và sự tìm kiếm bản thân.
+        Tiểu thuyết <em>Nhà giả kim</em> của Paulo Coelho như một câu chuyện cổ tích giản dị, nhân ái, giàu chất thơ, thấm đẫm những minh triết huyền bí của phương Đông. Trong lần xuất bản đầu tiên tại Brazil vào năm 1988, sách chỉ bán được 900 bản. Nhưng, với số phận đặc biệt của cuốn sách dành cho toàn nhân loại, vượt ra ngoài biên giới quốc gia, <em>Nhà giả kim</em> đã làm rung động hàng triệu tâm hồn, trở thành một trong những cuốn sách bán chạy nhất mọi thời đại, và có thể làm thay đổi cuộc đời người đọc.
     </p>
     <p>
-        Cuốn sách khuyến khích người đọc theo đuổi ước mơ và không bao giờ từ bỏ khát khao tìm kiếm hạnh phúc.
+        “Nhưng nhà luyện kim đan không quan tâm mấy đến những điều ấy. Ông đã từng thấy nhiều người đến rồi đi, trong khi ốc đảo và sa mạc vẫn là ốc đảo và sa mạc. Ông đã thấy vua chúa và kẻ ăn xin đi qua biển cát này, cái biển cát thường xuyên thay hình đổi dạng vì gió thổi nhưng vẫn mãi mãi là biển cát mà ông đã biết từ thuở nhỏ. Tuy vậy, tự đáy lòng mình, ông không thể không cảm thấy vui trước hạnh phúc của mỗi người lữ khách, sau bao ngày chỉ có cát vàng với trời xanh nay được thấy chà là xanh tươi hiện ra trước mắt. ‘Có thể Thượng đế tạo ra sa mạc chỉ để cho con người biết quý trọng cây chà là,’ ông nghĩ.”
+    </p>
+    <p>- Trích <em>Nhà giả kim</em></p>
+    <p>
+        <strong>Nhận định</strong>
+    </p>
+    <p>
+        “Sau Garcia Márquez, đây là nhà văn Mỹ Latinh được đọc nhiều nhất thế giới.” <em>- The Economist</em>, London, Anh
+    </p>
+    <p>
+        “Santiago có khả năng cảm nhận bằng trái tim như <em>Hoàng tử bé</em> của Saint-Exupéry.” <em>- Frankfurter Allgemeine Zeitung, Đức</em>
     </p>
 </div>
-', N'Paulo Coelho', N'bìa mềm', 208, NULL, N'Còn hàng');
+', N'Paulo Coelho', N'bìa mềm', 227, NULL, N'Còn hàng');
 
 -- Address
 INSERT INTO Address (address_id, address_house_number, address_ward, address_district, address_province, address_description) 
