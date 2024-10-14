@@ -4,20 +4,23 @@ import Footer from '~/layouts/Footer/Footer';
 import Header from '~/layouts/Header/Header';
 import BlogPage from './BlogPage';
 import BlogDetailPage from './BlogDetailPage';
-import { request } from '~/config';
-const blogTypes = ['Hoạt động', 'Sự kiện', 'Điểm sách', 'Sách giả - Sách lậu', 'Lịch phát hành sách định kỳ'];
+import blogApi from '~/apis/blogService';
+const blogTypes = ['Hoạt động', 'Sự kiện', 'Tin sách', 'Sách giả - Sách lậu', 'Lịch phát hành sách định kỳ'];
 export default function BlogLayout() {
     const navigate = useNavigate();
-    const [typeSlt, setTypeSlt] = useState(0);
-    const [showDetail, setShowDetail] = useState(false);
-    const [blogs, setBlogs] = useState();
+    const [typeSlt, setTypeSlt] = useState('Hoạt động');
+    const [blogs, setBlogs] = useState([]);
+    const [blogSlt, setBlogSlt] = useState(null);
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
     const getBlog = async () => {
-        const data = await request.get('/blog');
-        setBlogs(data.data);
+        const data = await blogApi.getAllBlog(page, 4, typeSlt);
+        setBlogs(data.blogs);
+        setTotalPage(data.total);
     };
     useEffect(() => {
         getBlog();
-    }, []);
+    }, [page, typeSlt]);
     return (
         <div>
             <Header />
@@ -50,10 +53,10 @@ export default function BlogLayout() {
                                 return (
                                     <div
                                         onClick={() => {
-                                            setTypeSlt(idx);
+                                            setTypeSlt(type);
                                         }}
                                         className={`${
-                                            typeSlt === idx && 'text-primary-color'
+                                            typeSlt === type && 'text-primary-color'
                                         } text-[14px] font-semibold hover:text-primary-color cursor-pointer`}
                                         key={idx}
                                     >
@@ -65,8 +68,10 @@ export default function BlogLayout() {
                     </div>
                 </div>
                 <div className="basis-[80%]">
-                    {!showDetail && <BlogPage blogs={blogs} />}
-                    {showDetail && <BlogDetailPage />}
+                    {!blogSlt && (
+                        <BlogPage setBlogSlt={setBlogSlt} blogs={blogs} totalPage={totalPage} setPage={setPage} />
+                    )}
+                    {blogSlt && <BlogDetailPage blog={blogSlt} setBlogSlt={setBlogSlt} />}
                 </div>
             </div>
             <div className="my-12"></div>
