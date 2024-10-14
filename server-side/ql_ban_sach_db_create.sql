@@ -590,7 +590,7 @@ VALUES
 -- Blog
 INSERT INTO Blog (blog_id, blog_title, blog_content, blog_thumbnail, type_id) 
 VALUES 
-    (130001, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
+    (130001, N'ƯU ĐÃI NGÀY KÉP 10.10', 
     '<div>
                     <p>
                         <strong>
@@ -674,7 +674,7 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002),
+    'https://file.hstatic.net/200000343865/file/y-kep-1010-banner-fb-post-1800_1200px_6daf20424c8d46139e654fe9547a7994_grande.png', 140002),
     (130002, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
     '<div>
                     <p>
@@ -759,8 +759,8 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002),
-    (130003, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
+    'https://file.hstatic.net/200000343865/article/1-1100_a73b918912c442efa45293faba761192_large.jpg', 140002),
+    (130003, N'Phát triển truyện tranh Việt: Nhìn từ huyền thoại Đôrêmon', 
     '<div>
                     <p>
                         <strong>
@@ -844,8 +844,8 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002),
-    (130004, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
+    'https://file.hstatic.net/200000343865/file/viet-nhin-tu-huyen-thoai-doremon-6329_97bc30aeb485429c9700bf95c0189033_grande.jpg', 140001),
+    (130004, N'Tiết lộ bất ngờ về truyện "Doraemon"', 
     '<div>
                     <p>
                         <strong>
@@ -929,8 +929,8 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002),
-    (130005, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
+    'https://file.hstatic.net/200000343865/file/manga_aba3e04a7cc94e9481d35603d9ed2e37_grande.jpg', 140003),
+    (130005, N'Công nghiệp truyện tranh Việt Nam:Từ “Đôrêmon” tới “Doraemon”', 
     '<div>
                     <p>
                         <strong>
@@ -1014,8 +1014,8 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002),
-    (130006, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
+    'https://file.hstatic.net/200000343865/file/1-1042_4e610f3749f84a6284dedc7712901224_grande.jpg', 140001),
+    (130006, N'Tạo "đất diễn" cho truyện tranh Việt Nam', 
     '<div>
                     <p>
                         <strong>
@@ -1099,8 +1099,8 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002),
-    (130007, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
+    'https://file.hstatic.net/200000343865/file/son_goal_09bb337d7d05403aa834f1feba4a8e93_grande.jpg', 140001),
+    (130007, N'Sách cho trẻ em - Làm sao đủ sức hút?', 
     '<div>
                     <p>
                         <strong>
@@ -1184,8 +1184,8 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002),
-    (130008, N'Viện Pháp thúc đẩy sự phát triển công nghiệp truyện tranh tại Việt Nam', 
+    'https://file.hstatic.net/200000343865/file/hep-vo-van-tan-1689137114989263029386_05a14d8c450a49489f1f9ee7cd0a5802_grande.jpg', 140003),
+    (130008, N'Nuôi dưỡng hệ sinh thái đọc sách cho trẻ em', 
     '<div>
                     <p>
                         <strong>
@@ -1269,7 +1269,7 @@ VALUES
                     </p>
                 </div>
 ', 
-    'blog_image_1.webp', 140002)
+    'https://file.hstatic.net/200000343865/file/read_af16bc4688f247298a3fe5a568264cda_grande.jpg', 140001)
     ;
 
 -- Categogy
