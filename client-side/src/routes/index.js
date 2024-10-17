@@ -23,6 +23,7 @@ import BlogLayout from '~/pages/BlogPage/BlogLayout';
 const Pages = [
     { path: routes.home, Component: HomePage },
     { path: routes.signIn, Component: SignInPage },
+    { path: routes.signUp, Component: SignInPage },
     { path: routes.cart, Component: CartPage },
     { path: routes.bookDetail, Component: BookDetail },
     { path: routes.user, Component: User },
