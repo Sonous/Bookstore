@@ -61,8 +61,9 @@ function Search({ className }) {
     };
     const handleNavigateToSearchPage = (e) => {
         if (e.key === 'Enter') {
-            navigate(`/results?q=${searchValue}`);
             setSearchValue('');
+            setSearchResult([]);
+            navigate(`/results?q=${searchValue}`);
         }
     };
 
