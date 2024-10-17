@@ -162,11 +162,12 @@ form.sign-up-form {
 }
 
 .toggle {
-    color: #151111;
+    color: #de3333;
     text-decoration: none;
-    font-size: 0.75rem;
+    font-size: 0.80rem;
     font-weight: 500;
     transition: 0.3s;
+       
 }
 
 .toggle:hover {
@@ -233,17 +234,10 @@ form.sign-up-form {
 
 .text {
     color: #bbb;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
 }
 
-.text a {
-    color: #bbb;
-    transition: 0.3s;
-}
 
-.text a:hover {
-    color: #8371fd;
-}
 
 main.sign-up-mode form.sign-in-form {
     opacity: 0;
