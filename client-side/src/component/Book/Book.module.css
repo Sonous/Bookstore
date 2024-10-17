@@ -8,6 +8,7 @@
     height: 80px;
     width: 80px;
     padding: 5px;
+    object-fit: contain;
 }
 .info {
     display: flex;

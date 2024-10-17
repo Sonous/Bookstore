@@ -5,10 +5,84 @@ import Header from '~/layouts/Header/Header';
 
 import Footer from '~/layouts/Footer/Footer';
 import Result from '~/component/Result';
-import { searchResult } from '~/dataTemorary';
+import { useEffect, useState } from 'react';
+import { request } from '~/config';
 
 function CollectionsPage() {
-    const { collection } = useParams();
+    const { collection, genre = '' } = useParams();
+    const [selectedCollection, setSelectedCollection] = useState(collection);
+    const [selectedGenres, setSelectedGeners] = useState([]);
+    const [genreList, setGenreList] = useState([]);
+    const [bookList, setBookList] = useState([]);
+
+    useEffect(() => {
+        setSelectedCollection(collection);
+        setSelectedGeners([genre]);
+    }, [collection, genre]);
+
+    useEffect(() => {
+        const fetchApi = () => {
+            function getGenresOfCategory() {
+                return request.get('/category', {
+                    params: {
+                        category: selectedCollection,
+                    },
+                });
+            }
+
+            function getBooksOfGenres() {
+                return request.get('/book', {
+                    params: {
+                        genres: selectedGenres,
+                        type: 'genre',
+                    },
+                });
+            }
+
+            function getBooksOfCategory() {
+                return request.get('/book', {
+                    params: {
+                        category: selectedCollection,
+                        type: 'category',
+                    },
+                });
+            }
+
+            function getBooksByCondition() {
+                return request.get(`/book`, {
+                    params: {
+                        type: selectedCollection,
+                    },
+                });
+            }
+
+            function getBooks() {
+                if (selectedGenres[0]) return getBooksOfGenres();
+                if (selectedCollection === 'Sách mới' || selectedCollection === 'Sách bán chạy') {
+                    return getBooksByCondition();
+                }
+                return getBooksOfCategory();
+            }
+
+            Promise.all([getGenresOfCategory(), getBooks()])
+                .then((result) => {
+                    if (selectedCollection === 'Sách mới' || selectedCollection === 'Sách bán chạy') {
+                        setGenreList([
+                            {
+                                category_name: selectedCollection,
+                                genres: [],
+                            },
+                        ]);
+                    } else {
+                        setGenreList(result[0]);
+                    }
+                    setBookList(result[1]);
+                })
+                .catch((err) => console.log(err.message));
+        };
+
+        fetchApi();
+    }, [selectedCollection, selectedGenres]);
 
     return (
         <>
@@ -20,10 +94,16 @@ function CollectionsPage() {
                             <span className="hover:text-primary-color cursor-pointer transition-all">TRANG CHỦ</span>
                         </Link>
                         <FontAwesomeIcon icon={faChevronRight} className="text-xs font-medium" />
-                        <span>{collection.toUpperCase()}</span>
+                        <span>{selectedCollection.toUpperCase()}</span>
                     </div>
 
-                    <Result collection={collection} data={searchResult} />
+                    <Result
+                        category={genreList[0]}
+                        selectedGenres={selectedGenres}
+                        setSelectedGeners={setSelectedGeners}
+                        data={bookList}
+                        otherPage={selectedCollection === 'Sách mới' || selectedCollection === 'Sách bán chạy'}
+                    />
                 </div>
             </div>
             <Footer />

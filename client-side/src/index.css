@@ -3,12 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Carousel */
 .slick-slide > div {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.ant-carousel * {
+    border-radius: 10px;
+}
 
+/* rate component */
 .ant-rate .ant-rate-star-zero .ant-rate-star-second {
     color: rgb(216, 216, 216);
 }

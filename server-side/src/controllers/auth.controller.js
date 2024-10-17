@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
 
@@ -11,8 +10,6 @@ const register = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'Email đã được sử dụng!' });
         }
-
-        
 
         // Tạo người dùng mới
         const newUser = await User.create({
