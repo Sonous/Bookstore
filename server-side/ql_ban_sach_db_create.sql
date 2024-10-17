@@ -5,6 +5,26 @@ create database ql_ban_sach;
 use ql_ban_sach;
 drop database ql_ban_sach;
 
+INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
+(60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
+  <p><strong>"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2</strong></p>
+  <p><strong>Hé lộ cuộc sống náo nhiệt của dàn nhân vật sau giờ học!</strong></p>
+  <p>Chuỗi ngày nghỉ ngơi tưởng chừng thong thả nhưng lại bắng nhắng vô cùng của Bí ẩn số 7 học viện Kamome - Cậu ma nhà xí Hanako - cùng cô gái hệ tâm linh Yashiro Nene lại tiếp tục!?</p>
+  <p>Ngoài ra, tập này sẽ bật mí kha khá về cuộc sống thường nhật hiếm ai bắt gặp của “người ấy” nữa đó!</p>
+  <p>Mời các bạn cùng thưởng thức tập 2 ngoại truyện, để xem nhóm Hanako đã có những hoạt động thư giãn nào sau giờ học nhé!</p>
+</div>
+', N'Aida Iro', N'bìa mềm', 135, null, N'Còn hàng');
+
+insert into bookimage (book_image_id, book_image_url, book_id)
+	values (70040, 'cau-ma-nha-xi-hanako_sau-gio-hoc_bia_qua-tang-kem_tap-2.webp', 60031);
+
+INSERT INTO BookGenre (book_id, genre_id) VALUES 
+(60031, 90014), (60031, 90021), (60031, 90036), (60031, 90015);
+
+insert into genre (genre_id, genre_name, category_id)
+	values (90036, 'School Life', 100003);
+
+
 -- tables
 -- Table: Address
 CREATE TABLE Address (
@@ -108,11 +128,11 @@ CREATE TABLE Cart (
     CONSTRAINT Cart_pk PRIMARY KEY (user_id,book_id)
 );
 
--- Table: Categogy
-CREATE TABLE Categogy (
+-- Table: Category
+CREATE TABLE Category (
     category_id int  NOT NULL,
     category_name nvarchar(50)  NOT NULL,
-    CONSTRAINT Categogy_pk PRIMARY KEY (category_id)
+    CONSTRAINT Category_pk PRIMARY KEY (category_id)
 );
 
 -- Table: FavoriteBook
@@ -135,13 +155,13 @@ CREATE TABLE `Order` (
     order_id int  NOT NULL,
     order_status nvarchar(50)  NOT NULL,
     books_total_prices decimal(20,2)  NOT NULL,
-    transport_cost decimal(20,2)  NOT NULL,
     order_total_cost decimal(20,2)  NOT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     user_id int  NOT NULL,
     address_id int  NOT NULL,
     pay_method_id int  NOT NULL,
+    transport_id int NOT NULL,
     CONSTRAINT Order_pk PRIMARY KEY (order_id)
 );
 
@@ -151,6 +171,13 @@ CREATE TABLE PayingMethod (
     pay_method_name nvarchar(255)  NOT NULL,
     CONSTRAINT PayingMethod_pk PRIMARY KEY (pay_method_id)
 );
+
+-- Table: TransportMethod
+CREATE TABLE TransportMethod (
+    transport_id int NOT NULL PRIMARY Key,
+    transport_name nvarchar(255)  NOT NULL,
+    transport_cost decimal(20,2)  NOT NULL
+)
 
 -- Table: RatingBook
 CREATE TABLE RatingBook (
@@ -224,9 +251,9 @@ ALTER TABLE Cart ADD CONSTRAINT Cart_User FOREIGN KEY Cart_User (user_id)
 ALTER TABLE FavoriteBook ADD CONSTRAINT FavoriteBook_Book FOREIGN KEY FavoriteBook_Book (book_id)
     REFERENCES Book (book_id);
 
--- Reference: Genre_Categogy (table: Genre)
-ALTER TABLE Genre ADD CONSTRAINT Genre_Categogy FOREIGN KEY Genre_Categogy (category_id)
-    REFERENCES Categogy (category_id);
+-- Reference: Genre_Category (table: Genre)
+ALTER TABLE Genre ADD CONSTRAINT Genre_Category FOREIGN KEY Genre_Category (category_id)
+    REFERENCES Category (category_id);
 
 -- Reference: Order_Address (table: Order)
 ALTER TABLE `Order` ADD CONSTRAINT Order_Address FOREIGN KEY Order_Address (address_id)
@@ -235,6 +262,10 @@ ALTER TABLE `Order` ADD CONSTRAINT Order_Address FOREIGN KEY Order_Address (addr
 -- Reference: Order_PayingMethod (table: Order)
 ALTER TABLE `Order` ADD CONSTRAINT Order_PayingMethod FOREIGN KEY Order_PayingMethod (pay_method_id)
     REFERENCES PayingMethod (pay_method_id);
+
+-- Reference: Order_TransportMethod (table: Order)
+ALTER TABLE `Order` ADD CONSTRAINT Order_TransportMethod FOREIGN KEY Order_TransportMethod (transport_id)
+    REFERENCES TransportMethod (transport_id);
 
 -- Reference: Order_User (table: Order)
 ALTER TABLE `Order` ADD CONSTRAINT Order_User FOREIGN KEY Order_User (user_id)
@@ -1272,8 +1303,8 @@ VALUES
     'https://file.hstatic.net/200000343865/file/read_af16bc4688f247298a3fe5a568264cda_grande.jpg', 140001)
     ;
 
--- Categogy
-INSERT INTO Categogy (category_id, category_name) VALUES 
+-- Category
+INSERT INTO Category (category_id, category_name) VALUES 
 (100001, N'Văn học'),
 (100002, N'Tâm lí - Kĩ năng sống'),
 (100003, N'Manga - Comic'),
@@ -1389,9 +1420,12 @@ INSERT INTO BookImage (book_image_id, book_image_url, book_id) VALUES
 -- PayingMethod
 INSERT INTO PayingMethod (pay_method_id, pay_method_name) VALUES (40001, N'Thanh toán khi nhận hàng'), (40002, N'Ví momo');
 
+-- TransportMethod
+INSERT INTO TransportMethod (transport_id, transport_name, transport_cost) VALUES (50001, N'Giao hàng tiêu chuẩn', 20000.00);
+
 -- Order
-INSERT INTO `Order` (order_id, order_status, books_total_prices, transport_cost, order_total_cost, user_id, address_id, pay_method_id) 
-VALUES (30001, N'Đã Giao', 82560.00, 20000.00, 102560.00, 10001, 20001, 40001);
+INSERT INTO `Order` (order_id, order_status, books_total_prices, order_total_cost, user_id, address_id, pay_method_id, transport_id) 
+VALUES (30001, N'Đã Giao', 82560.00, 102560.00, 10001, 20001, 40001, 50001);
 
 -- BookOrder
 INSERT INTO BookOrder (order_id, book_id, quantity) VALUES 

@@ -21,7 +21,6 @@ function SearchResultPage() {
                     type: 'search',
                 },
             });
-            console.log(res);
             setSearchResult(res);
         };
 
