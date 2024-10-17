@@ -1,9 +1,15 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2024-10-10 08:43:15.298
 
-create database ql_ban_sach;
-use ql_ban_sach;
-drop database ql_ban_sach;
+-- create database ql_ban_sach;
+-- use ql_ban_sach;
+-- drop database ql_ban_sach;
+
+
+
+
+
+
 
 -- tables
 -- Table: Address
@@ -21,7 +27,7 @@ CREATE TABLE Address (
 
 -- Table: Admin
 CREATE TABLE Admin (
-    admin_id int  NOT NULL,
+   admin_id INT NOT NULL AUTO_INCREMENT,
     admin_username varchar(255)  NOT NULL,
     admin_password varchar(255)  NOT NULL,
     CONSTRAINT Admin_pk PRIMARY KEY (admin_id)
@@ -165,7 +171,7 @@ CREATE TABLE RatingBook (
 
 -- Table: User
 CREATE TABLE User (
-    user_id int  NOT NULL,
+    user_id INT NOT NULL AUTO_INCREMENT,
     user_name nvarchar(255)  NOT NULL,
     user_phone varchar(20)  NOT NULL,
     user_email varchar(255)  NOT NULL,
@@ -261,8 +267,8 @@ ALTER TABLE UserAddress ADD CONSTRAINT User_Address_User FOREIGN KEY User_Addres
 -- Insert data
 
  -- User
- INSERT INTO User (user_id, user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
- (10001, N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg');
+ INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
+ (N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg');
  
  -- Book
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
