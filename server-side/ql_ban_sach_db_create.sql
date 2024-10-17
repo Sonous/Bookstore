@@ -31,6 +31,26 @@ insert into genre (genre_id, genre_name, category_id)
 	values (90036, 'School Life', 100003);
 
 
+INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
+(60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
+  <p><strong>"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2</strong></p>
+  <p><strong>Hé lộ cuộc sống náo nhiệt của dàn nhân vật sau giờ học!</strong></p>
+  <p>Chuỗi ngày nghỉ ngơi tưởng chừng thong thả nhưng lại bắng nhắng vô cùng của Bí ẩn số 7 học viện Kamome - Cậu ma nhà xí Hanako - cùng cô gái hệ tâm linh Yashiro Nene lại tiếp tục!?</p>
+  <p>Ngoài ra, tập này sẽ bật mí kha khá về cuộc sống thường nhật hiếm ai bắt gặp của “người ấy” nữa đó!</p>
+  <p>Mời các bạn cùng thưởng thức tập 2 ngoại truyện, để xem nhóm Hanako đã có những hoạt động thư giãn nào sau giờ học nhé!</p>
+</div>
+', N'Aida Iro', N'bìa mềm', 135, null, N'Còn hàng');
+
+insert into bookimage (book_image_id, book_image_url, book_id)
+	values (70040, 'cau-ma-nha-xi-hanako_sau-gio-hoc_bia_qua-tang-kem_tap-2.webp', 60031);
+
+INSERT INTO BookGenre (book_id, genre_id) VALUES 
+(60031, 90014), (60031, 90021), (60031, 90036), (60031, 90015);
+
+insert into genre (genre_id, genre_name, category_id)
+	values (90036, 'School Life', 100003);
+
+
 -- tables
 -- Table: Address
 CREATE TABLE Address (
