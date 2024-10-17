@@ -5,6 +5,7 @@ const routes = {
     blogdetail: '/blogs/:title',
     books: '/books/:name',
     signIn: '/signIn',
+    signUp: '/signUp',
     cart: '/cart',
     paying: '/paying',
     bookDetail: '/bookdetails',

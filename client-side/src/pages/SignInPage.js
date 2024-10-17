@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SignInForm from '~/component/Form/SignInForm';
 import SignUpForm from '~/component/Form/SignUpForm';
 import Carousel from '~/component/Form/Carousel';
@@ -7,6 +8,7 @@ import ForgetForm from '~/component/Form/ForgetForm';
 export default function SignInPage() {
     const [signUpMode, setSignUpMode] = useState(false);
     const [showForgetForm, setShowForgetForm] = useState(false); // Trạng thái hiển thị ForgetForm
+    const navigate = useNavigate();
 
     const toggleMode = () => {
         setSignUpMode(!signUpMode);
@@ -19,6 +21,15 @@ export default function SignInPage() {
     const handleCloseForgetForm = () => {
         setShowForgetForm(false); // Đóng ForgetForm
     };
+
+    // Theo dõi sự thay đổi của signUpMode
+    useEffect(() => {
+        if (signUpMode) {
+            navigate('/signUp'); // Điều hướng đến signUp
+        } else {
+            navigate('/signIn'); // Điều hướng đến signIn
+        }
+    }, [signUpMode, navigate]);
 
     return (
         <main className={signUpMode ? 'sign-up-mode' : ''}>
