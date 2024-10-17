@@ -1,6 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const register = async (req, res) => {
     const { user_name, user_phone, user_email, user_password, user_avatar_url } = req.body;
@@ -11,8 +14,6 @@ const register = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'Email đã được sử dụng!' });
         }
-
-        
 
         // Tạo người dùng mới
         const newUser = await User.create({
