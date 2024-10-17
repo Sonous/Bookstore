@@ -22,6 +22,8 @@ const Book = sequelize.define(
         book_page_num: DataTypes.INTEGER,
         book_collection: DataTypes.STRING,
         book_status: DataTypes.STRING,
+        created_at: DataTypes.DATE,
+        updated_at: DataTypes.DATE,
     },
     {
         timestamps: false,

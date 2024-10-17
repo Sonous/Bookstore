@@ -1,6 +1,6 @@
 const routes = {
     home: '/',
-    collections: '/collections/:collection',
+    collections: '/collections/:collection/:genre?',
     blog: '/blog',
     blogdetail: '/blogs/:title',
     books: '/books/:name',

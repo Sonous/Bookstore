@@ -12,7 +12,7 @@ import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
 
-const topics = ['Sách mới', 'Sách bán chạy', 'Manga - Comic', 'Tâm lí - Kĩ năng sống', 'Wingsbooks'];
+const topics = ['Sách mới', 'Sách bán chạy', 'Manga - Comic', 'Tâm lí - Kĩ năng sống', 'Văn học'];
 
 const temporaryBlogs = [
     {
