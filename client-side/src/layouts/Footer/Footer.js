@@ -29,7 +29,7 @@ const footerItems = [
 
 function Footer() {
     return (
-        <footer className="px-5">
+        <footer className="px-5 border-t-2">
             <div className={cx('wrapper')}>
                 <div className={cx('footer-nav')}>
                     <h3>Nhà xuất bản Kim Đồng</h3>

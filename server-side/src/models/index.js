@@ -8,6 +8,9 @@ import User from './user.model.js';
 import Address from './address.model.js';
 import Order from './order.model.js';
 import PayingMethod from './payingMethod.model.js';
+import FavoriteBook from './favoriteBook.model.js';
+import Cart from './cart.model.js';
+import RatingBook from './ratingBook.model.js';
 
 // Associate between Book and BookImage
 Book.hasMany(BookImage, {
@@ -52,41 +55,47 @@ Blog.belongsTo(BlogType, {
 // Associate between Book and User
 // favoritebook
 User.belongsToMany(Book, {
-    through: 'favoritebook',
+    through: FavoriteBook,
     foreignKey: 'user_id',
     otherKey: 'book_id',
+    as: 'FavoriteBook',
 });
 
 Book.belongsToMany(User, {
-    through: 'favoritebook',
+    through: FavoriteBook,
     foreignKey: 'book_id',
     otherKey: 'user_id',
+    as: 'UsersWhoFavorited',
 });
 
 // cart
 User.belongsToMany(Book, {
-    through: 'cart',
+    through: Cart,
     foreignKey: 'user_id',
     otherKey: 'book_id',
+    as: 'Cart',
 });
 
 Book.belongsToMany(User, {
-    through: 'cart',
+    through: Cart,
     foreignKey: 'book_id',
     otherKey: 'user_id',
+    as: 'UsersWithCart',
 });
 
 // ratingbook
 User.belongsToMany(Book, {
-    through: 'ratingbook',
+    through: RatingBook,
     foreignKey: 'user_id',
     otherKey: 'book_id',
+    as: 'RatingBook',
 });
 
 Book.belongsToMany(User, {
-    through: 'ratingbook',
+    through: RatingBook,
     foreignKey: 'book_id',
     otherKey: 'user_id',
+    as: 'UsersWhoRated',
 });
 
 // Associate between User and Address

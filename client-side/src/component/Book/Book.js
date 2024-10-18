@@ -17,8 +17,8 @@ function Book({
     book_end_cost,
     book_star_rating,
     book_status,
-    quantity = 0,
-    cart = false,
+    cart,
+    cartPopper = false,
     home = false,
     collection = false,
 }) {
@@ -39,7 +39,7 @@ function Book({
                 <div>
                     <span className={cx('current-price')}>{convertPriceToString(book_end_cost)}</span>
                     <span className="text-xs ml-3 line-through opacity-80">{convertPriceToString(book_cost)}</span>
-                    {cart && <span className={cx('quantity')}>x{quantity}</span>}
+                    {cartPopper && <span className={cx('quantity')}>x{cart.quantity}</span>}
                 </div>
                 {collection && <Rate className={cx('rate')} disabled value={book_star_rating} />}
             </div>
