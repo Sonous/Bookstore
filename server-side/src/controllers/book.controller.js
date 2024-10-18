@@ -192,5 +192,77 @@ const getAllBooks = (req, res) => {
                 );
     }
 };
+const getBookByName = (req, res) => {
+    const name = req.params.name; // Get the book name from the route parameter
+    Book.findOne({
+        where: {
+            book_name: sequelize.where(sequelize.fn('LOWER', sequelize.col('book_name')), 'LIKE', name.toLowerCase()),
+        },
+        include: [
+            {
+                model: BookImage,
+                attributes: ['book_image_url'],
+            },
+            {
+                model: Genre,
+                attributes: ['genre_name'],
+                through: { attributes: [] },
+            },
+        ],
+    })
+    .then((book) => {
+        // console.log('Fetched book:', book); // Log the fetched book
+        if (!book) {
+            return res.status(StatusCodes.NOT_FOUND).json({
+                message: 'Book not found',
+            });
+        }
+        res.status(StatusCodes.OK).json(book);
+    })
+    .catch((err) => {
+        console.error('Error fetching book:', err); // Log error for debugging
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: err.message,
+        });
+    });
+};
+const getBooksByAuthor = (req, res) => {
+    const author = req.params.author; // Get the author's name from the route parameter
 
-export { getGenreOfBook, getAllBooks };
+    Book.findAll({
+        where: {
+            book_author: sequelize.where(sequelize.fn('LOWER', sequelize.col('book_author')), 'LIKE', author.toLowerCase()),
+        },
+        include: [
+            {
+                model: BookImage,
+                attributes: ['book_image_url'],
+            },
+            {
+                model: Genre,
+                attributes: ['genre_name'],
+                through: { attributes: [] },
+            },
+        ],
+    })
+    .then((books) => {
+        if (!books || books.length === 0) {
+            return res.status(StatusCodes.NOT_FOUND).json({
+                message: 'No books found for this author',
+            });
+        }
+        res.status(StatusCodes.OK).json(books);
+    })
+    .catch((err) => {
+        console.error('Error fetching books by author:', err); // Log error for debugging
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: err.message,
+        });
+    });
+};
+
+
+
+
+
+export { getGenreOfBook, getAllBooks, getBookByName, getBooksByAuthor };
