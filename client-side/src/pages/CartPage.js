@@ -1,20 +1,48 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '~/layouts/Header/Header';
 import { Checkbox } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { UserContext } from '~/context/UserContextProvider';
+import { imageUrl } from '~/config/axios.config';
+import { Link } from 'react-router-dom';
+import { convertPriceToString } from '~/utils/functions';
+import cartApi from '~/apis/cartApi';
 export default function CartPage() {
+    const { cartItems, setCartItems, user } = useContext(UserContext);
+    const handleAddQuantity = async (bookId) => {
+        const updatedCartItems = cartItems.map((item) => {
+            if (item.book_id === bookId) {
+                return { ...item, cart: { ...item.cart, quantity: item.cart.quantity + 1 } };
+            }
+            return item;
+        });
+        setCartItems(updatedCartItems);
+        await cartApi.addQuantity(user.user_id, bookId);
+    };
+    const handleSubQuantity = async (bookId) => {
+        const updatedCartItems = cartItems.map((item) => {
+            if (item.book_id === bookId && item.cart.quantity > 1) {
+                // Only decrease if quantity is greater than 1 to avoid negative or zero values
+                return { ...item, cart: { ...item.cart, quantity: item.cart.quantity - 1 } };
+            }
+            return item;
+        });
+
+        setCartItems(updatedCartItems);
+        await cartApi.subQuantity(user.user_id, bookId);
+    };
     return (
         <div className="">
             <Header />
             <div className="px-24 bg-gray-100 ">
-                <h2 className="pt-6 text-xl mb-4">GIỎ HÀNG (2 sản phẩm)</h2>
+                <h2 className="pt-6 text-xl mb-4">GIỎ HÀNG ({cartItems?.length ? cartItems.length : 0} sản phẩm)</h2>
                 <div className="flex gap-4">
                     <div className="basis-[70%]">
                         <div className="flex justify-between px-4  rounded-lg py-3  items-center bg-white">
                             <div className="basis-[60%] flex text-sm font-semibold items-center gap-2 ">
                                 <Checkbox></Checkbox>
-                                <p>Chọn tất cả (2 sản phẩm)</p>
+                                <p>Chọn tất cả ({cartItems?.length ? cartItems.length : 0} sản phẩm)</p>
                             </div>
                             <div className="basis-[40%] flex items-center">
                                 <p className=" basis-[45%] text-center">Số lượng</p>
@@ -23,7 +51,7 @@ export default function CartPage() {
                             </div>
                         </div>
                         <div className="mt-4 rounded-lg overflow-hidden ">
-                            {[1, 2, 3].map((el, idx) => {
+                            {cartItems?.map((cartItem, idx) => {
                                 return (
                                     <div key={idx}>
                                         <div className={`flex px-4 py-6 bg-white `}>
@@ -31,18 +59,20 @@ export default function CartPage() {
                                                 <Checkbox />
                                                 <div
                                                     style={{
-                                                        backgroundImage: `url(https://cdn0.fahasa.com/media/catalog/product//b/1/b1-1_1_5.jpg)`,
+                                                        backgroundImage: `url(${imageUrl}/${cartItem.bookimages[0].book_image_url})`,
                                                     }}
                                                     className="min-w-[120px] h-[120px] bg-no-repeat bg-cover"
                                                 ></div>
                                                 <div className="flex flex-col justify-between">
-                                                    <p className="text-sm line-clamp-3">
-                                                        Destination B1 - Grammar And Vocabulary with Answer Key
-                                                    </p>
+                                                    <Link to={`/books/${cartItem.book_name}`} className=" line-clamp-3">
+                                                        {cartItem.book_name}
+                                                    </Link>
                                                     <div className="flex items-end gap-1">
-                                                        <p className="font-bold">131.820 đ</p>
+                                                        <p className="font-bold">
+                                                            {convertPriceToString(cartItem.book_end_cost)}
+                                                        </p>
                                                         <p className="text-xs mb-1 line-through text-gray-500">
-                                                            169.000 đ
+                                                            {convertPriceToString(cartItem.book_cost)}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -52,17 +82,25 @@ export default function CartPage() {
                                                     <div className=" border-[1px] rounded-md text-center items-center justify-center inline-flex">
                                                         <FontAwesomeIcon
                                                             icon={faMinus}
+                                                            onClick={() => {
+                                                                handleSubQuantity(cartItem.book_id);
+                                                            }}
                                                             className="px-2 py-2 text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
                                                         />
-                                                        <p className="font-bold text-gray-700 px-2 select-none">1</p>
+                                                        <p className="font-bold text-gray-700 px-2 select-none">
+                                                            {cartItem.cart.quantity}
+                                                        </p>
                                                         <FontAwesomeIcon
                                                             icon={faPlus}
+                                                            onClick={() => {
+                                                                handleAddQuantity(cartItem.book_id);
+                                                            }}
                                                             className="px-2 py-2 text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
                                                         />
                                                     </div>
                                                 </div>
                                                 <p className=" basis-[45%]  text-center select-none text-primary-color font-bold">
-                                                    131.820 đ
+                                                    {convertPriceToString(cartItem.book_end_cost)}
                                                 </p>
                                                 <div className="basis-[10%]">
                                                     <FontAwesomeIcon

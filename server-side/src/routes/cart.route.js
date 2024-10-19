@@ -1,6 +1,7 @@
 import express from 'express';
-import { getCartItemFromUser } from '../controllers/cart.controller.js';
+import { addQuantity, subQuantity } from '../controllers/cart.controller.js';
 
 const cartRouter = express.Router();
-cartRouter.route('/').post(getCartItemFromUser);
+cartRouter.route('/addQuantity').post(addQuantity);
+cartRouter.route('/subQuantity').post(subQuantity);
 export default cartRouter;
