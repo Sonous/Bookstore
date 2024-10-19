@@ -7,7 +7,6 @@ const properties = {
     attributes: {
         exclude: [
             'book_available',
-            // 'book_sold',
             'book_rating_num',
             'book_description',
             'book_author',

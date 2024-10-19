@@ -5,10 +5,7 @@ const request = axios.create({
 });
 const imageUrl = 'http://localhost:5000/images';
 
-request.interceptors.response.use(
-    (response) => response.data,
-    (error) => console.log(error),
-);
+request.interceptors.response.use((response) => response.data);
 
 export { imageUrl };
 export default request;

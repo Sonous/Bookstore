@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import classNames from 'classnames/bind';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './HomePage.module.css';
 import BannerSlider from '~/layouts/BannerSlider/BannerSlider';
 import Footer from '~/layouts/Footer/Footer';
 import Header from '~/layouts/Header/Header';
 import BookCollection from '~/component/BookCollection/BookCollection';
-import { useState } from 'react';
 import images from '~/assets/images';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
 

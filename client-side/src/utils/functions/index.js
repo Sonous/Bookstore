@@ -10,7 +10,10 @@
 export const sum = (input, property = null) => {
     let arr = [...input];
     if (property) {
-        arr = arr.map((item) => item[property]);
+        arr = arr.map((item) => {
+            if (property === 'cart') return item[property].quantity;
+            else return parseFloat(item[property]);
+        });
     }
 
     return arr.reduce((total, current) => {
