@@ -1,14 +1,33 @@
 import React, { useEffect } from 'react'
 import Footer from '~/layouts/Footer/Footer'
 import Header from '~/layouts/Header/Header'
-
+import { useNavigate } from 'react-router-dom';
 export default function LienHe() {
+    const navigate = useNavigate();
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
   return (
     <>
     <Header />
+    <div className="parallax h-[350px] relative">
+                <div className="absolute w-full h-full bg-black/50">
+                    <div className="absolute px-[15%] mt-28">
+                        <p className="text-white uppercase text-3xl font-bold">Liên Hệ</p>
+                        <p className="text-white">
+                            <span
+                                onClick={() => {
+                                    navigate('/');
+                                }}
+                                className="hover:text-primary-color cursor-pointer transition-all"
+                            >
+                                Trang chủ
+                            </span>{' '}
+                            / Liên Hệ
+                        </p>
+                    </div>
+                </div>
+            </div>
     <div className="max-w-5xl mx-auto p-6 font-sans">
             <div className="mb-12">
                 <h1 className="text-4xl font-bold mb-6 text-center">Liên Hệ</h1>

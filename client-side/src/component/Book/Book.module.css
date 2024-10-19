@@ -19,7 +19,7 @@
 .title {
     font-weight: 400;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Giới hạn hiển thị trong 2 dòng */
+    line-clamp: 2; /* Giới hạn hiển thị trong 2 dòng */
     -webkit-box-orient: vertical; /* Thiết lập cách chia hộp theo chiều dọc */
     overflow: hidden; /* Ẩn phần văn bản vượt quá */
     text-overflow: ellipsis; /* Hiển thị dấu ba chấm */

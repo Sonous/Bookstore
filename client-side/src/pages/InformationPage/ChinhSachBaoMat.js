@@ -1,14 +1,33 @@
 import React, { useEffect } from 'react'
 import Footer from '~/layouts/Footer/Footer'
 import Header from '~/layouts/Header/Header'
-
+import { useNavigate } from 'react-router-dom';
 export default function ChinhSachBaoMat() {
+    const navigate = useNavigate();
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
   return (
     <>
     <Header />
+    <div className="parallax h-[350px] relative">
+                <div className="absolute w-full h-full bg-black/50">
+                    <div className="absolute px-[15%] mt-28">
+                        <p className="text-white uppercase text-3xl font-bold">Chính sách bảo mật</p>
+                        <p className="text-white">
+                            <span
+                                onClick={() => {
+                                    navigate('/');
+                                }}
+                                className="hover:text-primary-color cursor-pointer transition-all"
+                            >
+                                Trang chủ
+                            </span>{' '}
+                            / Chính sách bảo mật
+                        </p>
+                    </div>
+                </div>
+            </div>
     <div className="max-w-4xl mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6">Chính sách bảo mật</h1>
             <p className="mb-4">
