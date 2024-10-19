@@ -7,7 +7,10 @@ export const addFavoriteBook = async (req, res) => {
 
     try {
         const favoriteBook = await FavoriteBook.create({ user_id, book_id });
-        res.status(201).json(favoriteBook);
+        res.status(201).json({
+            message: 'Favorite book added successfully!',
+            favoriteBook, // Trả về thông tin sách yêu thích
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -15,11 +18,11 @@ export const addFavoriteBook = async (req, res) => {
 
 // Lấy danh sách sách yêu thích của người dùng
 export const getFavoriteBooksByUser = async (req, res) => {
-    const { user_id } = req.params;
+    const userId = req.params.userId;
 
     try {
         const favoriteBooks = await FavoriteBook.findAll({
-            where: { user_id },
+            where: { user_id: userId },
             include: {
                 model: Book,
                 attributes: {
@@ -51,18 +54,17 @@ export const getFavoriteBooksByUser = async (req, res) => {
 
 // Xóa sách yêu thích
 export const removeFavoriteBook = async (req, res) => {
-    const { user_id, book_id } = req.params;
-
+    const userId = req.params.userId; // Lấy userId từ params
+    const bookId = req.params.bookId;  // Lấy bookId từ params
     try {
         const result = await FavoriteBook.destroy({
-            where: { user_id, book_id }
-        });
+            where: { user_id: userId, book_id: bookId }});
 
         if (result === 0) {
             return res.status(404).json({ message: 'Favorite book not found' });
         }
 
-        res.status(204).send(); // Thành công và không có nội dung trả về
+        res.status(200).json({ message: 'Favorite book removed successfully!' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
