@@ -6,10 +6,11 @@ import bookApi from '~/apis/bookApi';
 import Rating from '~/component/Rating/Rating';
 
 import Book from '~/component/Book/Book';
+import UserReview from '~/component/userReview/UserReview';
 
 function BookDetail() {
     const { name } = useParams(); // Extract the book name from the URL
-    const [activeHeader, setActiveHeader] = useState('');
+    const [activeHeader, setActiveHeader] = useState('Đánh giá');
     const [book, setBook] = useState(null);
     const [authBooks, setAuthBooks] = useState([]); // Renamed for clarity
     const [quantity, setQuantity] = useState(1);
@@ -37,11 +38,11 @@ function BookDetail() {
     const [selectedTab, setSelectedTab] = useState("desc");
 
     const handleDanhGiaClick = () => {
-        setActiveHeader('Danh Gia');
+        setActiveHeader('Đánh giá');
     };
 
     const handleCauHoiClick = () => {
-        setActiveHeader('Cau hoi va tra loi');
+        setActiveHeader('Câu hỏi và trả lời');
     };
 
     if (error) return <div>{error}</div>;
@@ -150,19 +151,19 @@ function BookDetail() {
                                 <h1>{book.book_description}</h1>
                             </div>
                         </div>
-                        <div className="rating border-gray-600 mt-5 border px-5">
+                        <div className="rating border-gray-600 mt-5 border px-5 rounded-xl py-5">
                             <h1 className="text-2xl">Đánh giá sản phẩm</h1>
                             <h1 className='flex items-center gap-5'>Rating: <Rating rating={book.book_star_rating} /> {book.book_star_rating || 'N/A'}</h1>
                             <div className="danhgia flex">
-                                <h1 className={`cursor-pointer ${activeHeader === 'Danh Gia' ? 'font-bold underline' : ''}`} onClick={handleDanhGiaClick}>
+                                <h1 className={`cursor-pointer ${activeHeader === 'Đánh giá' ? 'font-bold underline' : ''}`} onClick={handleDanhGiaClick}>
                                     Đánh giá
                                 </h1>
-                                <h1 className={`ml-4 cursor-pointer ${activeHeader === 'Cau hoi va tra loi' ? 'font-bold underline' : ''}`} onClick={handleCauHoiClick}>
+                                <h1 className={`ml-4 cursor-pointer ${activeHeader === 'Câu hỏi và trả lời' ? 'font-bold underline' : ''}`} onClick={handleCauHoiClick}>
                                     Câu hỏi và trả lời
                                 </h1>
                             </div>
                             <div className="content">
-
+                                {activeHeader === 'Đánh giá' && <UserReview />}
                             </div>
                         </div>
                     </div>
