@@ -6,6 +6,7 @@ import { UserContext } from '~/context/UserContextProvider';
 import favoriteApi from '~/apis/favoriteApi.js';
 
 import BookFavorite from '~/component/Book/BookFavorite';
+import images from '~/assets/images';
 
 export default function FavoriteLayout() {
     const navigate = useNavigate();
@@ -61,25 +62,8 @@ export default function FavoriteLayout() {
 
   return (
     <div>
-        <Header />
-        <div className="parallax h-[350px] relative">
-                <div className="absolute w-full h-full bg-black/50">
-                    <div className="absolute px-[15%] mt-28">
-                        <p className="text-white uppercase text-3xl font-bold">WISHLIST</p>
-                        <p className="text-white">
-                            <span
-                                onClick={() => {
-                                    navigate('/');
-                                }}
-                                className="hover:text-primary-color cursor-pointer transition-all"
-                            >
-                                Trang chủ
-                            </span>{' '}
-                            / Wishlist
-                        </p>
-                    </div>
-                </div>
-            </div>
+        
+        
 
             <div className="mt-12 px-24 flex-col">
             <p className=" text-2xl font-bold  ">WishList</p>
@@ -118,13 +102,16 @@ const idBook = favoriteBook.book_id;
                     })
                 
             ) : (
-                <div>Không có sách yêu thích nào.</div>
+                <div className="flex flex-col items-center py-5">
+                            <img src={images.nothingIcon} alt="nothing" className="w-44 h-44" />
+                            <span >Bạn chưa có sách yêu thích nào...</span>
+                        </div>
             )}
             </div>
             </div>
             
             <div className="my-12"></div>
-            <Footer />
+            
     </div>
   )
 }

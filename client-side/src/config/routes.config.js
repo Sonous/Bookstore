@@ -23,7 +23,7 @@ const routes = {
     order: '/order',
     results: '/results',
 
-    favorite: '/favorite',
+    
 
 
     favoritebooks: '/favoritebooks',

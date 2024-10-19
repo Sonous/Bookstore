@@ -136,10 +136,8 @@ function Header() {
                                         </div>
                                         <div className={cx('menu-item')} onClick={() => navigate('/favoritebooks')}>
                                             <img src={images.heartIcon} alt="heart icon" />
-
-                                            {/* <Link to={"/favorite"}> */}
-                                            <span className={cx('title')}>Xem sách yêu thích</span>
-                                            {/* </Link> */}
+                                            
+                                            <span className={cx('title')}>Xem sách yêu thích</span>                                           
 
                                         </div>
                                         <div className={cx('menu-item', 'logout')} onClick={handleLogout}>

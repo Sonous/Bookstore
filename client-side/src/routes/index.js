@@ -20,7 +20,7 @@ import OrderDetailPage from '~/pages/OrderDetail/OrderDetailPage';
 import BlogLayout from '~/pages/BlogPage/BlogLayout';
 
 
-import FavoriteLayout from '~/pages/FavoritePage/FavoriteLayout';
+
 
 
 import FavoriteBooksPage from '~/pages/User/FavoriteBooksPage';
@@ -51,7 +51,7 @@ const Pages = [
     { path: routes.results, Component: SearchResultPage },
 
 
-    { path: routes.favorite, Component: FavoriteLayout },
+    
 
     { path: routes.user, Component: UserPage, PrivateRoute: PrivateRoute },
     { path: routes.orderDetail, Component: OrderDetailPage, PrivateRoute: PrivateRoute },
