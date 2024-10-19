@@ -5,13 +5,13 @@ import { addFavoriteBook, getFavoriteBooksByUser, removeFavoriteBook, removeAllF
 const favoriteRouter = express.Router();
 
 
-favoriteRouter.post('/', addFavoriteBook);
+favoriteRouter.post('/add', addFavoriteBook);
 
 
-favoriteRouter.get('/:user_id', getFavoriteBooksByUser);
+favoriteRouter.get('/:userId', getFavoriteBooksByUser);
 
 
-favoriteRouter.delete('/:user_id/:book_id', removeFavoriteBook);
+favoriteRouter.delete('/:userId/:bookId', removeFavoriteBook);
 
 favoriteRouter.delete('/:userId', removeAllFavorites);
 

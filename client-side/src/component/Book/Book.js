@@ -3,7 +3,7 @@ import styles from './Book.module.css';
 import { Link } from 'react-router-dom';
 import { convertPriceToString } from '~/utils/functions';
 import { Rate } from 'antd';
-import { memo, useState, useContext } from 'react';
+import { memo, useState, useContext,useEffect } from 'react';
 import { imageUrl } from '~/config/axios.config';
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
@@ -30,6 +30,21 @@ function Book({
 }) {
     const [liked, setLiked] = useState(false);
     const { user } = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
+
+    // Kiểm tra danh sách yêu thích khi component mount
+    useEffect(() => {
+        const checkIfLiked = async () => {
+            if (user) {
+                // Gọi API để lấy danh sách yêu thích của người dùng
+                const favoriteBooks = await favoriteApi.getFavoriteBooksByUser(user.user_id);
+                const isLiked = favoriteBooks.some(favBook => favBook.book_id === book_id);
+                setLiked(isLiked);
+            }
+        };
+
+        checkIfLiked();
+    }, [user, book_id]);
     
     const handleClick = async () => {
         if (!user) {
@@ -37,33 +52,29 @@ function Book({
             alert("Vui lòng đăng nhập để thêm sách yêu thích!");
             return;
         }
+        if (loading) return; // Ngăn chặn nếu đang tải
 
-        setLiked(prevLiked => {
-            const newLikedState = !prevLiked; // Đảo ngược trạng thái liked
-
+        setLoading(true); // Bắt đầu trạng thái loading
+        const newLikedState = !liked;
+        
+        try {
             if (newLikedState) {
                 // Nếu liked = true, gọi API để thêm sách yêu thích
-                favoriteApi.addFavoriteBook(user.user_id, book_id) // Thay book_id bằng id của sách
-                    .then(response => {
-                        console.log("Sách đã được thêm vào danh sách yêu thích:", response);
-                    })
-                    .catch(err => {
-                        console.error("Lỗi khi thêm sách yêu thích:", err);
-                    });
+                const response = await favoriteApi.addFavoriteBook(user.user_id, book_id);
+                console.log("Sách đã được thêm vào danh sách yêu thích:", response);
             } else {
-                favoriteApi.removeFavoriteBook(user.user_id, book_id)
-                    .then(success => {
-                        if (success) {
-                            console.log("Sách đã được xóa khỏi danh sách yêu thích.");
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Lỗi khi xóa sách yêu thích:", err);
-                    });
+                // Nếu liked = false, gọi API để xóa sách yêu thích
+                const success = await favoriteApi.removeFavoriteBook(user.user_id, book_id);
+                if (success) {
+                    console.log("Sách đã được xóa khỏi danh sách yêu thích.");
+                }
             }
-
-            return newLikedState; // Trả về trạng thái mới
-        });
+        } catch (err) {
+            console.error("Lỗi khi cập nhật sách yêu thích:", err);
+        } finally {
+            setLiked(newLikedState); // Cập nhật trạng thái liked
+            setLoading(false); // Kết thúc trạng thái loading
+        }
     };
 
     return (

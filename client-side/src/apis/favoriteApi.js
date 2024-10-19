@@ -4,14 +4,15 @@ const favoriteApi = {
     // Thêm sách yêu thích
     addFavoriteBook: async (userId, bookId) => {
         try {
-            const data = await request.post('/favorite', {
+            const data = await request.post('/favorite/add', {
                 user_id: userId,
                 book_id: bookId,
             });
-            if (data?.message === 'Thêm sách yêu thích thành công!') {
+            if (data?.message === 'Favorite book added successfully!') {
                 return data.favoriteBook; // Trả về thông tin sách yêu thích
             }
         } catch (error) {
+            console.error("Lỗi khi thêm sách yêu thích:", error); // Ghi log lỗi
             throw new Error(error.message);
         }
     },
@@ -30,12 +31,13 @@ const favoriteApi = {
     // Xóa sách yêu thích
     removeFavoriteBook: async (userId, bookId) => {
         try {
-            const data = await request.delete(`/favorite/${userId}/${bookId}`);
-            if (data?.message === 'Xóa sách yêu thích thành công!') {
+            const data = await request.delete(`/favorite/${userId}/${bookId}`
+            );
+            if (data?.message === 'Favorite book removed successfully!') {
                 return true; // Trả về true nếu xóa thành công
             }
         } catch (error) {
-            throw new Error(error.message);
+            throw new Error("Loi xoa",error.message);
         }
     },
 

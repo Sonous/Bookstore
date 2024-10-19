@@ -14,13 +14,13 @@ export default function FavoriteLayout() {
     const [favoriteInfo, setFavoriteInfo] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    console.log('Nguoi DUng:', user);
+    // console.log('Nguoi DUng:', user);
     
     
     const fetchFavoriteBooks = async () => {
         try {
             const books = await favoriteApi.getFavoriteBooksByUser(user.user_id);
-            console.log('Favorite Books:', books);
+            
             setFavoriteInfo(books);
         } catch (err) {
             setError(err.message);
@@ -36,11 +36,12 @@ export default function FavoriteLayout() {
     }, [user]);
 
     useEffect(() => {
-        // Có thể thêm logic nào đó nếu cần khi favoriteInfo thay đổi
+        
         console.log('Favorite Info updated:', favoriteInfo);
     }, [favoriteInfo]);
    
 
+    
     
 
     const handleRemoveAllFavorites = async () => {
@@ -95,7 +96,7 @@ const idBook = favoriteBook.book_id;
                                 book_star_rating={book.book_star_rating}
                                 book_id={idBook}
                                 user_id={idUser}
-                                onRemove={fetchFavoriteBooks()}
+                                onRemove={fetchFavoriteBooks}
                             />
                             
                         );
