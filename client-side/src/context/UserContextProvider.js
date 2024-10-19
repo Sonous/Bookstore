@@ -42,7 +42,6 @@ const UserContextProvider = ({ children }) => {
                 })
                 .catch((err) => {
                     alertExpiredLogin();
-                    
                 });
         }
     };

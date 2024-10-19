@@ -3,10 +3,10 @@ import styles from './Book.module.css';
 import { Link } from 'react-router-dom';
 import { convertPriceToString } from '~/utils/functions';
 import { Rate } from 'antd';
-import { memo, useState, useContext,useEffect } from 'react';
+import { memo, useState, useContext, useEffect } from 'react';
 import { imageUrl } from '~/config/axios.config';
-import { FaRegHeart } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa6";
+import { FaRegHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa6';
 import { UserContext } from '~/context/UserContextProvider';
 
 import favoriteApi from '~/apis/favoriteApi.js';
@@ -38,39 +38,38 @@ function Book({
             if (user) {
                 // Gọi API để lấy danh sách yêu thích của người dùng
                 const favoriteBooks = await favoriteApi.getFavoriteBooksByUser(user.user_id);
-                const isLiked = favoriteBooks.some(favBook => favBook.book_id === book_id);
+                const isLiked = favoriteBooks.some((favBook) => favBook.book_id === book_id);
                 setLiked(isLiked);
             }
         };
 
         checkIfLiked();
     }, [user, book_id]);
-    
+
     const handleClick = async () => {
         if (!user) {
-            
-            alert("Vui lòng đăng nhập để thêm sách yêu thích!");
+            alert('Vui lòng đăng nhập để thêm sách yêu thích!');
             return;
         }
         if (loading) return; // Ngăn chặn nếu đang tải
 
         setLoading(true); // Bắt đầu trạng thái loading
         const newLikedState = !liked;
-        
+
         try {
             if (newLikedState) {
                 // Nếu liked = true, gọi API để thêm sách yêu thích
                 const response = await favoriteApi.addFavoriteBook(user.user_id, book_id);
-                console.log("Sách đã được thêm vào danh sách yêu thích:", response);
+                console.log('Sách đã được thêm vào danh sách yêu thích:', response);
             } else {
                 // Nếu liked = false, gọi API để xóa sách yêu thích
                 const success = await favoriteApi.removeFavoriteBook(user.user_id, book_id);
                 if (success) {
-                    console.log("Sách đã được xóa khỏi danh sách yêu thích.");
+                    console.log('Sách đã được xóa khỏi danh sách yêu thích.');
                 }
             }
         } catch (err) {
-            console.error("Lỗi khi cập nhật sách yêu thích:", err);
+            console.error('Lỗi khi cập nhật sách yêu thích:', err);
         } finally {
             setLiked(newLikedState); // Cập nhật trạng thái liked
             setLoading(false); // Kết thúc trạng thái loading
@@ -84,13 +83,15 @@ function Book({
                 collection,
             })}
         >
-<div className='absolute top-0 right-0 bg-red-500 p-2'>
-                <button onClick={handleClick}>
-<div className='flex justify-center items-center text-base text-white w-6 h-6'>
-{liked ? <FaHeart /> : <FaRegHeart />}
-</div>
-                </button>
-            </div>
+            {collection && (
+                <div className="absolute top-0 right-0 bg-red-500 p-2">
+                    <button onClick={handleClick}>
+                        <div className="flex justify-center items-center text-base text-white w-6 h-6">
+                            {liked ? <FaHeart /> : <FaRegHeart />}
+                        </div>
+                    </button>
+                </div>
+            )}
 
             <Link to={enable ? `/books/${book_name}` : null}>
                 <img src={`${imageUrl}/${bookimages[0].book_image_url}`} alt={book_name} className={cx('image')} />

@@ -5,6 +5,16 @@ import User from '../models/user.model.js';
 import Cart from '../models/cart.model.js';
 
 const getUserById = (req, res) => {
+    User.findByPk(req.params.userId)
+        .then((user) => res.status(200).json(user))
+        .catch((err) =>
+            res.status(404).json({
+                message: err.message,
+            }),
+        );
+};
+
+const getUserByToken = (req, res) => {
     User.findOne({
         attributes: ['user_id', 'user_name', 'user_phone', 'user_email', 'user_avatar_url'],
         where: {
@@ -60,4 +70,4 @@ const getCartItems = (req, res) => {
         );
 };
 
-export { getUserById, getCartItems };
+export { getUserById, getUserByToken, getCartItems };

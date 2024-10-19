@@ -7,6 +7,8 @@ const Category = sequelize.define(
         category_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         category_name: DataTypes.STRING,
     },

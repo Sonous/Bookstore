@@ -1,4 +1,4 @@
-import FavoriteBook from "../models/favoriteBook.model.js";
+import FavoriteBook from '../models/favoriteBook.model.js';
 import Book from '../models/book.model.js';
 import BookImage from '../models/bookImage.model.js';
 
@@ -41,7 +41,7 @@ export const getFavoriteBooksByUser = async (req, res) => {
                     attributes: ['book_image_url'],
                     limit: 1,
                 },
-                
+
                 as: 'Book', // Đảm bảo alias đúng
                 required: true,
             },
@@ -55,10 +55,11 @@ export const getFavoriteBooksByUser = async (req, res) => {
 // Xóa sách yêu thích
 export const removeFavoriteBook = async (req, res) => {
     const userId = req.params.userId; // Lấy userId từ params
-    const bookId = req.params.bookId;  // Lấy bookId từ params
+    const bookId = req.params.bookId; // Lấy bookId từ params
     try {
         const result = await FavoriteBook.destroy({
-            where: { user_id: userId, book_id: bookId }});
+            where: { user_id: userId, book_id: bookId },
+        });
 
         if (result === 0) {
             return res.status(404).json({ message: 'Favorite book not found' });
@@ -82,7 +83,7 @@ export const removeAllFavorites = async (req, res) => {
         // Trả về phản hồi thành công
         res.status(200).json({ message: 'All favorite books have been removed.' });
     } catch (error) {
-        console.error("Error removing all favorite books:", error);
+        console.error('Error removing all favorite books:', error);
         res.status(500).json({ message: 'Failed to remove favorite books.' });
     }
 };
