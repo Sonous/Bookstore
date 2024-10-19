@@ -7,7 +7,8 @@ const User = sequelize.define(
         user_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true, // Tự động tăng
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         user_name: DataTypes.STRING,
         user_phone: DataTypes.STRING,

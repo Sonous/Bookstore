@@ -7,6 +7,8 @@ const Order = sequelize.define(
         order_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         order_status: DataTypes.STRING,
         book_total_prices: DataTypes.DECIMAL(20, 2),

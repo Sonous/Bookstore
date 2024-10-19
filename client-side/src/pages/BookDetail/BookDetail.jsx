@@ -1,12 +1,14 @@
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
-
 import { useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
+
 import bookApi from '~/apis/bookApi';
 import Rating from '~/component/Rating/Rating';
-
 import Book from '~/component/Book/Book';
 import UserReview from '~/component/userReview/UserReview';
+import { imageUrl } from '~/config/axios.config';
+import { convertPriceToString } from '~/utils/functions';
 
 function BookDetail() {
     const { name } = useParams(); // Extract the book name from the URL
@@ -26,7 +28,6 @@ function BookDetail() {
                 // Fetch other books by the same author
                 const booksByAuthor = await bookApi.getBookByAuthor(bookData.book_author);
                 setAuthBooks(booksByAuthor);
-         
             } catch (err) {
                 console.error('Error fetching book details:', err);
                 setError('Could not fetch book details');
@@ -35,7 +36,7 @@ function BookDetail() {
         fetchBookDetails();
     }, [name]);
 
-    const [selectedTab, setSelectedTab] = useState("desc");
+    const [selectedTab, setSelectedTab] = useState('desc');
 
     const handleDanhGiaClick = () => {
         setActiveHeader('Đánh giá');
@@ -56,13 +57,13 @@ function BookDetail() {
                         <div
                             className="smallPicture w-[80px] h-[120px] 2xl:w-[100px] 2xl:h-[150px] mt-5 bg-cover bg-center bg-gray-300"
                             style={{
-                                backgroundImage: `url(${book.bookimages[0]?.book_image_url})`, // Use the first image
+                                backgroundImage: `url(${imageUrl}/${book.bookimages[0]?.book_image_url})`, // Use the first image
                             }}
                         ></div>
                         <div
                             className="bigPicture w-[240px] h-[360px] 2xl:w-[375px] 2xl:h-[550px] bg-cover pl-5 hover:scale-105 cursor-pointer transition-all ease-out bg-gray-300"
                             style={{
-                                backgroundImage: `url(${book.bookimages[0]?.book_image_url})`, // Use the first image
+                                backgroundImage: `url(${imageUrl}/${book.bookimages[0]?.book_image_url})`, // Use the first image
                             }}
                         ></div>
                     </div>
@@ -75,30 +76,50 @@ function BookDetail() {
                                         <Rating rating={book.book_star_rating} />
                                         <h1 className="2xl:text-lg">{book.book_star_rating}</h1>
                                     </div>
-                                    <a className='text-right'>Tác giả: <span className='font-semibold'>{book.book_author}</span></a>
+                                    <a className="text-right">
+                                        Tác giả: <span className="font-semibold">{book.book_author}</span>
+                                    </a>
                                 </div>
                             </div>
                             <div className="heart-icon"></div>
                         </div>
                         <div className="price-content flex justify-start items-center text-center py-5 gap-5">
-                            <h1 className="text-red-500 font-bold text-2xl 2xl:text-4xl">{book.book_end_cost} d</h1>
-                            <h1 className="discount text-gray-500 font-bold text-xl 2xl:text-2xl line-through">
-                                {book.book_cost} d
+                            <h1 className="text-red-500 font-bold text-2xl 2xl:text-4xl">
+                                {convertPriceToString(book.book_end_cost)}
                             </h1>
-                            <h1 className="2xl:text-md">(Tiết kiệm {book.book_cost * book.book_discount} d)</h1>
+                            <h1 className="discount text-gray-500 font-bold text-xl 2xl:text-2xl line-through">
+                                {convertPriceToString(book.book_cost)}
+                            </h1>
+                            <h1 className="2xl:text-md">
+                                (Tiết kiệm {convertPriceToString(book.book_cost * book.book_discount)} )
+                            </h1>
                         </div>
                         <div className="genre">
-                            <h3 className=''>Thể loại: <span className='font-bold'>  </span></h3>
+                            <h3 className="">
+                                Thể loại: <span className="font-bold"> </span>
+                            </h3>
                         </div>
                         <div className="information-content flex flex-col justify-around text-center py-5">
                             <div className="description h-[200px] border text-left px-5  flex flex-col gap-3 py-3 rounded-xl">
-                                <h3 className=''>Bộ sưu tập: <span className='font-bold'>{book.book_collection}</span></h3>
-                                <h3 className=''>Hình thức bìa: <span className='font-bold'>{book.book_format}</span></h3>
-                                <h3 className=''>Số trang: <span className='font-bold'>{book.book_page_num}</span></h3>
-                                <h3 className=''>Tình trạng: <span className='font-bold'>{book.book_status}</span></h3>
+                                <h3 className="">
+                                    Bộ sưu tập: <span className="font-bold">{book.book_collection}</span>
+                                </h3>
+                                <h3 className="">
+                                    Hình thức bìa: <span className="font-bold">{book.book_format}</span>
+                                </h3>
+                                <h3 className="">
+                                    Số trang: <span className="font-bold">{book.book_page_num}</span>
+                                </h3>
+                                <h3 className="">
+                                    Tình trạng: <span className="font-bold">{book.book_status}</span>
+                                </h3>
                                 <div className="flex justify-between gap-5">
-                                    <h3 className=''>Sách đang có: <span className='font-bold'>{book.book_available}</span></h3>
-                                    <h3 className=''>Sách đã bán: <span className='font-bold'>{book.book_sold}</span></h3>
+                                    <h3 className="">
+                                        Sách đang có: <span className="font-bold">{book.book_available}</span>
+                                    </h3>
+                                    <h3 className="">
+                                        Sách đã bán: <span className="font-bold">{book.book_sold}</span>
+                                    </h3>
                                 </div>
                             </div>
                             <div className="add-to-cart gap-5">
@@ -106,7 +127,13 @@ function BookDetail() {
                                     <div className="qty-cart flex flex-col justify-end items-center">
                                         <span className="block mb-2 font-medium">Số lượng</span>
                                         <div className="qty-interact items-center border border-black rounded-md justify-between w-48">
-                                            <button type="button" className="border-r border-black py-1" onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>-</button>
+                                            <button
+                                                type="button"
+                                                className="border-r border-black py-1"
+                                                onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+                                            >
+                                                -
+                                            </button>
                                             <input
                                                 type="number"
                                                 id="quantity"
@@ -114,7 +141,13 @@ function BookDetail() {
                                                 value={quantity}
                                                 readOnly
                                             />
-                                            <button type="button" className="border-l border-black py-1" onClick={() => setQuantity(quantity + 1)}>+</button>
+                                            <button
+                                                type="button"
+                                                className="border-l border-black py-1"
+                                                onClick={() => setQuantity(quantity + 1)}
+                                            >
+                                                +
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -122,9 +155,7 @@ function BookDetail() {
                                     <Button className="bg-blue-500 text-white font-bold text-lg w-48">
                                         Thêm vào giỏ hàng
                                     </Button>
-                                    <Button className="bg-blue-500 text-white font-bold text-lg w-48">
-                                        Mua ngay
-                                    </Button>
+                                    <Button className="bg-blue-500 text-white font-bold text-lg w-48">Mua ngay</Button>
                                 </div>
                             </div>
                         </div>
@@ -135,36 +166,52 @@ function BookDetail() {
                         <div className="bg-gray-100 border border-gray-600 rounded-xl">
                             <div className="heading bg-red-400 flex text-center rounded-t-xl">
                                 <div
-                                    className={`desc rounded-tl-xl px-5 cursor-pointer ${selectedTab === "desc" ? "bg-red-600 text-white" : "hover:bg-red-600 hover:text-white"}`}
-                                    onClick={() => setSelectedTab("desc")}
+                                    className={`desc rounded-tl-xl px-5 cursor-pointer ${
+                                        selectedTab === 'desc'
+                                            ? 'bg-red-600 text-white'
+                                            : 'hover:bg-red-600 hover:text-white'
+                                    }`}
+                                    onClick={() => setSelectedTab('desc')}
                                 >
                                     <h1 className="font-semibold text-lg">Mô tả - Đánh giá</h1>
                                 </div>
                                 <div
-                                    className={`cmt px-5 cursor-pointer ${selectedTab === "cmt" ? "bg-red-600 text-white" : "hover:bg-red-600 hover:text-white"}`}
-                                    onClick={() => setSelectedTab("cmt")}
+                                    className={`cmt px-5 cursor-pointer ${
+                                        selectedTab === 'cmt'
+                                            ? 'bg-red-600 text-white'
+                                            : 'hover:bg-red-600 hover:text-white'
+                                    }`}
+                                    onClick={() => setSelectedTab('cmt')}
                                 >
                                     <h1 className="font-semibold text-lg">Bình luận</h1>
                                 </div>
                             </div>
-                            <div className="desc-text px-5">
-                                <h1>{book.book_description}</h1>
-                            </div>
+                            <div className="desc-text px-5">{parse(book.book_description)}</div>
                         </div>
                         <div className="rating border-gray-600 mt-5 border px-5 rounded-xl py-5">
                             <h1 className="text-2xl">Đánh giá sản phẩm</h1>
-                            <h1 className='flex items-center gap-5'>Rating: <Rating rating={book.book_star_rating} /> {book.book_star_rating || 'N/A'}</h1>
+                            <h1 className="flex items-center gap-5">
+                                Rating: <Rating rating={book.book_star_rating} /> {book.book_star_rating || 'N/A'}
+                            </h1>
                             <div className="danhgia flex">
-                                <h1 className={`cursor-pointer ${activeHeader === 'Đánh giá' ? 'font-bold underline' : ''}`} onClick={handleDanhGiaClick}>
+                                <h1
+                                    className={`cursor-pointer ${
+                                        activeHeader === 'Đánh giá' ? 'font-bold underline' : ''
+                                    }`}
+                                    onClick={handleDanhGiaClick}
+                                >
                                     Đánh giá
                                 </h1>
-                                <h1 className={`ml-4 cursor-pointer ${activeHeader === 'Câu hỏi và trả lời' ? 'font-bold underline' : ''}`} onClick={handleCauHoiClick}>
+                                <h1
+                                    className={`ml-4 cursor-pointer ${
+                                        activeHeader === 'Câu hỏi và trả lời' ? 'font-bold underline' : ''
+                                    }`}
+                                    onClick={handleCauHoiClick}
+                                >
                                     Câu hỏi và trả lời
                                 </h1>
                             </div>
-                            <div className="content">
-                                {activeHeader === 'Đánh giá' && <UserReview />}
-                            </div>
+                            <div className="content">{activeHeader === 'Đánh giá' && <UserReview />}</div>
                         </div>
                     </div>
                     <div className="same-author text-center items-center w-full lg:w-3/12 bg-white rounded-xl border mb-5">

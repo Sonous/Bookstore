@@ -7,6 +7,8 @@ const Book = sequelize.define(
         book_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         book_name: DataTypes.STRING,
         book_cost: DataTypes.DECIMAL(20, 2),

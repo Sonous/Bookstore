@@ -2,55 +2,9 @@
 -- Last modification date: 2024-10-10 08:43:15.298
 
 -- create database ql_ban_sach;
-use ql_ban_sach;
+-- use ql_ban_sach;
 -- drop database ql_ban_sach;
 
-
-
-
-
-
-
-INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
-(60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
-  <p><strong>"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2</strong></p>
-  <p><strong>Hé lộ cuộc sống náo nhiệt của dàn nhân vật sau giờ học!</strong></p>
-  <p>Chuỗi ngày nghỉ ngơi tưởng chừng thong thả nhưng lại bắng nhắng vô cùng của Bí ẩn số 7 học viện Kamome - Cậu ma nhà xí Hanako - cùng cô gái hệ tâm linh Yashiro Nene lại tiếp tục!?</p>
-  <p>Ngoài ra, tập này sẽ bật mí kha khá về cuộc sống thường nhật hiếm ai bắt gặp của “người ấy” nữa đó!</p>
-  <p>Mời các bạn cùng thưởng thức tập 2 ngoại truyện, để xem nhóm Hanako đã có những hoạt động thư giãn nào sau giờ học nhé!</p>
-</div>
-', N'Aida Iro', N'bìa mềm', 135, null, N'Còn hàng');
-
-insert into bookimage (book_image_id, book_image_url, book_id)
-	values (70040, 'cau-ma-nha-xi-hanako_sau-gio-hoc_bia_qua-tang-kem_tap-2.webp', 60031);
-    
-    insert into genre (genre_id, genre_name, category_id)
-	values (90036, 'School Life', 100003);
-
-INSERT INTO BookGenre (book_id, genre_id) VALUES 
-(60031, 90014), (60031, 90021), (60031, 90036), (60031, 90015);
-
-
-
-
-INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
-(60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
-  <p><strong>"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2</strong></p>
-  <p><strong>Hé lộ cuộc sống náo nhiệt của dàn nhân vật sau giờ học!</strong></p>
-  <p>Chuỗi ngày nghỉ ngơi tưởng chừng thong thả nhưng lại bắng nhắng vô cùng của Bí ẩn số 7 học viện Kamome - Cậu ma nhà xí Hanako - cùng cô gái hệ tâm linh Yashiro Nene lại tiếp tục!?</p>
-  <p>Ngoài ra, tập này sẽ bật mí kha khá về cuộc sống thường nhật hiếm ai bắt gặp của “người ấy” nữa đó!</p>
-  <p>Mời các bạn cùng thưởng thức tập 2 ngoại truyện, để xem nhóm Hanako đã có những hoạt động thư giãn nào sau giờ học nhé!</p>
-</div>
-', N'Aida Iro', N'bìa mềm', 135, null, N'Còn hàng');
-
-insert into bookimage (book_image_id, book_image_url, book_id)
-	values (70040, 'cau-ma-nha-xi-hanako_sau-gio-hoc_bia_qua-tang-kem_tap-2.webp', 60031);
-
-INSERT INTO BookGenre (book_id, genre_id) VALUES 
-(60031, 90014), (60031, 90021), (60031, 90036), (60031, 90015);
-
-insert into genre (genre_id, genre_name, category_id)
-	values (90036, 'School Life', 100003);
 
 
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
@@ -76,7 +30,7 @@ insert into genre (genre_id, genre_name, category_id)
 -- tables
 -- Table: Address
 CREATE TABLE Address (
-    address_id int  NOT NULL,
+    address_id int  NOT NULL AUTO_INCREMENT,
     address_house_number nvarchar(255)  NOT NULL,
     address_ward nvarchar(50)  NOT NULL,
     address_district nvarchar(50)  NOT NULL,
@@ -97,7 +51,7 @@ CREATE TABLE Admin (
 
 -- Table: Banner
 CREATE TABLE Banner (
-    banner_id int  NOT NULL,
+    banner_id int  NOT NULL AUTO_INCREMENT,
     banner_image_url varchar(255)  NOT NULL,
     banner_link varchar(255) ,
     CONSTRAINT Banner_pk PRIMARY KEY (banner_id)
@@ -105,7 +59,7 @@ CREATE TABLE Banner (
 
 -- Table: Blog
 CREATE TABLE Blog (
-    blog_id int  NOT NULL,
+    blog_id int  NOT NULL AUTO_INCREMENT,
     blog_title nvarchar(255)  NOT NULL,
     blog_content text  NOT NULL,
     blog_thumbnail varchar(255)  NOT NULL,
@@ -117,14 +71,14 @@ CREATE TABLE Blog (
 
 -- Table: BlogType
 CREATE TABLE BlogType (
-    type_id int  NOT NULL,
+    type_id int  NOT NULL AUTO_INCREMENT,
     type_name nvarchar(50)  NOT NULL,
     CONSTRAINT BlogType_pk PRIMARY KEY (type_id)
 );
 
 -- Table: Book
 CREATE TABLE Book (
-    book_id int  NOT NULL,
+    book_id int  NOT NULL AUTO_INCREMENT,
     book_name nvarchar(255)  NOT NULL,
     book_cost decimal(20,2)  NOT NULL,
     book_discount decimal(4,2)  NOT NULL,
@@ -154,7 +108,7 @@ CREATE TABLE BookGenre (
 
 -- Table: BookImage
 CREATE TABLE BookImage (
-    book_image_id int  NOT NULL,
+    book_image_id int  NOT NULL AUTO_INCREMENT,
     book_image_url varchar(255)  NOT NULL,
     book_id int  NOT NULL,
     CONSTRAINT BookImage_pk PRIMARY KEY (book_image_id)
@@ -178,7 +132,7 @@ CREATE TABLE Cart (
 
 -- Table: Category
 CREATE TABLE Category (
-    category_id int  NOT NULL,
+    category_id int  NOT NULL AUTO_INCREMENT,
     category_name nvarchar(50)  NOT NULL,
     CONSTRAINT Category_pk PRIMARY KEY (category_id)
 );
@@ -192,7 +146,7 @@ CREATE TABLE FavoriteBook (
 
 -- Table: Genre
 CREATE TABLE Genre (
-    genre_id int  NOT NULL,
+    genre_id int  NOT NULL AUTO_INCREMENT,
     genre_name nvarchar(50)  NOT NULL,
     category_id int  NOT NULL,
     CONSTRAINT Genre_pk PRIMARY KEY (genre_id)
@@ -200,7 +154,7 @@ CREATE TABLE Genre (
 
 -- Table: Order
 CREATE TABLE `Order` (
-    order_id int  NOT NULL,
+    order_id int  NOT NULL AUTO_INCREMENT,
     order_status nvarchar(50)  NOT NULL,
     books_total_prices decimal(20,2)  NOT NULL,
     order_total_cost decimal(20,2)  NOT NULL,
@@ -215,14 +169,14 @@ CREATE TABLE `Order` (
 
 -- Table: PayingMethod
 CREATE TABLE PayingMethod (
-    pay_method_id int  NOT NULL,
+    pay_method_id int  NOT NULL AUTO_INCREMENT,
     pay_method_name nvarchar(255)  NOT NULL,
     CONSTRAINT PayingMethod_pk PRIMARY KEY (pay_method_id)
 );
 
 -- Table: TransportMethod
 CREATE TABLE TransportMethod (
-    transport_id int NOT NULL PRIMARY Key,
+    transport_id int NOT NULL PRIMARY Key AUTO_INCREMENT,
     transport_name nvarchar(255)  NOT NULL,
     transport_cost decimal(20,2)  NOT NULL
 );
@@ -340,10 +294,10 @@ ALTER TABLE UserAddress ADD CONSTRAINT User_Address_User FOREIGN KEY User_Addres
 -- Insert data
 
  -- User
- INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
- (N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg');
+ INSERT INTO User (user_id, user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
+ (10001, N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg');
  
- INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
+  INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
  (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg');
  
  -- Book
@@ -1476,11 +1430,7 @@ INSERT INTO TransportMethod (transport_id, transport_name, transport_cost) VALUE
 
 -- Order
 INSERT INTO `Order` (order_id, order_status, books_total_prices, order_total_cost, user_id, address_id, pay_method_id, transport_id) 
-
-VALUES (30001, N'Đã Giao', 82560.00, 102560.00, 1, 20001, 40001, 50001);
-
 VALUES (30001, N'Hoàn tất', 82560.00, 102560.00, 10001, 20001, 40001, 50001);
-
 
 -- BookOrder
 INSERT INTO BookOrder (order_id, book_id, quantity) VALUES 
@@ -1489,25 +1439,24 @@ INSERT INTO BookOrder (order_id, book_id, quantity) VALUES
 
 -- Cart
 INSERT INTO Cart (user_id, book_id, quantity) VALUES 
-(1, 60001, 1),
-(1, 60002, 2),
-(1, 60003, 2);
+(10001, 60001, 1),
+(10001, 60002, 2),
+(10001, 60003, 2);
 
 
 -- FavoriteBook
 INSERT INTO FavoriteBook (user_id, book_id) VALUES 
-(1, 60001),
-(1, 60002),
-(1, 60003),
-(1, 60004),
-(1, 60005);
+(10001, 60001),
+(10001, 60002),
+(10001, 60003),
+(10001, 60004),
+(10001, 60005);
 
 -- RatingBook
 INSERT INTO RatingBook (user_id, book_id, rating_star, rating_content) VALUES
- (1, 60001, 5, N'Sách hay, tuyệt vời'),
- (1, 60002, 4, N'Tình tiết truyện cuốn hút'),
- (1, 60003, 5, N'Hóng tập tiếp theo');
+ (10001, 60001, 5, N'Sách hay, tuyệt vời'),
+ (10001, 60002, 4, N'Tình tiết truyện cuốn hút'),
+ (10001, 60003, 5, N'Hóng tập tiếp theo');
  
  -- UserAddress
- INSERT INTO UserAddress (address_id, user_id) VALUES (20001, 1);
-
+ INSERT INTO UserAddress (address_id, user_id) VALUES (20001, 10001);

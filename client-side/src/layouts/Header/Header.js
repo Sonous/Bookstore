@@ -39,7 +39,9 @@ function Header() {
                     }
                 })
                 .catch((err) => {
-                    alertExpiredLogin();
+                    if (err.message === 'Unauthorized!') {
+                        alertExpiredLogin();
+                    }
                 });
         };
 
@@ -139,9 +141,8 @@ function Header() {
                                         </div>
                                         <div className={cx('menu-item')} onClick={() => navigate('/favoritebooks')}>
                                             <img src={images.heartIcon} alt="heart icon" />
-                                            
-                                            <span className={cx('title')}>Xem sách yêu thích</span>                                           
 
+                                            <span className={cx('title')}>Xem sách yêu thích</span>
                                         </div>
                                         <div className={cx('menu-item', 'logout')} onClick={handleLogout}>
                                             <img src={images.logoutIcon} alt="logout icon" />

@@ -7,6 +7,8 @@ const Address = sequelize.define(
         address_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         address_house_number: DataTypes.STRING,
         address_ward: DataTypes.STRING,

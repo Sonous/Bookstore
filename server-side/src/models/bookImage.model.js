@@ -7,6 +7,8 @@ const BookImage = sequelize.define(
         book_image_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         book_image_url: DataTypes.STRING,
         book_id: DataTypes.INTEGER,

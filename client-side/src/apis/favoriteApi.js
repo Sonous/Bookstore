@@ -21,7 +21,7 @@ const favoriteApi = {
     getFavoriteBooksByUser: async (userId) => {
         try {
             const data = await request.get(`/favorite/${userId}`);
-            
+
             return data || []; // Trả về danh sách sách yêu thích
         } catch (error) {
             throw new Error(error.message);
