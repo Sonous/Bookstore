@@ -10,7 +10,19 @@ function App() {
                 <Router>
                     <Routes>
                         {Pages.map((Page, index) => (
-                            <Route key={index} path={Page.path} element={<Page.Component />} />
+                            <Route
+                                key={index}
+                                path={Page.path}
+                                element={
+                                    Page.PrivateRoute ? (
+                                        <Page.PrivateRoute>
+                                            <Page.Component />
+                                        </Page.PrivateRoute>
+                                    ) : (
+                                        <Page.Component />
+                                    )
+                                }
+                            />
                         ))}
                         <Route path="*" element={<NotFound />} />
                     </Routes>

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import authApi from '~/apis/authApi';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '~/context/UserContextProvider';
 
 const SignInForm = ({ toggleMode, onGetHelpClick }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    const { login } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Ngăn chặn hành vi mặc định của form
@@ -18,6 +21,7 @@ const SignInForm = ({ toggleMode, onGetHelpClick }) => {
 
             if (token) {
                 localStorage.setItem('token', token); // Lưu token
+                login();
                 navigate('/');
             } else {
                 setError('Email hoặc Mật khẩu không chính xác!');
