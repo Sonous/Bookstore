@@ -1,5 +1,5 @@
 import { routes } from '~/config';
-import BookDetail from '~/pages/BookDetail';
+import BookDetail from '~/pages/BookDetail/BookDetail';
 import CartPage from '~/pages/CartPage';
 import PayingPage from '~/pages/PayingPage/PayingPage';
 import HomePage from '~/pages/HomePage/HomePage';
@@ -18,6 +18,7 @@ import CollectionsPage from '~/pages/CollectionsPage';
 import SearchResultPage from '~/pages/SearchResultPage';
 import OrderDetailPage from '~/pages/OrderDetail/OrderDetailPage';
 import BlogLayout from '~/pages/BlogPage/BlogLayout';
+
 import FavoriteBooksPage from '~/pages/User/FavoriteBooksPage';
 import PrivateRoute from './PrivateRoute';
 import OrderPage from '~/pages/User/OrderPage';

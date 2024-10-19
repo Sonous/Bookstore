@@ -8,7 +8,7 @@ const routes = {
     signUp: '/signUp',
     cart: '/cart',
     paying: '/paying',
-    bookDetail: '/bookdetails',
+    bookDetail: '/books/:name',
 
     dieuKhoan: '/dieu-khoan-dich-vu', // Điều khoản dịch vụ
     chinhSachBaoMat: '/chinh-sach-bao-mat', // Chính sách bảo mật
