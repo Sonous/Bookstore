@@ -21,6 +21,7 @@ const routes = {
     usercheck: '/check',
     order: '/order',
     results: '/results',
+    favorite: '/favorite',
 };
 
 export default routes;

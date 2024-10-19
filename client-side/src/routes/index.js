@@ -19,6 +19,7 @@ import CollectionsPage from '~/pages/CollectionsPage';
 import SearchResultPage from '~/pages/SearchResultPage';
 import OrderPage from '~/pages/OrderDetail/OrderDetailPage';
 import BlogLayout from '~/pages/BlogPage/BlogLayout';
+import FavoriteLayout from '~/pages/FavoritePage/FavoriteLayout';
 
 const Pages = [
     { path: routes.home, Component: HomePage },
@@ -44,6 +45,8 @@ const Pages = [
     { path: routes.blogdetail, Component: BlogLayout },
 
     { path: routes.results, Component: SearchResultPage },
+
+    { path: routes.favorite, Component: FavoriteLayout },
 ];
 
 export default Pages;

@@ -139,7 +139,9 @@ function Header({ setIsLoading }) {
                                         </div>
                                         <div className={cx('menu-item')}>
                                             <img src={images.heartIcon} alt="heart icon" />
+                                            <Link to={"/favorite"}>
                                             <span className={cx('title')}>Xem sản phẩm yêu thích</span>
+                                            </Link>
                                         </div>
                                         <div className={cx('menu-item', 'logout')} onClick={handleLogout}>
                                             <img src={images.logoutIcon} alt="logout icon" />

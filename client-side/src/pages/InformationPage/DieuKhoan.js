@@ -1,14 +1,33 @@
 import React, { useEffect } from 'react'
 import Footer from '~/layouts/Footer/Footer'
 import Header from '~/layouts/Header/Header'
-
+import { useNavigate } from 'react-router-dom';
 export default function DieuKhoan() {
+  const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
 }, []);
   return (
     <>
     <Header />
+    <div className="parallax h-[350px] relative">
+                <div className="absolute w-full h-full bg-black/50">
+                    <div className="absolute px-[15%] mt-28">
+                        <p className="text-white uppercase text-3xl font-bold">Điều Khoản Dịch Vụ</p>
+                        <p className="text-white">
+                            <span
+                                onClick={() => {
+                                    navigate('/');
+                                }}
+                                className="hover:text-primary-color cursor-pointer transition-all"
+                            >
+                                Trang chủ
+                            </span>{' '}
+                            / Điều Khoản Dịch Vụ
+                        </p>
+                    </div>
+                </div>
+            </div>
     <div class="max-w-5xl mx-auto p-6">
     <h1 class="text-2xl font-bold mb-6">Điều Khoản Dịch Vụ</h1>
     <p class="mb-4">Chào mừng bạn đến với website của Nhà xuất bản Kim Đồng!</p>

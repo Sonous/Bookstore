@@ -2,7 +2,7 @@
 -- Last modification date: 2024-10-10 08:43:15.298
 
 -- create database ql_ban_sach;
--- use ql_ban_sach;
+use ql_ban_sach;
 -- drop database ql_ban_sach;
 
 
@@ -23,12 +23,14 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 
 insert into bookimage (book_image_id, book_image_url, book_id)
 	values (70040, 'cau-ma-nha-xi-hanako_sau-gio-hoc_bia_qua-tang-kem_tap-2.webp', 60031);
+    
+    insert into genre (genre_id, genre_name, category_id)
+	values (90036, 'School Life', 100003);
 
 INSERT INTO BookGenre (book_id, genre_id) VALUES 
 (60031, 90014), (60031, 90021), (60031, 90036), (60031, 90015);
 
-insert into genre (genre_id, genre_name, category_id)
-	values (90036, 'School Life', 100003);
+
 
 
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
@@ -223,7 +225,7 @@ CREATE TABLE TransportMethod (
     transport_id int NOT NULL PRIMARY Key,
     transport_name nvarchar(255)  NOT NULL,
     transport_cost decimal(20,2)  NOT NULL
-)
+);
 
 -- Table: RatingBook
 CREATE TABLE RatingBook (
@@ -340,6 +342,9 @@ ALTER TABLE UserAddress ADD CONSTRAINT User_Address_User FOREIGN KEY User_Addres
  -- User
  INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
  (N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg');
+ 
+ INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
+ (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg');
  
  -- Book
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
@@ -1471,7 +1476,7 @@ INSERT INTO TransportMethod (transport_id, transport_name, transport_cost) VALUE
 
 -- Order
 INSERT INTO `Order` (order_id, order_status, books_total_prices, order_total_cost, user_id, address_id, pay_method_id, transport_id) 
-VALUES (30001, N'Đã Giao', 82560.00, 102560.00, 10001, 20001, 40001, 50001);
+VALUES (30001, N'Đã Giao', 82560.00, 102560.00, 1, 20001, 40001, 50001);
 
 -- BookOrder
 INSERT INTO BookOrder (order_id, book_id, quantity) VALUES 
@@ -1480,25 +1485,25 @@ INSERT INTO BookOrder (order_id, book_id, quantity) VALUES
 
 -- Cart
 INSERT INTO Cart (user_id, book_id, quantity) VALUES 
-(10001, 60001, 1),
-(10001, 60002, 2),
-(10001, 60003, 2);
+(1, 60001, 1),
+(1, 60002, 2),
+(1, 60003, 2);
 
 
 -- FavoriteBook
 INSERT INTO FavoriteBook (user_id, book_id) VALUES 
-(10001, 60001),
-(10001, 60002),
-(10001, 60003),
-(10001, 60004),
-(10001, 60005);
+(1, 60001),
+(1, 60002),
+(1, 60003),
+(1, 60004),
+(1, 60005);
 
 -- RatingBook
 INSERT INTO RatingBook (user_id, book_id, rating_star, rating_content) VALUES
- (10001, 60001, 5, N'Sách hay, tuyệt vời'),
- (10001, 60002, 4, N'Tình tiết truyện cuốn hút'),
- (10001, 60003, 5, N'Hóng tập tiếp theo');
+ (1, 60001, 5, N'Sách hay, tuyệt vời'),
+ (1, 60002, 4, N'Tình tiết truyện cuốn hút'),
+ (1, 60003, 5, N'Hóng tập tiếp theo');
  
  -- UserAddress
- INSERT INTO UserAddress (address_id, user_id) VALUES (20001, 10001);
+ INSERT INTO UserAddress (address_id, user_id) VALUES (20001, 1);
 

@@ -1,14 +1,33 @@
 import React, { useEffect } from 'react'
 import Footer from '~/layouts/Footer/Footer'
 import Header from '~/layouts/Header/Header'
-
+import { useNavigate } from 'react-router-dom';
 export default function ChinhSachDoiTra() {
+  const navigate = useNavigate();
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
   return (
     <>
     <Header />
+    <div className="parallax h-[350px] relative">
+                <div className="absolute w-full h-full bg-black/50">
+                    <div className="absolute px-[15%] mt-28">
+                        <p className="text-white uppercase text-3xl font-bold">Chính Sách Đổi Trả - Hoàn Tiền</p>
+                        <p className="text-white">
+                            <span
+                                onClick={() => {
+                                    navigate('/');
+                                }}
+                                className="hover:text-primary-color cursor-pointer transition-all"
+                            >
+                                Trang chủ
+                            </span>{' '}
+                            / Chính Sách Đổi Trả - Hoàn Tiền
+                        </p>
+                    </div>
+                </div>
+            </div>
     <div className="max-w-4xl mx-auto p-6 ">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Chính Sách Đổi Trả - Hoàn Tiền</h1>
       <p className="text-gray-700 mb-4">
