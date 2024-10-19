@@ -19,25 +19,28 @@ import request, { imageUrl } from '~/config/axios.config';
 const cx = classNames.bind(styles);
 
 function Header() {
-    const [cartInfo, setCartInfo] = useState([]);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const navigate = useNavigate();
-
-    const { user, logout, setIsLoading, alertExpiredLogin } = useContext(UserContext);
+    const { user, logout, setIsLoading, alertExpiredLogin, cartItems, setCartItems } = useContext(UserContext);
 
     useEffect(() => {
         const fetchApi = () => {
             if (!user) return;
             const token = localStorage.getItem('token');
-
             request
                 .get(`/user/${user.user_id}/cart`, {
                     headers: {
                         'x-access-token': token,
                     },
                 })
-                .then((books) => setCartInfo(books[0].Cart))
-                .catch((err) => alertExpiredLogin());
+                .then((books) => {
+                    if (books.length > 0) {
+                        setCartItems(books[0].Cart);
+                    }
+                })
+                .catch((err) => {
+                    alertExpiredLogin();
+                });
         };
 
         fetchApi();
@@ -78,13 +81,13 @@ function Header() {
                                         <PopperWrapper className={cx('cart-popper')}>
                                             <div className={cx('cart-header')}>
                                                 <span>{`Giỏ hàng (${
-                                                    cartInfo.length > 0 ? sum(cartInfo, 'cart') : 0
+                                                    cartItems.length > 0 ? sum(cartItems, 'cart') : 0
                                                 })`}</span>
                                             </div>
-                                            {cartInfo.length > 0 ? (
+                                            {cartItems.length > 0 ? (
                                                 <div>
                                                     <div className={cx('cart-items')}>
-                                                        {cartInfo.map((item, index) => {
+                                                        {cartItems.map((item, index) => {
                                                             return <Book key={index} {...item} cartPopper />;
                                                         })}
                                                     </div>
@@ -92,7 +95,7 @@ function Header() {
                                                         <div className={cx('total')}>
                                                             <span>Tổng cộng:</span>
                                                             <span className={cx('price')}>
-                                                                {convertPriceToString(sum(cartInfo, 'book_end_cost'))}
+                                                                {convertPriceToString(sum(cartItems, 'book_end_cost'))}
                                                             </span>
                                                         </div>
                                                         <div>
@@ -112,9 +115,9 @@ function Header() {
                                 >
                                     <button className={cx('cart-btn')}>
                                         <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
-                                        {cartInfo.length > 0 && (
+                                        {cartItems.length > 0 && (
                                             <div className={cx('quantity')}>
-                                                <span>{sum(cartInfo, 'cart')}</span>
+                                                <span>{sum(cartItems, 'cart')}</span>
                                             </div>
                                         )}
                                     </button>
