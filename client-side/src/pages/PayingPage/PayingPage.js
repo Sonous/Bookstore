@@ -13,38 +13,65 @@ export default function PayingPage() {
     const [district, setDistrict] = useState();
     const [ward, setWard] = useState();
     const getCity = async () => {
-        const response = await axios.get('https://provinces.open-api.vn/api/');
+        const response = await axios.get('https://vapi.vnappmob.com/api/province/');
         const dataCity = [];
-        response.data.map((city, idx) => {
+        response.data.results.map((city, idx) => {
             dataCity.push({
-                label: city.name,
-                value: city.code,
+                label: city.province_name,
+                value: city.province_id,
             });
         });
         setCity(dataCity);
+        // const response = await axios.get('https://provinces.open-api.vn/api/');
+        // const dataCity = [];
+        // response.data.map((city, idx) => {
+        //     dataCity.push({
+        //         label: city.name,
+        //         value: city.code,
+        //     });
+        // });
+        // setCity(dataCity);
     };
     const getDistrict = async (e) => {
-        const response = await axios.get(`https://provinces.open-api.vn/api/p/${e}?depth=2`);
+        const response = await axios.get(`https://vapi.vnappmob.com/api/province/district/${e}`);
         const dataDistrict = [];
-        response.data.districts.map((district, idx) => {
+        response.data.results.map((district, idx) => {
             dataDistrict.push({
-                label: district.name,
-                value: district.code,
+                label: district.district_name,
+                value: district.district_id,
             });
         });
         setDistrict(dataDistrict);
+
+        // const response = await axios.get(`https://provinces.open-api.vn/api/p/${e}?depth=2`);
+        // const dataDistrict = [];
+        // response.data.districts.map((district, idx) => {
+        //     dataDistrict.push({
+        //         label: district.name,
+        //         value: district.code,
+        //     });
+        // });
+        // setDistrict(dataDistrict);
     };
     const getWards = async (e) => {
-        const response = await axios.get(`https://provinces.open-api.vn/api/d/${e}?depth=2`);
-
+        const response = await axios.get(`https://vapi.vnappmob.com/api/province/ward/${e}`);
         const dataWard = [];
-        response.data.wards.map((ward, idx) => {
+        response.data.results.map((ward, idx) => {
             dataWard.push({
-                label: ward.name,
-                value: ward.code,
+                label: ward.ward_name,
+                value: ward.ward_id,
             });
         });
         setWard(dataWard);
+        // const response = await axios.get(`https://provinces.open-api.vn/api/d/${e}?depth=2`);
+        // const dataWard = [];
+        // response.data.wards.map((ward, idx) => {
+        //     dataWard.push({
+        //         label: ward.name,
+        //         value: ward.code,
+        //     });
+        // });
+        // setWard(dataWard);
     };
     useEffect(() => {
         getCity();
