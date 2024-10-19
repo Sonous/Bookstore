@@ -18,33 +18,29 @@ import request, { imageUrl } from '~/config/axios.config';
 
 const cx = classNames.bind(styles);
 
-function Header({ setIsLoading }) {
+function Header() {
     const [cartInfo, setCartInfo] = useState([]);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [isLogin, setIsLogin] = useState(false);
     const navigate = useNavigate();
 
-    const { user, logout } = useContext(UserContext);
+    const { user, logout, setIsLoading, alertExpiredLogin } = useContext(UserContext);
 
     useEffect(() => {
-        if (user) {
-            setIsLogin(true);
+        const fetchApi = () => {
+            if (!user) return;
+            const token = localStorage.getItem('token');
 
-            const fetchApi = () => {
-                const token = localStorage.getItem('token');
+            request
+                .get(`/user/${user.user_id}/cart`, {
+                    headers: {
+                        'x-access-token': token,
+                    },
+                })
+                .then((books) => setCartInfo(books[0].Cart))
+                .catch((err) => alertExpiredLogin());
+        };
 
-                request
-                    .get(`/user/${user.user_id}/cart`, {
-                        headers: {
-                            'x-access-token': token,
-                        },
-                    })
-                    .then((books) => setCartInfo(books[0].Cart))
-                    .catch((err) => console.log(err));
-            };
-
-            fetchApi();
-        } else setIsLogin(false);
+        fetchApi();
     }, [user]);
 
     window.addEventListener('resize', () => {
@@ -53,6 +49,7 @@ function Header({ setIsLoading }) {
 
     const handleLogout = () => {
         setIsLoading(true);
+        navigate('/');
         logout();
         setTimeout(() => {
             setIsLoading(false);
@@ -71,7 +68,7 @@ function Header({ setIsLoading }) {
 
                     <Search />
 
-                    {isLogin ? (
+                    {user ? (
                         <div className={cx('action')}>
                             <div>
                                 <TippyHeadless
@@ -129,19 +126,21 @@ function Header({ setIsLoading }) {
                                 placement="bottom"
                                 render={() => (
                                     <PopperWrapper className={cx('user-popper')}>
-                                        <div className={cx('menu-item')}>
+                                        <div className={cx('menu-item')} onClick={() => navigate('/user')}>
                                             <img src={images.userIcon} alt="user icon" />
                                             <span className={cx('title')}>Xem thông tin tài khoản</span>
                                         </div>
-                                        <div className={cx('menu-item')}>
+                                        <div className={cx('menu-item')} onClick={() => navigate('/order')}>
                                             <img src={images.orderIcon} alt="order icon" />
                                             <span className={cx('title')}>Đơn hàng của tôi</span>
                                         </div>
-                                        <div className={cx('menu-item')}>
+                                        <div className={cx('menu-item')} onClick={() => navigate('/favoritebooks')}>
                                             <img src={images.heartIcon} alt="heart icon" />
-                                            <Link to={"/favorite"}>
-                                            <span className={cx('title')}>Xem sản phẩm yêu thích</span>
-                                            </Link>
+
+                                            {/* <Link to={"/favorite"}> */}
+                                            <span className={cx('title')}>Xem sách yêu thích</span>
+                                            {/* </Link> */}
+
                                         </div>
                                         <div className={cx('menu-item', 'logout')} onClick={handleLogout}>
                                             <img src={images.logoutIcon} alt="logout icon" />
@@ -185,7 +184,7 @@ function Header({ setIsLoading }) {
 
                         <Search />
 
-                        {isLogin ? (
+                        {user ? (
                             <div className="flex gap-3">
                                 <span className="flex items-center">
                                     <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />

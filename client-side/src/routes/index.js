@@ -12,14 +12,19 @@ import HuongDanDatHang from '~/pages/InformationPage/HuongDanDatHang';
 import ChinhSachDoiTra from '~/pages/InformationPage/ChinhSachDoiTra';
 import PhuongThucVanChuyen from '~/pages/InformationPage/PhuongThucVanChuyen';
 
-import UserPage from '~/pages/User/UserCard';
-import User from '~/pages/User/UserPage';
+import UserPage from '~/pages/User/UserPage';
 import CollectionsPage from '~/pages/CollectionsPage';
 
 import SearchResultPage from '~/pages/SearchResultPage';
-import OrderPage from '~/pages/OrderDetail/OrderDetailPage';
+import OrderDetailPage from '~/pages/OrderDetail/OrderDetailPage';
 import BlogLayout from '~/pages/BlogPage/BlogLayout';
+
 import FavoriteLayout from '~/pages/FavoritePage/FavoriteLayout';
+
+import FavoriteBooksPage from '~/pages/User/FavoriteBooksPage';
+import PrivateRoute from './PrivateRoute';
+import OrderPage from '~/pages/User/OrderPage';
+
 
 const Pages = [
     { path: routes.home, Component: HomePage },
@@ -27,9 +32,6 @@ const Pages = [
     { path: routes.signUp, Component: SignInPage },
     { path: routes.cart, Component: CartPage },
     { path: routes.bookDetail, Component: BookDetail },
-    { path: routes.user, Component: User },
-    { path: routes.usercheck, Component: UserPage },
-    { path: routes.order, Component: OrderPage },
     { path: routes.paying, Component: PayingPage },
 
     { path: routes.dieuKhoan, Component: DieuKhoan },
@@ -40,13 +42,19 @@ const Pages = [
     { path: routes.phuongThucVanChuyen, Component: PhuongThucVanChuyen },
 
     { path: routes.collections, Component: CollectionsPage },
-
     { path: routes.blog, Component: BlogLayout },
     { path: routes.blogdetail, Component: BlogLayout },
 
     { path: routes.results, Component: SearchResultPage },
 
+
     { path: routes.favorite, Component: FavoriteLayout },
+
+    { path: routes.user, Component: UserPage, PrivateRoute: PrivateRoute },
+    { path: routes.orderDetail, Component: OrderDetailPage, PrivateRoute: PrivateRoute },
+    { path: routes.order, Component: OrderPage, PrivateRoute: PrivateRoute },
+    { path: routes.favoritebooks, Component: FavoriteBooksPage, PrivateRoute: PrivateRoute },
+
 ];
 
 export default Pages;

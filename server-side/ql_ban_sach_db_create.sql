@@ -1476,7 +1476,11 @@ INSERT INTO TransportMethod (transport_id, transport_name, transport_cost) VALUE
 
 -- Order
 INSERT INTO `Order` (order_id, order_status, books_total_prices, order_total_cost, user_id, address_id, pay_method_id, transport_id) 
+
 VALUES (30001, N'Đã Giao', 82560.00, 102560.00, 1, 20001, 40001, 50001);
+
+VALUES (30001, N'Hoàn tất', 82560.00, 102560.00, 10001, 20001, 40001, 50001);
+
 
 -- BookOrder
 INSERT INTO BookOrder (order_id, book_id, quantity) VALUES 

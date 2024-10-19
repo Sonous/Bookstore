@@ -9,7 +9,7 @@ import Book from '~/component/Book/Book';
 import Review from '~/component/Review/Review';
 import UserHeading from './UserHeading';
 
-function UserPage({ UserData }) {
+function UserCard({ UserData }) {
     // console.log(UserData);
     const [formData, setFormData] = useState({
         firstname: '',
@@ -261,20 +261,10 @@ function UserPage({ UserData }) {
                         </Form>
                         <Button className="mb-5 items-center">Save Address</Button>
                     </div>
-
-                    <div className="right-info-likerecently bg-white rounded-xl px-5 sm:px-10 mx-5 mt-5">
-                        <h1 className="text-2xl font-bold sm:text-xl text-center py-5">Danh sách yêu thích gần đây</h1>
-                        <span className="text-right hover:underline hover:font-semibold hover:cursor-pointer">
-                            Xem thêm
-                        </span>
-                        {/* {searchResult.slice(0, 3).map((item, index) => (
-                        <Book key={index} {...item} />
-                    ))} */}
-                    </div>
                 </div>
             </section>
         </div>
     );
 }
 
-export default UserPage;
+export default UserCard;

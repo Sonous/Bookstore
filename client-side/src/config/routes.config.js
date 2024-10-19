@@ -19,9 +19,15 @@ const routes = {
 
     user: '/user',
     usercheck: '/check',
+    orderDetail: '/orderdetail',
     order: '/order',
     results: '/results',
+
     favorite: '/favorite',
+
+
+    favoritebooks: '/favoritebooks',
+
 };
 
 export default routes;
