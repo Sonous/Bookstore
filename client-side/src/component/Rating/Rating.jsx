@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt, faStar as faRegStar } from '@fortawesome/free-solid-svg-icons'; // Use this line if you are using solid and half stars.
+import { faStar, faStarHalfAlt} from '@fortawesome/free-solid-svg-icons';
+import { faStar as faRegStar } from '@fortawesome/free-regular-svg-icons'; 
 
 const Rating = ({ rating, maxRating = 5 }) => {
     const ratings = Array.from({ length: maxRating }, (_, index) => {
@@ -8,7 +9,7 @@ const Rating = ({ rating, maxRating = 5 }) => {
         } else if (index === Math.floor(rating) && rating % 1 !== 0) {
             return <FontAwesomeIcon key={index} icon={faStarHalfAlt} className="text-yellow-400" />; // Half star
         } else {
-            return <FontAwesomeIcon key={index} icon={faRegStar} className="text-yellow-400" />; // Outline star
+            return <FontAwesomeIcon key={index} icon={faRegStar} className="text-yellow-400" />; // Empty star
         }
     });
 
