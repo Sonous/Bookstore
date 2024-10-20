@@ -14,7 +14,6 @@ function BookCollection({ topic = '' }) {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const navigate = useNavigate();
 
-
     useEffect(() => {
         const fetchApi = () => {
             request

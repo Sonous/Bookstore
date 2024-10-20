@@ -90,7 +90,7 @@ export default function FavoriteLayout() {
                             );
                         })
                     ) : (
-                        <div className="flex flex-col items-center py-5">
+                        <div className="flex flex-col items-center py-5 col-span-5">
                             <img src={images.nothingIcon} alt="nothing" className="w-44 h-44" />
                             <span>Bạn chưa có sách yêu thích nào...</span>
                         </div>

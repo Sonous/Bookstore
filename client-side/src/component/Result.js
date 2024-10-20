@@ -66,6 +66,12 @@ function Result({ category, selectedGenres, searchPage = false, data = [], setSe
     const [genres, setGenres] = useState([]);
     const [checkedPrice, setCheckedPrice] = useState('');
 
+    // console.log(
+    //     prices.find((price) => {
+    //         return price.label === checkedPrice;
+    //     }).value,
+    // );
+
     useEffect(() => {
         setBooks(data);
     }, [data]);

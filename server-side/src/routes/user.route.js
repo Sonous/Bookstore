@@ -7,6 +7,6 @@ userRouter.route('/').get(UserController.getUserByToken);
 
 userRouter.route('/:userId').get(UserController.getUserById);
 
-userRouter.route('/:userId/cart').get(UserController.getCartItems);
+userRouter.route('/:userId/cart/:bookId?').get(UserController.getCartItems).post(UserController.addBookToCart);
 
 export default userRouter;

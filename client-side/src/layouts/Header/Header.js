@@ -21,7 +21,8 @@ const cx = classNames.bind(styles);
 function Header() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const navigate = useNavigate();
-    const { user, logout, setIsLoading, alertExpiredLogin, cartItems, setCartItems } = useContext(UserContext);
+    const { user, logout, setIsLoading, alertExpiredLogin, cartItems, setCartItems, isReloadCart, setIsReloadCart } =
+        useContext(UserContext);
 
     useEffect(() => {
         const fetchApi = () => {
@@ -36,6 +37,7 @@ function Header() {
                 .then((books) => {
                     if (books.length > 0) {
                         setCartItems(books[0].Cart);
+                        setIsReloadCart(false);
                     }
                 })
                 .catch((err) => {
@@ -46,7 +48,7 @@ function Header() {
         };
 
         fetchApi();
-    }, [user]);
+    }, [user, isReloadCart]);
 
     window.addEventListener('resize', () => {
         setWindowWidth(window.innerWidth);
@@ -101,7 +103,12 @@ function Header() {
                                                             </span>
                                                         </div>
                                                         <div>
-                                                            <button className={cx('more')}>Xem giỏ hàng</button>
+                                                            <button
+                                                                className={cx('more')}
+                                                                onClick={() => navigate('/cart')}
+                                                            >
+                                                                Xem giỏ hàng
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
