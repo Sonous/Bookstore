@@ -39,5 +39,24 @@ const cartApi = {
             throw new Error(error.message);
         }
     },
+    deleteCartItem: async (userId, bookId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await request.post(
+                `/cart/deleteCartItem`,
+                { userId, bookId },
+                {
+                    headers: {
+                        'x-access-token': token,
+                    },
+                },
+            );
+            if (response?.message === 'success') {
+                return response.data;
+            }
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };
 export default cartApi;

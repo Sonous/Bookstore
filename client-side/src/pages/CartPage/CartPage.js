@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from '~/layouts/Header/Header';
 import { Checkbox } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,8 +8,13 @@ import { imageUrl } from '~/config/axios.config';
 import { Link } from 'react-router-dom';
 import { convertPriceToString } from '~/utils/functions';
 import cartApi from '~/apis/cartApi';
+import Dialog from './Dialog';
 export default function CartPage() {
     const { cartItems, setCartItems, user } = useContext(UserContext);
+    const [deleteId, setDeleteId] = useState(null);
+    const [showDeleteSelect, setShowDeleteSelect] = useState(false);
+    const [sltArr, setSltArr] = useState([]);
+    const [total, setTotal] = useState(0);
     const handleAddQuantity = async (bookId) => {
         const updatedCartItems = cartItems.map((item) => {
             if (item.book_id === bookId) {
@@ -32,16 +37,50 @@ export default function CartPage() {
         setCartItems(updatedCartItems);
         await cartApi.subQuantity(user.user_id, bookId);
     };
+    const handleDeleteProd = async (deleteId) => {
+        if (deleteId !== null) {
+            const updatedCartItems = cartItems.filter((item) => item.book_id !== deleteId);
+            setCartItems(updatedCartItems);
+            await cartApi.deleteCartItem(user.user_id, deleteId);
+        }
+    };
+    const onCheckboxChange = (e, bookId) => {
+        const isChecked = e.target.checked;
+        if (isChecked) {
+            setSltArr((prev) => [...prev, bookId]);
+        } else {
+            const newArr = sltArr.filter((el) => el !== bookId);
+            setSltArr(newArr);
+        }
+    };
+    useEffect(() => {
+        let tot = 0;
+        for (let i = 0; i < cartItems.length; i++) {
+            if (sltArr.includes(cartItems[i].book_id)) {
+                tot += cartItems[i].book_end_cost * cartItems[i].cart.quantity;
+            }
+        }
+        setTotal(tot);
+    }, [sltArr, cartItems]);
     return (
         <div className="">
             <Header />
-            <div className="px-24 bg-gray-100 ">
+            <div className="px-24 bg-gray-100 pb-24">
                 <h2 className="pt-6 text-xl mb-4">GIỎ HÀNG ({cartItems?.length ? cartItems.length : 0} sản phẩm)</h2>
                 <div className="flex gap-4">
                     <div className="basis-[70%]">
                         <div className="flex justify-between px-4  rounded-lg py-3  items-center bg-white">
                             <div className="basis-[60%] flex text-sm font-semibold items-center gap-2 ">
-                                <Checkbox></Checkbox>
+                                <Checkbox
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            const newArr = cartItems?.map((el) => el.book_id);
+                                            setSltArr(newArr);
+                                        } else {
+                                            setSltArr([]);
+                                        }
+                                    }}
+                                ></Checkbox>
                                 <p>Chọn tất cả ({cartItems?.length ? cartItems.length : 0} sản phẩm)</p>
                             </div>
                             <div className="basis-[40%] flex items-center">
@@ -56,7 +95,10 @@ export default function CartPage() {
                                     <div key={idx}>
                                         <div className={`flex px-4 py-6 bg-white `}>
                                             <div className="basis-[60%] flex gap-4">
-                                                <Checkbox />
+                                                <Checkbox
+                                                    checked={sltArr.includes(cartItem.book_id)}
+                                                    onChange={(e) => onCheckboxChange(e, cartItem.book_id)}
+                                                />
                                                 <div
                                                     style={{
                                                         backgroundImage: `url(${imageUrl}/${cartItem.bookimages[0].book_image_url})`,
@@ -104,6 +146,10 @@ export default function CartPage() {
                                                 </p>
                                                 <div className="basis-[10%]">
                                                     <FontAwesomeIcon
+                                                        onClick={() => {
+                                                            setShowDeleteSelect(true);
+                                                            setDeleteId(cartItem.book_id);
+                                                        }}
                                                         icon={faTrash}
                                                         className="text-xl text-gray-400 cursor-pointer hover:text-gray-700 transition-all"
                                                     />
@@ -124,12 +170,12 @@ export default function CartPage() {
                         <div className="px-4  py-4 bg-white rounded-lg">
                             <div className="flex pb-3 justify-between">
                                 <h1>Thành tiền</h1>
-                                <h1>0 đ</h1>
+                                <h1>{convertPriceToString(total)}</h1>
                             </div>
                             <div className="bg-gray-200 h-[1px] w-full mx-auto"></div>
                             <div className="flex justify-between py-4 items-center">
                                 <h1 className="font-bold">Tổng số tiền (gồm VAT)</h1>
-                                <h1 className="text-xl text-primary-color font-bold">0 đ</h1>
+                                <h1 className="text-xl text-primary-color font-bold">{convertPriceToString(total)}</h1>
                             </div>
                             <div className="w-full py-2 bg-primary-color text-white uppercase font-bold text-center rounded-md cursor-pointer transition-all hover:bg-red-700 select-none">
                                 Thanh toán
@@ -138,6 +184,21 @@ export default function CartPage() {
                     </div>
                 </div>
             </div>
+            {showDeleteSelect && (
+                <Dialog
+                    onClose={() => {
+                        setDeleteId(null);
+                        setShowDeleteSelect(false);
+                    }}
+                    onYes={() => {
+                        handleDeleteProd(deleteId);
+                        setShowDeleteSelect(false);
+                    }}
+                    buttonContent={'Xóa'}
+                    message={'Bạn có chắc muốn xóa cuốn sách này'}
+                    content={'Sách sẽ được xóa khỏi giỏ hàng của bạn!!'}
+                />
+            )}
         </div>
     );
 }
