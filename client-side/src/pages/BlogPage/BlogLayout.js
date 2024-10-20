@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '~/layouts/Footer/Footer';
 import Header from '~/layouts/Header/Header';
 import BlogPage from './BlogPage';
@@ -8,6 +8,7 @@ import blogApi from '~/apis/blogService';
 const blogTypes = ['Hoạt động', 'Sự kiện', 'Tin sách', 'Sách giả - Sách lậu', 'Lịch phát hành sách định kỳ'];
 export default function BlogLayout() {
     const navigate = useNavigate();
+    const { title } = useParams();
     const [typeSlt, setTypeSlt] = useState('Hoạt động');
     const [blogs, setBlogs] = useState([]);
     const [blogSlt, setBlogSlt] = useState(null);
@@ -19,8 +20,12 @@ export default function BlogLayout() {
         setTotalPage(data.total);
     };
     useEffect(() => {
+        if (title && blogTypes.includes(title)) {
+            setTypeSlt(title);
+        }
         getBlog();
-    }, [page, typeSlt]);
+    }, [page, typeSlt, title]);
+
     return (
         <div>
             <Header />
@@ -53,7 +58,7 @@ export default function BlogLayout() {
                                 return (
                                     <div
                                         onClick={() => {
-                                            setTypeSlt(type);
+                                            navigate(`/blogs/${type}`);
                                         }}
                                         className={`${
                                             typeSlt === type && 'text-primary-color'

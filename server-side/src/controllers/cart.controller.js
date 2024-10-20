@@ -77,7 +77,6 @@ const addQuantity = async (req, res) => {
         });
     }
 };
-
 const subQuantity = async (req, res) => {
     const { userId, bookId } = req.body;
     const user_id = parseInt(userId);
@@ -116,4 +115,46 @@ const subQuantity = async (req, res) => {
         });
     }
 };
-export { addQuantity, subQuantity };
+const deleteCartItem = async (req, res) => {
+    const { userId, bookId } = req.body;
+    const user_id = parseInt(userId);
+
+    // Check for missing fields
+    if (!user_id || !bookId) {
+        return res.status(400).json({
+            message: 'Missing fields',
+            status: 'failed',
+        });
+    }
+
+    try {
+        // Find the cart item and delete it
+        const deleted = await Cart.destroy({
+            where: { user_id: user_id, book_id: bookId },
+        });
+
+        // If no rows were affected, it means the item was not found
+        if (deleted === 0) {
+            return res.status(404).json({
+                message: 'Cart item not found',
+                status: 'failed',
+            });
+        }
+        const data = await getCartItemFromUser(userId);
+        // Success response
+        return res.status(200).json({
+            message: 'Cart item deleted successfully',
+            status: 'success',
+            data,
+        });
+    } catch (error) {
+        // Handle any errors
+        return res.status(500).json({
+            message: 'Error deleting cart item',
+            error: error.message,
+            status: 'failed',
+        });
+    }
+};
+
+export { addQuantity, subQuantity, deleteCartItem };
