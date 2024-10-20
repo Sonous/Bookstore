@@ -6,7 +6,8 @@ const UserReviewCard = ({
     name,
     rating,
     since,
-    desc
+    desc,
+   
 }) => {
   return (
     <div className='flex gap-[10px] flex-col bg-gray-300 rounded-[4px] p-[10px]'>

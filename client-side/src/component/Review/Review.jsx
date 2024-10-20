@@ -5,7 +5,6 @@ const ReviewData = [
         img: 'https://cdn0.fahasa.com/media/catalog/product/8/9/8935235238961.jpg',
         title: "Đồi thỏ",
         date: "02/10/2024",
-      
         rating: "5",
         review: "Đồi Thỏ của Richard Adams là một tác phẩm mà tôi rất yêu thích. Cuốn sách không chỉ đơn thuần là câu chuyện về cuộc hành trình của những chú thỏ, mà còn là một bài học về tình bạn, sự kiên trì và lòng dũng cảm.",
         price: '135.200',
@@ -14,7 +13,6 @@ const ReviewData = [
         img: 'https://cdn0.fahasa.com/media/catalog/product/8/9/8935235238961.jpg',
         title: "Đồi thỏ",
         date: "02/10/2024",
-      
         rating: "5",
         review: "Đồi Thỏ của Richard Adams là một tác phẩm mà tôi rất yêu thích. Cuốn sách không chỉ đơn thuần là câu chuyện về cuộc hành trình của những chú thỏ, mà còn là một bài học về tình bạn, sự kiên trì và lòng dũng cảm.",
         price: '135.200',
