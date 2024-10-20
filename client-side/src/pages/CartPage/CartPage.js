@@ -142,7 +142,9 @@ export default function CartPage() {
                                                     </div>
                                                 </div>
                                                 <p className=" basis-[45%]  text-center select-none text-primary-color font-bold">
-                                                    {convertPriceToString(cartItem.book_end_cost)}
+                                                    {convertPriceToString(
+                                                        cartItem.book_end_cost * cartItem.cart.quantity,
+                                                    )}
                                                 </p>
                                                 <div className="basis-[10%]">
                                                     <FontAwesomeIcon

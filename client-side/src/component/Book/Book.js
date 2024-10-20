@@ -31,6 +31,7 @@ function Book({
     const [liked, setLiked] = useState(false);
     const { user } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
+    const [showLike, setShowLike] = useState(false);
 
     // Kiểm tra danh sách yêu thích khi component mount
     useEffect(() => {
@@ -82,8 +83,10 @@ function Book({
                 home,
                 collection,
             })}
+            onMouseOver={() => setShowLike(true)}
+            onMouseLeave={() => setShowLike(false)}
         >
-            {collection && (
+            {collection && showLike && (
                 <div className="absolute top-0 right-0 bg-red-500 p-2">
                     <button onClick={handleClick}>
                         <div className="flex justify-center items-center text-base text-white w-6 h-6">

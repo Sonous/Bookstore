@@ -70,4 +70,58 @@ const getCartItems = (req, res) => {
         );
 };
 
-export { getUserById, getUserByToken, getCartItems };
+const addBookToCart = async (req, res) => {
+    const { quantity } = req.body;
+    const { userId, bookId } = req.params;
+
+    try {
+        if (!quantity) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: 'Please select the quantity of book!',
+            });
+        }
+
+        const isExisted = await Cart.findOne({
+            where: {
+                user_id: userId,
+                book_id: bookId,
+            },
+        });
+
+        if (isExisted) {
+            const updateItem = await Cart.update(
+                {
+                    quantity: parseInt(quantity),
+                },
+                {
+                    where: {
+                        user_id: userId,
+                        book_id: bookId,
+                    },
+                },
+            );
+
+            return res.status(200).json({
+                message: 'Update quantity of book!',
+                updateItem,
+            });
+        }
+
+        const item = await Cart.create({
+            user_id: parseInt(userId),
+            book_id: parseInt(bookId),
+            quantity: parseInt(quantity),
+        });
+
+        return res.status(200).json({
+            message: 'Add book to cart successfully!',
+            item,
+        });
+    } catch (error) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+            message: error.message,
+        });
+    }
+};
+
+export { getUserById, getUserByToken, getCartItems, addBookToCart };

@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import parse from 'html-react-parser';
 
@@ -7,8 +7,10 @@ import bookApi from '~/apis/bookApi';
 import Rating from '~/component/Rating/Rating';
 import Book from '~/component/Book/Book';
 import UserReview from '~/component/userReview/UserReview';
-import { imageUrl } from '~/config/axios.config';
+import request, { imageUrl } from '~/config/axios.config';
 import { convertPriceToString } from '~/utils/functions';
+import { UserContext } from '~/context/UserContextProvider';
+import Swal from 'sweetalert2';
 
 function BookDetail() {
     const { name } = useParams(); // Extract the book name from the URL
@@ -17,6 +19,7 @@ function BookDetail() {
     const [authBooks, setAuthBooks] = useState([]); // Renamed for clarity
     const [quantity, setQuantity] = useState(1);
     const [error, setError] = useState(null);
+    const { user, alertExpiredLogin, setIsReloadCart } = useContext(UserContext);
 
     // Fetch book details using the book name
     useEffect(() => {
@@ -48,6 +51,47 @@ function BookDetail() {
 
     if (error) return <div>{error}</div>;
     if (!book) return <div>Loading...</div>;
+
+    const handleAddBookToCart = () => {
+        const token = localStorage.getItem('token');
+
+        request
+            .post(
+                `/user/${user.user_id}/cart/${book.book_id}`,
+                {
+                    quantity,
+                },
+                {
+                    headers: {
+                        'x-access-token': token,
+                    },
+                },
+            )
+            .then((res) => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    },
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Thêm sách vào giỏ hàng thành công!',
+                });
+
+                setIsReloadCart(true);
+            })
+            .catch((err) => {
+                if (err.message === 'Unauthorized!') {
+                    alertExpiredLogin();
+                }
+            });
+    };
 
     return (
         <div>
@@ -152,7 +196,10 @@ function BookDetail() {
                                     </div>
                                 </form>
                                 <div className="button-container flex justify-evenly">
-                                    <Button className="bg-blue-500 text-white font-bold text-lg w-48">
+                                    <Button
+                                        className="bg-blue-500 text-white font-bold text-lg w-48"
+                                        onClick={handleAddBookToCart}
+                                    >
                                         Thêm vào giỏ hàng
                                     </Button>
                                     <Button className="bg-blue-500 text-white font-bold text-lg w-48">Mua ngay</Button>
