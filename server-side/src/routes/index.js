@@ -8,6 +8,8 @@ import verifyToken from '../middleware/verifyToken.js';
 import cartRouter from './cart.route.js';
 import favoriteRouter from './favorite.route.js';
 import adminRouter from './admin.route.js';
+import ratingRouter from './rating.route.js';
+
 
 export default function routes(server) {
     server.use('/api/book', bookRouter);
@@ -19,4 +21,5 @@ export default function routes(server) {
     server.use('/api/cart', verifyToken, cartRouter);
     server.use('/api/admin', verifyToken, adminRouter);
     server.use('/api/favorite', favoriteRouter);
+    server.use('/api/rating', ratingRouter)
 }

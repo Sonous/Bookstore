@@ -21,7 +21,17 @@ const bookApi = {
             throw error; // Re-throw error for handling elsewhere
         }
     },
-    
+ 
+    getGenreOfBook: async (id) => {
+        try {
+            const response = await axios.get(`${BASE_URL}/book/${id}/genre`); // Adjusted endpoint
+            console.log('Fetched genre data for book:', response.data); // Log the fetched data
+            return response.data; // Return the genre data
+        } catch (error) {
+            console.error('Error fetching genres of book:', error);
+            throw error; // Re-throw error for handling elsewhere
+        }
+    },
 };
 
 export default bookApi;
