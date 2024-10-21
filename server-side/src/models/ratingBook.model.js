@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
+import Book from './book.model.js';
 
 const RatingBook = sequelize.define(
     'ratingbook',
@@ -20,5 +21,9 @@ const RatingBook = sequelize.define(
         freezeTableName: true,
     },
 );
+RatingBook.belongsTo(Book, {
+    foreignKey: 'book_id',
+    as: 'Book', // Use this alias in your queries
+});
 
 export default RatingBook;
