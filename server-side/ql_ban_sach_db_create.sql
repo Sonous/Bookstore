@@ -46,6 +46,9 @@ CREATE TABLE Admin (
    admin_id INT NOT NULL AUTO_INCREMENT,
     admin_username varchar(255)  NOT NULL,
     admin_password varchar(255)  NOT NULL,
+    admin_avatar_url varchar(255)  NOT NULL,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT Admin_pk PRIMARY KEY (admin_id)
 );
 
@@ -606,8 +609,8 @@ INSERT INTO Address (address_id, address_house_number, address_ward, address_dis
 VALUES (20001, N'abc123', N'Phường Tây Thạnh', N'Quận Tân Phú', N'Thành phố Hồ Chí Minh', N'abcxyz123');
 
 -- Admin
-INSERT INTO Admin (admin_id, admin_username, admin_password) 
-VALUES (1, 'root', '22520545');
+INSERT INTO Admin (admin_id, admin_username, admin_password, admin_avatar_url) 
+VALUES (1, 'root', '22520545', 'Sonous.jpg');
 
 -- Banner
 INSERT INTO Banner (banner_id, banner_image_url, banner_link) 

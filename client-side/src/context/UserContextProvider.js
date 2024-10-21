@@ -4,6 +4,7 @@ import Loading from '~/component/Loading';
 import { request } from '~/config';
 
 const UserContext = createContext();
+
 const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +44,7 @@ const UserContextProvider = ({ children }) => {
                 })
                 .catch((err) => {
                     alertExpiredLogin();
+                    setIsLoading(false);
                 });
         }
     };
