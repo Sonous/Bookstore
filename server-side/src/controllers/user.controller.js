@@ -3,6 +3,7 @@ import Book from '../models/book.model.js';
 import BookImage from '../models/bookImage.model.js';
 import User from '../models/user.model.js';
 import Cart from '../models/cart.model.js';
+import RatingBook from '../models/ratingBook.model.js';
 
 const getUserById = (req, res) => {
     User.findByPk(req.params.userId)
