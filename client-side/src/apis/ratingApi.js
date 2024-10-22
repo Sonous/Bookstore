@@ -10,6 +10,24 @@ const reviewApi = {
             throw new Error(error.message);
         }
     },
+    addRating: async (data) => {
+        try {
+            const response = await request.post(`/rating`, data);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getAllRating: async (bookId) => {
+        try {
+            const response = await request.post(`/rating/getAllRatings`, {
+                bookId,
+            });
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };
 
 export default reviewApi;
