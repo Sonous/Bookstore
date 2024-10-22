@@ -8,7 +8,7 @@ export const ReviewCard = ({ img, title, rating, review, price }) => {
       <img
         src={img}
         alt="No image"
-        className="mx-auto h-[240px] w-[240px] object-cover transition duration-700 hover:skew-x-2"
+        className="mx-auto h-[180px] w-[180px] object-cover transition duration-700 hover:skew-x-2"
       />
     </div>
     <div className="space-y-2 p-3 flex-grow">
