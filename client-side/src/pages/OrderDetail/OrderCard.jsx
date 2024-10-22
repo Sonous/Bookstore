@@ -8,6 +8,7 @@ function OrderCard({ OrderData }) {
     if (!OrderData) {
       return <p>No Order Data</p>;
     }
+    const isCancel = OrderData.order_status === 'Hủy';
   
     // Sample test data for products (replace this with real product data from OrderData)
     const products = OrderData.books || [];
@@ -24,15 +25,19 @@ function OrderCard({ OrderData }) {
           </div>
           <div className="look-up flex gap-5 items-center px-5">
             <p className='text-blue-500'>Tra cứu vận chuyển</p>
-            <div className="complete border rounded-2xl w-[100px] bg-green-200 text-green-500 font-bold text-center">
-              <h1>Hoàn tất</h1>
+            <div className={`complete border rounded-2xl w-[100px] ${isCancel ? 'bg-red-200 text-red-500' : 'bg-green-200 text-green-500'} font-bold text-center`}>
+                <h1>{isCancel ? 'Hủy' : 'Hoàn tất'}</h1>
             </div>
           </div>
         </div>
   
         {/* Processing info (if applicable) */}
         <div className="process mx-5 p-5"></div>
-        <FullProcess />
+        <FullProcess 
+             isCancel={isCancel} // Pass the isCancel variable
+             orderDate={OrderData.created_at}
+             completeDate={OrderData.updated_at}
+             />
   
         {/* Display the product table */}
         <ProductTable products={products} />
