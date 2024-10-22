@@ -1,50 +1,137 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from '~/layouts/Header/Header';
+
 import { Link } from 'react-router-dom';
 import { routes } from '~/config';
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { Button, Checkbox, Form, Input, message, Select } from 'antd';
 import axios from 'axios';
-import { searchResult } from '~/dataTemorary';
-import Book from '~/component/Book/Book';
 import Review from '~/component/Review/Review';
 import UserHeading from './UserHeading';
+import { UserContext } from '~/context/UserContextProvider';
+import request, { imageUrl } from '~/config/axios.config';
 
-function UserCard({ UserData }) {
+import userApi from '~/apis/userApi';
+
+function UserCard() {
     // console.log(UserData);
-    const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
-        number: '',
-    });
-    useEffect(() => {
-        if (UserData) {
-            setFormData({
-                firstname: UserData.firstname || '',
-                lastname: UserData.lastname || '',
-                email: UserData.email || '',
-                number: UserData.number || '',
-            });
-        }
-    }, [UserData]);
+    const { user, setUser } = useContext(UserContext);
+    const [newAvatar, setNewAvatar] = useState(null);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-    const handleSave = (e) => {
-        e.preventDefault(); // Prevent form from reloading
-        console.log('Updated data:', formData); // Simulate saving by logging
-        // Here you can add code to send formData to a backend or API
-    };
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
+    const [formData, setFormData] = useState({
+        user_name: '',
+        user_email: '',
+        user_phone: '',
+    });
     const [validateAddress, setValidateAddress] = useState([]);
     const [form] = Form.useForm();
     const [city, setCity] = useState();
     const [district, setDistrict] = useState();
     const [ward, setWard] = useState();
+    const [message, setMessage] = useState('');
+    useEffect(() => {
+        if ( user) {
+            setFormData({
+                user_name: user.user_name || '',
+                user_email: user.user_email || '',
+                user_phone: user.user_phone || '',
+            });
+        }
+    }, [user]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+    const handleUpdateUser = async () => {
+        try {
+            // Call the updateUser function with the current form data
+            const updatedUserData = await userApi.updateUser(user?.user_id, formData);
+            console.log('User updated successfully:', updatedUserData);
+            // Handle successful update (e.g., display a success message)
+            setMessage('User updated successfully!');
+        } catch (error) {
+            console.error('Error updating user:', error.message);
+            setMessage('An error occurred while updating the user.'); // Informative error message
+        } finally {
+            // Optionally clear the form after submission
+            setFormData({
+                user_name: '',
+                user_email: '',
+                user_phone: '',
+            });
+        }
+    };
+    
+
+    const onFinish = (values) => {
+        console.log('Success:', values);
+    };
+
+    const handleAvatarChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setNewAvatar(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const uploadAvatar = async () => {
+        if (!newAvatar) {
+            message.error('Please select an image to upload.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('avatar', newAvatar);
+
+        try {
+            const token = localStorage.getItem('token'); // Get the token from localStorage
+            const userId = user.user_id; // Ensure this matches your user structure
+
+            const response = await axios.put(`http://localhost:5000/api/user/${userId}/avatar`, formData, {
+                headers: {
+                    'x-access-token': token,
+                },
+            });
+
+            if (response.status === 200) {
+                message.success('Avatar updated successfully!');
+                // Optionally, refresh user data to get the new avatar
+            } else {
+                message.error('Failed to update avatar.');
+            }
+        } catch (error) {
+            console.error('Error uploading avatar:', error);
+            message.error('Error uploading avatar.');
+        }
+    };
+
+    const deleteAvatar = async () => {
+        try {
+            const token = localStorage.getItem('token'); // Get the token from localStorage
+            const userId = user.user_id; // Ensure this matches your user structure
+
+            const response = await axios.delete(`http://localhost:5000/api/user/${userId}/avatar`, {
+                headers: {
+                    'x-access-token': token,
+                },
+            });
+
+            if (response.status === 200) {
+
+            } else {
+            }
+        } catch (error) {
+            console.error('Error deleting avatar:', error);
+        }
+    };
+
 
     const getCity = async () => {
         const response = await axios.get('https://provinces.open-api.vn/api/');
@@ -85,6 +172,7 @@ function UserCard({ UserData }) {
 
     useEffect(() => {
         getCity();
+       
     }, []);
 
     // Your JSX code here
@@ -94,47 +182,47 @@ function UserCard({ UserData }) {
             <Header />
             <UserHeading />
             <section className="userInfo flex bg-gray-300 mx-5 rounded-xl justify-between ">
-                <div className="left-info flex flex-col w-full xl:w-3/12 mx-auto">
+                <div className="left-info flex flex-col w-full xl:w-3/12 ">
                     <div className="bg-white rounded-xl p-5 mx-5 mt-5">
                         <h1 className="text-2xl font-bold 2xl:text-xl text-center py-5 border-b border-blue-500">
                             Public Profile
                         </h1>
                         {/* Avatar */}
-                        <div className="grid max-w-2xl mx-auto mt-8">
+                        <div className="flex flex-col max-w-2xl mx-auto mt-8">
                             <div className="flex flex-col lg:flex-row justify-between items-center space-y-5 2xl:space-y-0 2xl:space-x-4">
                                 {' '}
                                 {/* Flex adjustments */}
-                                <div className="bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/2048px-User_icon_2.svg.png')] w-32 h-32 2xl:w-40 2xl:h-40 rounded-full bg-cover ring-2 ring-indigo-300"></div>
+                                <div className=" w-32 h-32 2xl:w-40 2xl:h-40 rounded-full bg-cover ring-2 ring-indigo-300" 
+                                 style={{
+                                    backgroundImage: `url(${imageUrl}/${user.user_avatar_url})`, // Use the first image
+                                }}></div>
                                 <div className="flex flex-col space-y-2 lg:ml-8">
-                                    {' '}
-                                    {/* Adjusted space */}
-                                    <Button className="font-medium hover:bg-slate-800">Change Avatar</Button>
-                                    <Button className="font-medium bg-white text-black hover:bg-slate-300">
-                                        Delete Avatar
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleAvatarChange}
+                                    className="hidden"
+                                    id="avatar-upload" // Associate with label
+                                />
+                                <label htmlFor="avatar-upload">
+                                    <Button className="font-medium hover:bg-slate-800" onClick={uploadAvatar}>
+                                        Change Avatar
                                     </Button>
+                                </label>
+                                <Button className="font-medium bg-white text-black hover:bg-slate-300" onClick={deleteAvatar}>
+                                    Delete Avatar
+                                </Button>
                                 </div>
                             </div>
                             {/* Update Info */}
-                            <div className="mt-8 2xl:mt-14 text-[#202142]">
+                            <Form className="mt-8 2xl:mt-14 text-[#202142]" form={form}>
                                 <div className="flex flex-col 2xl:flex-row 2xl:space-x-4 space-y-2 2xl:space-y-0">
                                     <div className="w-full">
-                                        <p className="block mb-2 text-sm font-medium text-indigo-900">
-                                            Your First Name
-                                        </p>
+                                        <p className="block mb-2 text-sm font-medium text-indigo-900">Your Name</p>
                                         <input
                                             type="text"
-                                            name="firstname"
-                                            value={formData.firstname}
-                                            onChange={handleChange}
-                                            className="bg-indigo-50 border border-indigo-300 text-sm rounded-lg w-full p-2.5"
-                                        />
-                                    </div>
-                                    <div className="w-full">
-                                        <p className="block mb-2 text-sm font-medium text-indigo-900">Your Last Name</p>
-                                        <input
-                                            type="text"
-                                            name="lastname"
-                                            value={formData.lastname}
+                                            name="user_name" // Match with state key
+                                            value={formData.user_name}
                                             onChange={handleChange}
                                             className="bg-indigo-50 border border-indigo-300 text-sm rounded-lg w-full p-2.5"
                                         />
@@ -144,8 +232,8 @@ function UserCard({ UserData }) {
                                     <p className="block mb-2 text-sm font-medium text-indigo-900">Your Email</p>
                                     <input
                                         type="email"
-                                        name="email"
-                                        value={formData.email}
+                                        name="user_email" // Match with state key
+                                        value={formData.user_email}
                                         onChange={handleChange}
                                         className="bg-indigo-50 border border-indigo-300 text-sm rounded-lg w-full p-2.5"
                                     />
@@ -154,26 +242,24 @@ function UserCard({ UserData }) {
                                     <p className="block mb-2 text-sm font-medium text-indigo-900">Your Number</p>
                                     <input
                                         type="text"
-                                        name="number"
-                                        value={formData.number}
+                                        name="user_phone" // Match with state key
+                                        value={formData.user_phone}
                                         onChange={handleChange}
                                         className="bg-indigo-50 border border-indigo-300 text-sm rounded-lg w-full p-2.5"
                                     />
                                 </div>
                                 <div className="flex justify-end mt-5">
-                                    <Button
-                                        onClick={handleSave}
-                                        className="text-white bg-indigo-700 hover:bg-indigo-800 rounded-lg px-5 py-2.5"
-                                    >
+                                    <Button type="button" onClick={handleUpdateUser}>
                                         Save
                                     </Button>
                                 </div>
-                            </div>
+                            </Form>
+
                         </div>
                     </div>
                 </div>
                 <div className="mid-review w-6/12">
-                    <div className="review rounded-xl px-10 mt-5  dark:text-white">
+                    <div className="review rounded-xl px-2 mt-5  dark:text-white">
                         {' '}
                         {/* Removed round-xl */}
                         <Review /> {/* Ensure Review takes the full width */}
@@ -181,7 +267,7 @@ function UserCard({ UserData }) {
                 </div>
 
                 <div className="right w-full lg:w-3/12 mx-auto">
-                    <div className="right-address bg-white rounded-xl px-5 lg:px-10 mx-5 mt-5">
+                    <div className="right-address bg-white rounded-xl px-5 lg:px-5 mx-5 mt-5">
                         <h1 className="text-2xl font-bold lg:text-xl text-center py-5 border-b border-blue-500">
                             Address
                         </h1>
@@ -191,13 +277,13 @@ function UserCard({ UserData }) {
                             name="basic"
                             onFinish={onFinish}
                             autoComplete="off"
-                            initialValues={{ username: `${formData.firstname} ${formData.lastname}` }}
+                            initialValues={{ username: `${formData.user_name}` }}
                         >
                             <Form.Item
-                                label={<p className="min-w-[130px] text-start text-sm">Họ và tên</p>}
+                                label={<p className="min-w-[130px] text-start text-sm ">Họ và tên</p>}
                                 name="username"
                             >
-                                <Input className="w-full" placeholder="Enter your name" />
+                                <div className="w-full font-semibold" >{formData.user_name}</div>
                             </Form.Item>
 
                             <Form.Item
@@ -207,7 +293,7 @@ function UserCard({ UserData }) {
                             >
                                 <Select
                                     placeholder="Chọn tỉnh/thành phố"
-                                    style={{ width: '150%' }}
+                                    style={{ width: '120%' }}
                                     onChange={(e) => {
                                         getDistrict(e);
                                         form.setFieldsValue({ district: null, ward: null });
@@ -225,7 +311,7 @@ function UserCard({ UserData }) {
                                 <Select
                                     disabled={validateAddress.includes('city') ? false : true}
                                     placeholder="Chọn quận/huyện"
-                                    style={{ width: '150%' }}
+                                    style={{ width: '120%' }}
                                     onChange={(e) => {
                                         getWards(e);
                                         form.setFieldsValue({ ward: null });
@@ -243,7 +329,7 @@ function UserCard({ UserData }) {
                                 <Select
                                     disabled={validateAddress.includes('district') ? false : true}
                                     placeholder="Chọn phường/xã"
-                                    style={{ width: '150%' }}
+                                    style={{ width: '120%' }}
                                     onChange={() => {
                                         setValidateAddress((prev) => [...prev, 'ward']);
                                     }}
@@ -251,15 +337,16 @@ function UserCard({ UserData }) {
                                 />
                             </Form.Item>
 
-                            <Form.Item
-                                label={<p className="w-[130px] text-start text-sm">Địa chỉ nhận hàng:</p>}
+                            <Form.Item className='items-end'
+                                label={<p className="w-[120px] text-start text-sm">Địa chỉ nhận hàng:</p>}
                                 name="address"
                                 rules={[{ required: true, message: 'Vui lòng nhập số địa chỉ nhận hàng' }]}
+                                
                             >
-                                <Input className="w-[180px]" placeholder="Enter your address" />
+                                <Input className="w-[150px] " placeholder="Enter your address" />
                             </Form.Item>
                         </Form>
-                        <Button className="mb-5 items-center">Save Address</Button>
+                        <Button className="mb-5 items-center" type="submit">Save Address</Button>
                     </div>
                 </div>
             </section>

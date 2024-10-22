@@ -1,8 +1,16 @@
 import React from 'react';
 
 const ProductTable = ({ products }) => {
+  console.log('Book', products);
+  
   const productCount = products.length; // Count the number of products
-  const totalCost = products.reduce((acc, product) => acc + (product.currentPrice * product.quantity), 0);
+  
+  // Calculate total cost
+  const totalCost = products.reduce((acc, product) => {
+    const cost = parseFloat(product.book_end_cost) || 0; // Convert to number
+    const quantity = product.quantity || 1; // Default quantity to 1 if not provided
+    return acc + (cost * quantity); // Add cost * quantity to accumulator
+  }, 0);
 
   return (
     <div className="overflow-x-auto p-5">
@@ -18,31 +26,37 @@ const ProductTable = ({ products }) => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product, index) => (
-            <tr key={index} className="border-b">
-              <td className="py-3 px-4 flex items-center">
-                <img
-                  src={product.image || 'https://via.placeholder.com/50'} // Placeholder image if none
-                  alt={product.title}
-                  className="w-20 h-20 object-cover mr-4"
-                />
-                <span>{product.title}</span>
-              </td>
-              <td className="py-3 px-4">
-                {product.currentPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-              </td>
-              <td className="py-3 px-4">{product.quantity}</td>
-              <td className="py-3 px-4">
-                {(product.currentPrice * product.quantity).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-              </td>
-            </tr>
-          ))}
-            <tr className="border-b">
-                <td colSpan="3" className="text-right py-3 px-4 font-semibold">Tổng thành tiền:</td>
-                <td className="py-3 px-4 font-semibold">
-                {totalCost.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+          {products.map((product, index) => {
+            const cost = parseFloat(product.book_end_cost) || 0; // Convert to number
+            const quantity = product.quantity || 1; // Default quantity to 1 if not provided
+            const itemTotal = cost * quantity; // Calculate total for this product
+
+            return (
+              <tr key={index} className="border-b">
+                <td className="py-3 px-4 flex items-center">
+                  <img
+                    src={(product.bookimages && product.bookimages.length > 0 ? product.bookimages[0].book_image_url : 'https://via.placeholder.com/50')}
+                    alt={product.book_name}
+                    className="w-20 h-20 object-cover mr-4"
+                  />
+                  <span>{product.book_name}</span>
                 </td>
-            </tr>
+                <td className="py-3 px-4">
+                  {cost.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                </td>
+                <td className="py-3 px-4">{quantity}</td>
+                <td className="py-3 px-4">
+                  {itemTotal.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} {/* Displaying the total for each product */}
+                </td>
+              </tr>
+            );
+          })}
+          <tr className="border-b">
+            <td colSpan="3" className="text-right py-3 px-4 font-semibold">Tổng thành tiền:</td>
+            <td className="py-3 px-4 font-semibold">
+              {totalCost.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

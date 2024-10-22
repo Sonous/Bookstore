@@ -1,6 +1,8 @@
 import express from 'express';
-import { getAddress } from '../controllers/address.controller.js';
+import { getAddressByUser } from '../controllers/address.controller.js';
 
 const addressRouter = express.Router();
-addressRouter.route('/').post(getAddress);
+
+addressRouter.get('/:userId', getAddressByUser);
+
 export default addressRouter;

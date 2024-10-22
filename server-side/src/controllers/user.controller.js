@@ -3,6 +3,7 @@ import Book from '../models/book.model.js';
 import BookImage from '../models/bookImage.model.js';
 import User from '../models/user.model.js';
 import Cart from '../models/cart.model.js';
+import RatingBook from '../models/ratingBook.model.js';
 
 const getUserById = (req, res) => {
     User.findByPk(req.params.userId)
@@ -123,5 +124,29 @@ const addBookToCart = async (req, res) => {
         });
     }
 };
+const updateUser = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const updatedUserData = req.body;
 
-export { getUserById, getUserByToken, getCartItems, addBookToCart };
+        const user = await User.findByPk(userId);
+
+        if (!user) {
+            return res.status(StatusCodes.NOT_FOUND).json({ message: 'User not found.' });
+        }
+
+        await user.update(updatedUserData);
+
+        res.status(StatusCodes.OK).json({
+            message: 'User updated successfully.',
+            user: user,
+        });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: 'An error occurred while updating the user.',
+            error: error.message,
+        });
+    }
+};
+
+export { getUserById, getUserByToken, getCartItems, addBookToCart, updateUser };

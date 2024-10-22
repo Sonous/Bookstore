@@ -13,11 +13,7 @@ server.use(
     }),
 );
 server.use(express.json());
-server.use(
-    cors({
-        origin: 'http://localhost:3000',
-    }),
-);
+server.use(cors());
 server.use(express.static('src/assets'));
 
 // Check db connection
