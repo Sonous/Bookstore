@@ -5,11 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '~/context/UserContextProvider';
 import { imageUrl } from '~/config/axios.config';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { convertPriceToString } from '~/utils/functions';
 import cartApi from '~/apis/cartApi';
 import Dialog from './Dialog';
 export default function CartPage() {
+    const navigate = useNavigate();
+
     const { cartItems, setCartItems, user } = useContext(UserContext);
     const [deleteId, setDeleteId] = useState(null);
     const [showDeleteSelect, setShowDeleteSelect] = useState(false);
@@ -52,6 +54,20 @@ export default function CartPage() {
             const newArr = sltArr.filter((el) => el !== bookId);
             setSltArr(newArr);
         }
+    };
+    const handlePayment = () => {
+        let books = [];
+        for (let i = 0; i < cartItems.length; i++) {
+            if (sltArr.includes(cartItems[i].book_id)) {
+                books.push(cartItems[i]);
+            }
+        }
+        for (let i = 0; i < books.length; i++) {
+            books[i].total = books[i].cart.quantity * books[i].book_end_cost;
+            books[i].totalPrice = total;
+        }
+        localStorage.setItem('bookpayment', JSON.stringify(books));
+        navigate('/paying');
     };
     useEffect(() => {
         let tot = 0;
@@ -179,7 +195,12 @@ export default function CartPage() {
                                 <h1 className="font-bold">Tổng số tiền (gồm VAT)</h1>
                                 <h1 className="text-xl text-primary-color font-bold">{convertPriceToString(total)}</h1>
                             </div>
-                            <div className="w-full py-2 bg-primary-color text-white uppercase font-bold text-center rounded-md cursor-pointer transition-all hover:bg-red-700 select-none">
+                            <div
+                                onClick={() => {
+                                    handlePayment();
+                                }}
+                                className="w-full py-2 bg-primary-color text-white uppercase font-bold text-center rounded-md cursor-pointer transition-all hover:bg-red-700 select-none"
+                            >
                                 Thanh toán
                             </div>
                         </div>

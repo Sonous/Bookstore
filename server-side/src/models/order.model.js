@@ -17,6 +17,7 @@ const Order = sequelize.define(
         user_id: DataTypes.INTEGER,
         address_id: DataTypes.INTEGER,
         pay_method_id: DataTypes.INTEGER,
+        address_data: DataTypes.STRING,
     },
     {
         timestamps: false,

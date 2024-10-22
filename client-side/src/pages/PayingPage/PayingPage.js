@@ -3,6 +3,8 @@ import Header from '~/layouts/Header/Header';
 import { Checkbox, Form, Input, Select } from 'antd';
 import axios from 'axios';
 import PaymentMethod from './PaymentMethod';
+import { imageUrl } from '~/config/axios.config';
+import { convertPriceToString } from '~/utils/functions';
 export default function PayingPage() {
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -12,6 +14,7 @@ export default function PayingPage() {
     const [city, setCity] = useState();
     const [district, setDistrict] = useState();
     const [ward, setWard] = useState();
+    const [books, setBooks] = useState([]);
     const getCity = async () => {
         const response = await axios.get('https://vapi.vnappmob.com/api/province/');
         const dataCity = [];
@@ -75,6 +78,10 @@ export default function PayingPage() {
     };
     useEffect(() => {
         getCity();
+        const item = localStorage.getItem('bookpayment');
+        if (item) {
+            setBooks(JSON.parse(item));
+        }
     }, []);
     return (
         <div>
@@ -197,26 +204,33 @@ export default function PayingPage() {
                     <h1 className="uppercase font-bold text-lg border-b-[1px] border-gray-300 pb-2">
                         Kiểm tra lại đơn hàng
                     </h1>
-                    <div className="flex gap-4 ">
-                        <div
-                            className="basis-[13%] min-w-[150px] h-[150px] bg-no-repeat bg-cover"
-                            style={{
-                                backgroundImage: `url(https://cdn0.fahasa.com/media/catalog/product//b/_/b_a-in-g_c-nh_-c_-n_ng.jpg)`,
-                            }}
-                        ></div>
-                        <div className="mt-4 basis-[50%]">
-                            <p>Góc nhỏ có nắng</p>
-                        </div>
-                        <div className="mt-4 basis-[12%]">
-                            <p className="text-sm">54.400 đ</p>
-                            <p className="text-sm line-through text-gray-500">68.000 đ</p>
-                        </div>
-                        <div className="mt-4 basis-[10%]">
-                            <p>Số lượng : 1</p>
-                        </div>
-                        <div className="mt-4 basis-[10%]">
-                            <p className="text-yellow-500 font-bold">54.400 đ</p>
-                        </div>
+                    <div className="flex mt-4 flex-col gap-4">
+                        {books.length > 0 &&
+                            books.map((book, idx) => (
+                                <div key={idx} className="flex gap-4 ">
+                                    <div
+                                        className="basis-[13%] min-w-[150px] h-[150px] bg-no-repeat bg-contain bg-center"
+                                        style={{
+                                            backgroundImage: `url(${imageUrl}/${book.bookimages[0].book_image_url})`,
+                                        }}
+                                    ></div>
+                                    <div className="mt-4 basis-[50%] ">
+                                        <p className="text-lg">{book.book_name}</p>
+                                    </div>
+                                    <div className="mt-4 basis-[12%]">
+                                        <p className="text-sm">{convertPriceToString(book.book_end_cost)}</p>
+                                        <p className="text-sm line-through text-gray-500">
+                                            {convertPriceToString(book.book_cost)}
+                                        </p>
+                                    </div>
+                                    <div className="mt-4 basis-[10%]">
+                                        <p>Số lượng : {book.cart.quantity}</p>
+                                    </div>
+                                    <div className="mt-4 basis-[10%]">
+                                        <p className="text-yellow-500 font-bold">{convertPriceToString(book.total)}</p>
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>
@@ -224,7 +238,9 @@ export default function PayingPage() {
                 <div className="flex items-end flex-col">
                     <div className="flex">
                         <p>Thành tiền</p>
-                        <p className="min-w-[180px] text-end">54.400 đ</p>
+                        <p className="min-w-[180px] text-end">
+                            {books.length > 0 ? convertPriceToString(books[0].totalPrice) : 0}
+                        </p>
                     </div>
                     <div className="flex">
                         <p>Phí vận chuyển (Giao hàng tiêu chuẩn)</p>
@@ -232,7 +248,9 @@ export default function PayingPage() {
                     </div>
                     <div className="flex">
                         <p className="font-bold">Tổng Số Tiền (gồm VAT)</p>
-                        <p className="min-w-[180px] text-end text-lg text-yellow-500 font-extrabold">74.400 đ</p>
+                        <p className="min-w-[180px] text-end text-lg text-yellow-500 font-extrabold">
+                            {books.length > 0 ? convertPriceToString(books[0].totalPrice + 20000) : 0}
+                        </p>
                     </div>
                 </div>
                 <div className="my-4 h-[0.5px] w-full bg-gray-300"></div>
