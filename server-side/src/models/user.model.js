@@ -18,6 +18,7 @@ const User = sequelize.define(
         },
         user_password: DataTypes.STRING,
         user_avatar_url: DataTypes.STRING,
+        address_id: DataTypes.INTEGER,
     },
     {
         timestamps: false,

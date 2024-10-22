@@ -117,14 +117,6 @@ CREATE TABLE BookImage (
     CONSTRAINT BookImage_pk PRIMARY KEY (book_image_id)
 );
 
--- Table: BookOrder
-CREATE TABLE BookOrder (
-    order_id int  NOT NULL,
-    book_id int  NOT NULL,
-    quantity int  NOT NULL,
-    CONSTRAINT BookOrder_pk PRIMARY KEY (order_id,book_id)
-);
-
 -- Table: Cart
 CREATE TABLE Cart (
     user_id int  NOT NULL,
@@ -158,15 +150,16 @@ CREATE TABLE Genre (
 -- Table: Order
 CREATE TABLE `Order` (
     order_id int  NOT NULL AUTO_INCREMENT,
+    order_address_info json  NOT NULL,
+    order_books json  NOT NULL,
     order_status nvarchar(50)  NOT NULL,
     books_total_prices decimal(20,2)  NOT NULL,
+    transport_name nvarchar(255)  NOT NULL,
+    transport_cost decimal(20,2)  NOT NULL,
     order_total_cost decimal(20,2)  NOT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     user_id int  NOT NULL,
-    address_id int  NOT NULL,
-    pay_method_id int  NOT NULL,
-    transport_id int NOT NULL,
     CONSTRAINT Order_pk PRIMARY KEY (order_id)
 );
 
@@ -205,14 +198,8 @@ CREATE TABLE User (
     user_avatar_url varchar(255)  NOT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    address_id int,
     CONSTRAINT User_pk PRIMARY KEY (user_id)
-);
-
--- Table: UserAddress
-CREATE TABLE UserAddress (
-    address_id int  NOT NULL,
-    user_id int  NOT NULL,
-    CONSTRAINT UserAddress_pk PRIMARY KEY (address_id,user_id)
 );
 
 -- foreign keys
@@ -236,14 +223,6 @@ ALTER TABLE BookGenre ADD CONSTRAINT BookGenre_Genre FOREIGN KEY BookGenre_Genre
 ALTER TABLE BookImage ADD CONSTRAINT BookImage_Book FOREIGN KEY BookImage_Book (book_id)
     REFERENCES Book (book_id);
 
--- Reference: BookOrder_Book (table: BookOrder)
-ALTER TABLE BookOrder ADD CONSTRAINT BookOrder_Book FOREIGN KEY BookOrder_Book (book_id)
-    REFERENCES Book (book_id);
-
--- Reference: BookOrder_Order (table: BookOrder)
-ALTER TABLE BookOrder ADD CONSTRAINT BookOrder_Order FOREIGN KEY BookOrder_Order (order_id)
-    REFERENCES `Order` (order_id);
-
 -- Reference: Cart_Book (table: Cart)
 ALTER TABLE Cart ADD CONSTRAINT Cart_Book FOREIGN KEY Cart_Book (book_id)
     REFERENCES Book (book_id);
@@ -260,18 +239,6 @@ ALTER TABLE FavoriteBook ADD CONSTRAINT FavoriteBook_Book FOREIGN KEY FavoriteBo
 ALTER TABLE Genre ADD CONSTRAINT Genre_Category FOREIGN KEY Genre_Category (category_id)
     REFERENCES Category (category_id);
 
--- Reference: Order_Address (table: Order)
-ALTER TABLE `Order` ADD CONSTRAINT Order_Address FOREIGN KEY Order_Address (address_id)
-    REFERENCES Address (address_id);
-
--- Reference: Order_PayingMethod (table: Order)
-ALTER TABLE `Order` ADD CONSTRAINT Order_PayingMethod FOREIGN KEY Order_PayingMethod (pay_method_id)
-    REFERENCES PayingMethod (pay_method_id);
-
--- Reference: Order_TransportMethod (table: Order)
-ALTER TABLE `Order` ADD CONSTRAINT Order_TransportMethod FOREIGN KEY Order_TransportMethod (transport_id)
-    REFERENCES TransportMethod (transport_id);
-
 -- Reference: Order_User (table: Order)
 ALTER TABLE `Order` ADD CONSTRAINT Order_User FOREIGN KEY Order_User (user_id)
     REFERENCES User (user_id);
@@ -284,24 +251,20 @@ ALTER TABLE RatingBook ADD CONSTRAINT Table_15_Book FOREIGN KEY Table_15_Book (b
 ALTER TABLE RatingBook ADD CONSTRAINT Table_15_User FOREIGN KEY Table_15_User (user_id)
     REFERENCES User (user_id);
 
--- Reference: User_Address_Address (table: UserAddress)
-ALTER TABLE UserAddress ADD CONSTRAINT User_Address_Address FOREIGN KEY User_Address_Address (address_id)
+-- Reference: User_Address (table: User)
+ALTER TABLE User ADD CONSTRAINT User_Address FOREIGN KEY User_Address (address_id)
     REFERENCES Address (address_id);
-
--- Reference: User_Address_User (table: UserAddress)
-ALTER TABLE UserAddress ADD CONSTRAINT User_Address_User FOREIGN KEY User_Address_User (user_id)
-    REFERENCES User (user_id);
 
 -- End of file.
 
 -- Insert data
 
  -- User
- INSERT INTO User (user_id, user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
- (10001, N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg');
+ INSERT INTO User (user_id, user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
+ (10001, N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg', 20001);
  
-  INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
- (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg');
+  INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
+ (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg', NULL);
  
  -- Book
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
@@ -1431,15 +1394,6 @@ INSERT INTO PayingMethod (pay_method_id, pay_method_name) VALUES (40001, N'Thanh
 -- TransportMethod
 INSERT INTO TransportMethod (transport_id, transport_name, transport_cost) VALUES (50001, N'Giao hàng tiêu chuẩn', 20000.00);
 
--- Order
-INSERT INTO `Order` (order_id, order_status, books_total_prices, order_total_cost, user_id, address_id, pay_method_id, transport_id) 
-VALUES (30001, N'Hoàn tất', 82560.00, 102560.00, 10001, 20001, 40001, 50001);
-
--- BookOrder
-INSERT INTO BookOrder (order_id, book_id, quantity) VALUES 
-(30001, 60001, 1), 
-(30001, 60003, 2);
-
 -- Cart
 INSERT INTO Cart (user_id, book_id, quantity) VALUES 
 (10001, 60001, 1),
@@ -1461,5 +1415,3 @@ INSERT INTO RatingBook (user_id, book_id, rating_star, rating_content) VALUES
  (10001, 60002, 4, N'Tình tiết truyện cuốn hút'),
  (10001, 60003, 5, N'Hóng tập tiếp theo');
  
- -- UserAddress
- INSERT INTO UserAddress (address_id, user_id) VALUES (20001, 10001);

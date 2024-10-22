@@ -99,16 +99,12 @@ Book.belongsToMany(User, {
 });
 
 // Associate between User and Address
-User.belongsToMany(Address, {
-    through: 'useraddress',
-    foreignKey: 'user_id',
-    otherKey: 'address_id',
+Address.hasMany(User, {
+    foreignKey: 'address_id',
 });
 
-Address.belongsToMany(User, {
-    through: 'useraddress',
+User.belongsTo(Address, {
     foreignKey: 'address_id',
-    otherKey: 'user_id',
 });
 
 // Associate between User and Order
@@ -118,37 +114,6 @@ User.hasMany(Order, {
 
 Order.belongsTo(User, {
     foreignKey: 'user_id',
-});
-
-// Associate between Address and Order
-Address.hasMany(Order, {
-    foreignKey: 'address_id',
-});
-
-Order.belongsTo(Address, {
-    foreignKey: 'address_id',
-});
-
-// Associate between Book and Order
-Book.belongsToMany(Order, {
-    through: 'bookorder',
-    foreignKey: 'book_id',
-    otherKey: 'order_id',
-});
-
-Order.belongsToMany(Book, {
-    through: 'bookorder',
-    foreignKey: 'order_id',
-    otherKey: 'book_id',
-});
-
-// Associate between PayingMethod and Order
-PayingMethod.hasMany(Order, {
-    foreignKey: 'pay_method_id',
-});
-
-Order.belongsTo(PayingMethod, {
-    foreignKey: 'pay_method_id',
 });
 
 export { Book, BookImage, Genre, Category, BlogType, Blog, User, Address, Order, PayingMethod };
