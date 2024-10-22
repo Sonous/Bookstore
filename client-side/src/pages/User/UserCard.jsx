@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '~/layouts/Header/Header';
+
 import { Link } from 'react-router-dom';
 import { routes } from '~/config';
 import { Button, Checkbox, Form, Input, message, Select } from 'antd';
@@ -9,15 +10,17 @@ import UserHeading from './UserHeading';
 import { UserContext } from '~/context/UserContextProvider';
 import request, { imageUrl } from '~/config/axios.config';
 
-function UserCard({ UserData  }) {
+import userApi from '~/apis/userApi';
+
+function UserCard() {
     // console.log(UserData);
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [newAvatar, setNewAvatar] = useState(null);
 
     const [formData, setFormData] = useState({
         user_name: '',
-        email: '',
-        number: '',
+        user_email: '',
+        user_phone: '',
     });
     const [validateAddress, setValidateAddress] = useState([]);
     const [form] = Form.useForm();
@@ -29,8 +32,8 @@ function UserCard({ UserData  }) {
         if ( user) {
             setFormData({
                 user_name: user.user_name || '',
-                email: user.user_email || '',
-                number: user.user_phone || '',
+                user_email: user.user_email || '',
+                user_phone: user.user_phone || '',
             });
         }
     }, [user]);
@@ -42,24 +45,27 @@ function UserCard({ UserData  }) {
             [name]: value,
         });
     };
-    const handleSave = async (data) => {
-        const token = localStorage.getItem('token'); // Lấy token từ local storage
+    const handleUpdateUser = async () => {
         try {
-            const response = await request.put(`/user/${user.user_id}`, data, {
-                headers: {
-                    'x-access-token': token,
-                },
-            });
-            // Cập nhật trạng thái thông báo thành công
-            setMessage('Update successful!');
-            console.log('Update successful:', response.data);
+            // Call the updateUser function with the current form data
+            const updatedUserData = await userApi.updateUser(user?.user_id, formData);
+            console.log('User updated successfully:', updatedUserData);
+            // Handle successful update (e.g., display a success message)
+            setMessage('User updated successfully!');
         } catch (error) {
-            // Cập nhật trạng thái thông báo lỗi
-            setMessage('Error updating user: ' + (error.response ? error.response.data : error.message));
-            console.error('Error updating user:', error.response ? error.response.data : error.message);
+            console.error('Error updating user:', error.message);
+            setMessage('An error occurred while updating the user.'); // Informative error message
+        } finally {
+            // Optionally clear the form after submission
+            setFormData({
+                user_name: '',
+                user_email: '',
+                user_phone: '',
+            });
         }
     };
     
+
     const onFinish = (values) => {
         console.log('Success:', values);
     };
@@ -209,15 +215,13 @@ function UserCard({ UserData  }) {
                                 </div>
                             </div>
                             {/* Update Info */}
-                            <Form className="mt-8 2xl:mt-14 text-[#202142]">
+                            <Form className="mt-8 2xl:mt-14 text-[#202142]" form={form}>
                                 <div className="flex flex-col 2xl:flex-row 2xl:space-x-4 space-y-2 2xl:space-y-0">
                                     <div className="w-full">
-                                        <p className="block mb-2 text-sm font-medium text-indigo-900">
-                                            Your Name
-                                        </p>
+                                        <p className="block mb-2 text-sm font-medium text-indigo-900">Your Name</p>
                                         <input
                                             type="text"
-                                            name="firstname"
+                                            name="user_name" // Match with state key
                                             value={formData.user_name}
                                             onChange={handleChange}
                                             className="bg-indigo-50 border border-indigo-300 text-sm rounded-lg w-full p-2.5"
@@ -228,8 +232,8 @@ function UserCard({ UserData  }) {
                                     <p className="block mb-2 text-sm font-medium text-indigo-900">Your Email</p>
                                     <input
                                         type="email"
-                                        name="email"
-                                        value={formData.email}
+                                        name="user_email" // Match with state key
+                                        value={formData.user_email}
                                         onChange={handleChange}
                                         className="bg-indigo-50 border border-indigo-300 text-sm rounded-lg w-full p-2.5"
                                     />
@@ -238,21 +242,19 @@ function UserCard({ UserData  }) {
                                     <p className="block mb-2 text-sm font-medium text-indigo-900">Your Number</p>
                                     <input
                                         type="text"
-                                        name="number"
-                                        value={formData.number}
+                                        name="user_phone" // Match with state key
+                                        value={formData.user_phone}
                                         onChange={handleChange}
                                         className="bg-indigo-50 border border-indigo-300 text-sm rounded-lg w-full p-2.5"
                                     />
                                 </div>
                                 <div className="flex justify-end mt-5">
-                                    <Button onClick={() => handleSave(formData)}
-                                        
-                                        className="text-white bg-indigo-700 hover:bg-indigo-800 rounded-lg px-5 py-2.5"
-                                    >
+                                    <Button type="button" onClick={handleUpdateUser}>
                                         Save
                                     </Button>
                                 </div>
                             </Form>
+
                         </div>
                     </div>
                 </div>
@@ -344,7 +346,7 @@ function UserCard({ UserData  }) {
                                 <Input className="w-[150px] " placeholder="Enter your address" />
                             </Form.Item>
                         </Form>
-                        <Button className="mb-5 items-center">Save Address</Button>
+                        <Button className="mb-5 items-center" type="submit">Save Address</Button>
                     </div>
                 </div>
             </section>
