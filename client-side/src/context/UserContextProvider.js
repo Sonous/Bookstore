@@ -10,6 +10,7 @@ const UserContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [isReloadCart, setIsReloadCart] = useState(false);
+
     useEffect(() => {
         login();
     }, []);

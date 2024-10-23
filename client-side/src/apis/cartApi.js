@@ -51,7 +51,7 @@ const cartApi = {
                     },
                 },
             );
-            if (response?.message === 'success') {
+            if (response?.status === 'success') {
                 return response.data;
             }
         } catch (error) {

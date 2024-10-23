@@ -9,9 +9,9 @@ import cartRouter from './cart.route.js';
 import favoriteRouter from './favorite.route.js';
 import adminRouter from './admin.route.js';
 import ratingRouter from './rating.route.js';
+import transportMethodRouter from './transportMethod.route.js';
 import orderRouter from './order.route.js';
-import addressRouter from './address.route.js';
-
+// import addressRouter from './address.route.js';
 
 export default function routes(server) {
     server.use('/api/book', bookRouter);
@@ -23,7 +23,8 @@ export default function routes(server) {
     server.use('/api/cart', verifyToken, cartRouter);
     server.use('/api/admin', verifyToken, adminRouter);
     server.use('/api/favorite', favoriteRouter);
-    server.use('/api/rating', ratingRouter)
-    server.use('/api/order', orderRouter)
-    server.use('/api/address', addressRouter)
+    server.use('/api/rating', ratingRouter);
+    server.use('/api/order', verifyToken, orderRouter);
+    // server.use('/api/address', addressRouter)
+    server.use('/api/transport', transportMethodRouter);
 }

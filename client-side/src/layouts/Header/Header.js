@@ -35,10 +35,8 @@ function Header() {
                     },
                 })
                 .then((books) => {
-                    if (books.length > 0) {
-                        setCartItems(books[0].Cart);
-                        setIsReloadCart(false);
-                    }
+                    setCartItems(books.length > 0 ? books[0].Cart : []);
+                    setIsReloadCart(false);
                 })
                 .catch((err) => {
                     if (err.message === 'Unauthorized!') {
@@ -122,7 +120,7 @@ function Header() {
                                     )}
                                     hideOnClick={false}
                                 >
-                                    <button className={cx('cart-btn')}>
+                                    <button className={cx('cart-btn')} onClick={() => navigate('/cart')}>
                                         <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
                                         {cartItems.length > 0 && (
                                             <div className={cx('quantity')}>

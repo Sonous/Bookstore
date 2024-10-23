@@ -6,7 +6,6 @@
 -- drop database ql_ban_sach;
 
 
-
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
 (60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
   <p><strong>"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2</strong></p>
@@ -35,7 +34,6 @@ CREATE TABLE Address (
     address_ward nvarchar(50)  NOT NULL,
     address_district nvarchar(50)  NOT NULL,
     address_province nvarchar(50)  NOT NULL,
-    address_description text  NOT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT Address_pk PRIMARY KEY (address_id)
@@ -149,13 +147,14 @@ CREATE TABLE Genre (
 
 -- Table: Order
 CREATE TABLE `Order` (
-    order_id int  NOT NULL AUTO_INCREMENT,
-    order_address_info json  NOT NULL,
-    order_books json  NOT NULL,
+    order_id CHAR(36) NOT NULL,
+    order_address_info text  NOT NULL,
+    order_books text  NOT NULL,
     order_status nvarchar(50)  NOT NULL,
     books_total_prices decimal(20,2)  NOT NULL,
     transport_name nvarchar(255)  NOT NULL,
     transport_cost decimal(20,2)  NOT NULL,
+    pay_method_name nvarchar(255) NOT NULL,
     order_total_cost decimal(20,2)  NOT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
@@ -259,12 +258,7 @@ ALTER TABLE User ADD CONSTRAINT User_Address FOREIGN KEY User_Address (address_i
 
 -- Insert data
 
- -- User
- INSERT INTO User (user_id, user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
- (10001, N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg', 20001);
- 
-  INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
- (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg', NULL);
+
  
  -- Book
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
@@ -568,8 +562,15 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 ', N'Paulo Coelho', N'bìa mềm', 227, NULL, N'Còn hàng');
 
 -- Address
-INSERT INTO Address (address_id, address_house_number, address_ward, address_district, address_province, address_description) 
-VALUES (20001, N'abc123', N'Phường Tây Thạnh', N'Quận Tân Phú', N'Thành phố Hồ Chí Minh', N'abcxyz123');
+INSERT INTO Address (address_id, address_house_number, address_ward, address_district, address_province) 
+VALUES (20001, N'abc123', N'Phường Tây Thạnh', N'Quận Tân Phú', N'Thành phố Hồ Chí Minh');
+
+  -- User
+ INSERT INTO User (user_id, user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
+ (10001, N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg', 20001);
+ 
+  INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
+ (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg', NULL);
 
 -- Admin
 INSERT INTO Admin (admin_id, admin_username, admin_password, admin_avatar_url) 

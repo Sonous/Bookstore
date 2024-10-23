@@ -4,6 +4,7 @@ import BookImage from '../models/bookImage.model.js';
 import User from '../models/user.model.js';
 import Cart from '../models/cart.model.js';
 import RatingBook from '../models/ratingBook.model.js';
+import Address from '../models/address.model.js';
 
 const getUserById = (req, res) => {
     User.findByPk(req.params.userId)
@@ -149,4 +150,25 @@ const updateUser = async (req, res) => {
     }
 };
 
-export { getUserById, getUserByToken, getCartItems, addBookToCart, updateUser };
+const getAddressOfUser = (req, res) => {
+    const { userId } = req.params;
+
+    User.findByPk(userId, {
+        attributes: ['user_name', 'user_phone'],
+        include: {
+            model: Address,
+            attributes: {
+                exclude: ['address_id', 'address_description'],
+            },
+            required: true,
+        },
+    })
+        .then((address) => res.status(200).json(address))
+        .catch((err) =>
+            res.status(StatusCodes.NOT_FOUND).json({
+                message: err.message,
+            }),
+        );
+};
+
+export { getUserById, getUserByToken, getCartItems, addBookToCart, updateUser, getAddressOfUser };

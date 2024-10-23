@@ -28,9 +28,9 @@ const Pages = [
     { path: routes.home, Component: HomePage },
     { path: routes.signIn, Component: SignInPage },
     { path: routes.signUp, Component: SignInPage },
-    { path: routes.cart, Component: CartPage },
+    { path: routes.cart, Component: CartPage, PrivateRoute: PrivateRoute },
     { path: routes.bookDetail, Component: BookDetailPage },
-    { path: routes.paying, Component: PayingPage },
+    { path: routes.paying, Component: PayingPage, PrivateRoute: PrivateRoute },
 
     { path: routes.dieuKhoan, Component: DieuKhoan },
     { path: routes.chinhSachBaoMat, Component: ChinhSachBaoMat },

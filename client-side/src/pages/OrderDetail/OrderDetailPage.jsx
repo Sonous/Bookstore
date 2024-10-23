@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { routes } from '~/config';
 import UserHeading from '../User/UserHeading';
 import { UserContext } from '~/context/UserContextProvider';
-import orderApi from '~/apis/oderApi';
+import orderApi from '~/apis/orderApi';
 import addressApi from '~/apis/addressApi';
 import { formatDate } from '~/utils/functions/formatDate';
 
@@ -17,13 +17,11 @@ const OrderDetailPage = () => {
     const [loading, setLoading] = useState(true);
     const [orders, setOrders] = useState([]);
     const [address, setAddress] = useState([]);
-   
-
 
     useEffect(() => {
         const fetchOrder = async () => {
             if (!user) return;
-    
+
             try {
                 const orderData = await orderApi.getOrderByUser(user.user_id);
                 setOrders(orderData);
@@ -38,7 +36,7 @@ const OrderDetailPage = () => {
                 setLoading(false);
             }
         };
-    
+
         fetchOrder();
     }, [user]);
 
@@ -69,10 +67,14 @@ const OrderDetailPage = () => {
                         <div className="order mt-10 mx-20 border rounded-xl px-5 py-5 flex flex-col gap-5">
                             <div className="topOrder flex text-center items-center justify-between">
                                 <div className="orderID flex gap-10 text-center items-center">
-                                    <h1 className="font-bold text-2xl">
-                                        Mã đơn hàng #{order.order_id}
-                                    </h1>
-                                    <div className={isCancel ? 'bg-red-100 rounded-xl shadow-sm hover:shadow-lg p-1' : 'bg-green-100 rounded-xl shadow-sm hover:shadow-lg p-1'}>
+                                    <h1 className="font-bold text-2xl">Mã đơn hàng #{order.order_id}</h1>
+                                    <div
+                                        className={
+                                            isCancel
+                                                ? 'bg-red-100 rounded-xl shadow-sm hover:shadow-lg p-1'
+                                                : 'bg-green-100 rounded-xl shadow-sm hover:shadow-lg p-1'
+                                        }
+                                    >
                                         <h1>{isCancel ? 'Đã hủy' : 'Hoàn tất'}</h1>
                                     </div>
                                 </div>
@@ -81,7 +83,7 @@ const OrderDetailPage = () => {
                                 </div>
                             </div>
                             <div className="process">
-                                <Process 
+                                <Process
                                     isCancel={isCancel} // Pass the isCancel variable
                                     orderDate={order.created_at}
                                     completeDate={order.updated_at}
@@ -95,7 +97,10 @@ const OrderDetailPage = () => {
                                     <p>Tel: {user.user_phone}</p>
                                     <div className="address flex gap-2 items-center">
                                         <FaHouse />
-                                        <p>{userAddress.address_house_number}, {userAddress.address_ward}, {userAddress.address_district}, {userAddress.address_province}</p>
+                                        <p>
+                                            {userAddress.address_house_number}, {userAddress.address_ward},{' '}
+                                            {userAddress.address_district}, {userAddress.address_province}
+                                        </p>
                                     </div>
                                 </div>
                                 {/* Payment Method */}
@@ -133,15 +138,16 @@ const OrderDetailPage = () => {
                                     <p>Không có</p>
                                 </div>
                             </div>
-    
+
                             {/* Order History Section */}
                             <div className="history border rounded-xl flex flex-col p-5 gap-5 justify-between shadow-sm hover:shadow-lg">
                                 <p className="pb-4 font-semibold text-lg text-center">Lịch sử đơn hàng</p>
                                 <div className="detail flex flex-col">
                                     <p>
-                                    Đơn hàng <span>{order.order_id} </span>
-                                    {isCancel ? 'của quý khách đã bị hủy. Quý khách hãy phản hồi nếu có vấn đề gì cho chúng tôi.' : ' của quý khách đã được đối tác vận chuyển xác nhận giao hàng thành công. Cảm ơn quý khách đã mua hàng tại KimDong.'}
-                                        
+                                        Đơn hàng <span>{order.order_id} </span>
+                                        {isCancel
+                                            ? 'của quý khách đã bị hủy. Quý khách hãy phản hồi nếu có vấn đề gì cho chúng tôi.'
+                                            : ' của quý khách đã được đối tác vận chuyển xác nhận giao hàng thành công. Cảm ơn quý khách đã mua hàng tại KimDong.'}
                                     </p>
                                     <p className="text-gray-500 text-sm">{order.updated_at}</p>
                                 </div>
@@ -150,7 +156,7 @@ const OrderDetailPage = () => {
                                     <FaAngleDown />
                                 </div>
                             </div>
-    
+
                             <OrderCard OrderData={order} />
                         </div>
                     </div>
@@ -158,7 +164,6 @@ const OrderDetailPage = () => {
             })}
         </div>
     );
-    
 };
 
 export default OrderDetailPage;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
@@ -9,6 +9,7 @@ import Footer from '~/layouts/Footer/Footer';
 import Header from '~/layouts/Header/Header';
 import BookCollection from '~/component/BookCollection/BookCollection';
 import images from '~/assets/images';
+import { UserContext } from '~/context/UserContextProvider';
 
 const cx = classNames.bind(styles);
 

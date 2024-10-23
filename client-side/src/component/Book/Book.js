@@ -37,7 +37,6 @@ function Book({
     useEffect(() => {
         const checkIfLiked = async () => {
             if (user) {
-                console.log('hfiajdfi');
                 // Gọi API để lấy danh sách yêu thích của người dùng
                 const favoriteBooks = await favoriteApi.getFavoriteBooksByUser(user.user_id);
                 const isLiked = favoriteBooks.some((favBook) => favBook.book_id === book_id);
