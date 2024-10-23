@@ -7,7 +7,7 @@ const routes = {
     signIn: '/signIn',
     signUp: '/signUp',
     cart: '/cart',
-    paying: '/paying',
+    paying: '/paying/:type?',
     bookDetail: '/books/:name',
 
     dieuKhoan: '/dieu-khoan-dich-vu', // Điều khoản dịch vụ
@@ -23,11 +23,7 @@ const routes = {
     order: '/order',
     results: '/results',
 
-    
-
-
     favoritebooks: '/favoritebooks',
-
 };
 
 export default routes;

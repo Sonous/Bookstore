@@ -14,7 +14,6 @@ const Address = sequelize.define(
         address_ward: DataTypes.STRING,
         address_district: DataTypes.STRING,
         address_province: DataTypes.STRING,
-        address_description: DataTypes.TEXT,
     },
     {
         timestamps: false,

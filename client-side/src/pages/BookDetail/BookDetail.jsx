@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import parse from 'html-react-parser';
-import { Breadcrumb } from "antd";
+import { Breadcrumb } from 'antd';
 import { Dropdown, Menu } from 'antd';
 
 import bookApi from '~/apis/bookApi';
@@ -15,6 +15,7 @@ import { UserContext } from '~/context/UserContextProvider';
 import Swal from 'sweetalert2';
 import DropdownButton from 'antd/es/dropdown/dropdown-button';
 import CommentList from '~/component/userReview/CommentList';
+import transportApi from '~/apis/transportApi';
 
 function BookDetail() {
     const { name } = useParams(); // Extract the book name from the URL
@@ -24,7 +25,20 @@ function BookDetail() {
     const [bookGenre, setBookGenre] = useState(null); // Renamed for clarity
     const [quantity, setQuantity] = useState(1);
     const [error, setError] = useState(null);
-    const { user, alertExpiredLogin, setIsReloadCart } = useContext(UserContext);
+    const { user, alertExpiredLogin, setIsReloadCart, isReloadCart } = useContext(UserContext);
+    const [transportMethod, setTransportMethod] = useState('');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const method = await transportApi.getTransportMethodById();
+
+            setTransportMethod(method);
+        };
+
+        fetchApi();
+    }, []);
 
     // Fetch book details using the book name
     useEffect(() => {
@@ -41,7 +55,6 @@ function BookDetail() {
                 if (genreData && genreData.length > 0) {
                     setBookGenre(genreData[0].genres); // Set the genres array
                 }
-       
             } catch (err) {
                 console.error('Error fetching book details:', err);
                 setError('Could not fetch book details');
@@ -49,8 +62,6 @@ function BookDetail() {
         };
         fetchBookDetails();
     }, [name]);
-    
-    
 
     const [selectedTab, setSelectedTab] = useState('desc');
 
@@ -122,13 +133,44 @@ function BookDetail() {
             <Menu.Item key="popular">Phổ biến nhất</Menu.Item>
         </Menu>
     );
-   
+
+    const handlePurchase = () => {
+        const orderBook = {
+            book_id: book.book_id,
+            book_name: book.book_name,
+            book_cost: book.book_cost,
+            book_discount: book.book_discount,
+            book_end_cost: book.book_end_cost,
+            book_sold: book.book_sold,
+            book_star_rating: book.book_star_rating,
+            book_status: book.book_status,
+            created_at: book.created_at,
+            updated_at: book.updated_at,
+            cart: {
+                quantity: quantity,
+            },
+            bookimages: book.bookimages,
+        };
+
+        const order = {
+            order_books: [orderBook],
+            books_total_prices: parseFloat(book.book_end_cost) * quantity,
+            transport_name: transportMethod.transport_name,
+            transport_cost: transportMethod.transport_cost,
+            order_total_cost: transportMethod.transport_cost + parseFloat(book.book_end_cost) * quantity,
+        };
+
+        localStorage.setItem('order', JSON.stringify(order));
+        navigate('/paying/directly');
+    };
+
     return (
         <div>
             <div className="0 rounded-xl flex flex-col">
                 <div className="breadcumb  mx-4 lg:mx-48 mt-10">
-                <Breadcrumb className='font-semibold text-black'
-                        items={breadcrumbItems.map(item => ({
+                    <Breadcrumb
+                        className="font-semibold text-black"
+                        items={breadcrumbItems.map((item) => ({
                             title: item.href ? <a href={item.href}>{item.title}</a> : item.title,
                         }))}
                     />
@@ -154,7 +196,7 @@ function BookDetail() {
                                 <h1 className="font-bold text-xl 2xl:text-2xl">{book.book_name}</h1>
                                 <div className="rating flex items-center justify-between text-center">
                                     <div className="rating flex items-center gap-5">
-                                        <Rating rating= {book.book_star_rating} />
+                                        <Rating rating={book.book_star_rating} />
                                         <h1 className="2xl:text-lg">{book.book_star_rating}</h1>
                                     </div>
                                     <a className="text-right">
@@ -177,21 +219,29 @@ function BookDetail() {
                         </div>
                         <div className="genre">
                             <h3 className="">
-                            Thể loại: <span>
-                                {bookGenre ? (
-                                    bookGenre.map((genre, index) => (
-                                        <span key={index} className="font-bold">{genre.genre_name}{index < bookGenre.length - 1 ? ', ' : ''}</span>
-                                    ))
-                                ) : (
-                                    <span className="font-bold">N/A</span>
-                                )}
-                                </span> 
+                                Thể loại:{' '}
+                                <span>
+                                    {bookGenre ? (
+                                        bookGenre.map((genre, index) => (
+                                            <span key={index} className="font-bold">
+                                                {genre.genre_name}
+                                                {index < bookGenre.length - 1 ? ', ' : ''}
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <span className="font-bold">N/A</span>
+                                    )}
+                                </span>
                             </h3>
                         </div>
                         <div className="information-content flex flex-col justify-around text-center py-5">
                             <div className="description h-[200px] border text-left px-5  flex flex-col gap-3 py-3 rounded-xl">
                                 <h3 className="">
-                                    Bộ sưu tập: <span className="font-bold"> {book.book_collection ? book.book_collection : "Không có"}</span>
+                                    Bộ sưu tập:{' '}
+                                    <span className="font-bold">
+                                        {' '}
+                                        {book.book_collection ? book.book_collection : 'Không có'}
+                                    </span>
                                 </h3>
                                 <h3 className="">
                                     Hình thức bìa: <span className="font-bold">{book.book_format}</span>
@@ -247,7 +297,12 @@ function BookDetail() {
                                     >
                                         Thêm vào giỏ hàng
                                     </Button>
-                                    <Button className="bg-blue-500 text-white font-bold text-lg w-48">Mua ngay</Button>
+                                    <Button
+                                        className="bg-blue-500 text-white font-bold text-lg w-48"
+                                        onClick={handlePurchase}
+                                    >
+                                        Mua ngay
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -279,32 +334,29 @@ function BookDetail() {
                                 </div>
                             </div>
                             <div className="desc-text px-5">
-                            {selectedTab === 'desc' ? (
-                                <div className="desc-text">{parse(book.book_description)}</div>
-                            ) : (
-                                <div className="comment-form py-3 flex flex-col gap-3">
-                                    <div className="top-comment  flex justify-between items-center">
-                                        <h3>0 bình luận</h3>
-                                            
-                                        <Dropdown overlay={dropDownmenu} trigger={['click']}>
-                                            <Button>
-                                                Sắp xếp theo<span>▼</span>
-                                            </Button>
-                                        </Dropdown>
-                                    </div>
-                                    
-                                    {/* Example form elements */}
-                                    <div className="form w-full">
-                                       
+                                {selectedTab === 'desc' ? (
+                                    <div className="desc-text">{parse(book.book_description)}</div>
+                                ) : (
+                                    <div className="comment-form py-3 flex flex-col gap-3">
+                                        <div className="top-comment  flex justify-between items-center">
+                                            <h3>0 bình luận</h3>
+
+                                            <Dropdown overlay={dropDownmenu} trigger={['click']}>
+                                                <Button>
+                                                    Sắp xếp theo<span>▼</span>
+                                                </Button>
+                                            </Dropdown>
+                                        </div>
+
+                                        {/* Example form elements */}
+                                        <div className="form w-full">
                                             <textarea
                                                 placeholder="Write your comment here..."
                                                 className="border p-2 w-full"
                                             />
-                                        
+                                        </div>
                                     </div>
-                                   
-                                </div>
-                            )}
+                                )}
                             </div>
                         </div>
                         <div className="rating border-gray-600 mt-5 border px-5 rounded-xl py-5">
@@ -331,9 +383,7 @@ function BookDetail() {
                                 </h1>
                             </div>
                             <div className="content">{activeHeader === 'Đánh giá' && <UserReview />}</div>
-                            <div className="content">{activeHeader === 'Câu hỏi và trả lời' && <CommentList/>}
-                              
-                            </div>
+                            <div className="content">{activeHeader === 'Câu hỏi và trả lời' && <CommentList />}</div>
                         </div>
                     </div>
                     <div className="same-author text-center items-center w-full lg:w-3/12 bg-white rounded-xl border mb-5">

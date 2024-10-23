@@ -5,16 +5,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '~/context/UserContextProvider';
 import { imageUrl } from '~/config/axios.config';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { convertPriceToString } from '~/utils/functions';
 import cartApi from '~/apis/cartApi';
 import Dialog from './Dialog';
+import transportApi from '~/apis/transportApi';
+import Footer from '~/layouts/Footer/Footer';
 export default function CartPage() {
-    const { cartItems, setCartItems, user } = useContext(UserContext);
+    const { cartItems, setCartItems, user, order, setOrder } = useContext(UserContext);
     const [deleteId, setDeleteId] = useState(null);
     const [showDeleteSelect, setShowDeleteSelect] = useState(false);
     const [sltArr, setSltArr] = useState([]);
     const [total, setTotal] = useState(0);
+    const [transportMethod, setTransportMethod] = useState('');
+
+    const navigate = useNavigate();
+
     const handleAddQuantity = async (bookId) => {
         const updatedCartItems = cartItems.map((item) => {
             if (item.book_id === bookId) {
@@ -62,6 +68,36 @@ export default function CartPage() {
         }
         setTotal(tot);
     }, [sltArr, cartItems]);
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const method = await transportApi.getTransportMethodById();
+
+            setTransportMethod(method);
+        };
+
+        fetchApi();
+    }, []);
+
+    const navigateToPayingPage = () => {
+        if (sltArr.length > 0) {
+            const order = {
+                order_books: cartItems.filter((book) => {
+                    return sltArr.includes(book.book_id);
+                }),
+                books_total_prices: total,
+                transport_name: transportMethod.transport_name,
+                transport_cost: transportMethod.transport_cost,
+                order_total_cost: transportMethod.transport_cost + total,
+            };
+
+            console.log(order);
+
+            localStorage.setItem('order', JSON.stringify(order));
+            navigate('/paying');
+        }
+    };
+
     return (
         <div className="">
             <Header />
@@ -174,12 +210,25 @@ export default function CartPage() {
                                 <h1>Thành tiền</h1>
                                 <h1>{convertPriceToString(total)}</h1>
                             </div>
+                            {sltArr.length > 0 && (
+                                <div className="flex pb-3 justify-between gap-2">
+                                    <h1>Phí vận chuyển ({transportMethod.transport_name})</h1>
+                                    <h1>{convertPriceToString(transportMethod.transport_cost)}</h1>
+                                </div>
+                            )}
                             <div className="bg-gray-200 h-[1px] w-full mx-auto"></div>
                             <div className="flex justify-between py-4 items-center">
                                 <h1 className="font-bold">Tổng số tiền (gồm VAT)</h1>
-                                <h1 className="text-xl text-primary-color font-bold">{convertPriceToString(total)}</h1>
+                                <h1 className="text-xl text-primary-color font-bold">
+                                    {convertPriceToString(
+                                        sltArr.length > 0 ? transportMethod.transport_cost + total : total,
+                                    )}
+                                </h1>
                             </div>
-                            <div className="w-full py-2 bg-primary-color text-white uppercase font-bold text-center rounded-md cursor-pointer transition-all hover:bg-red-700 select-none">
+                            <div
+                                className="w-full py-2 bg-primary-color text-white uppercase font-bold text-center rounded-md cursor-pointer transition-all hover:bg-red-700 select-none"
+                                onClick={navigateToPayingPage}
+                            >
                                 Thanh toán
                             </div>
                         </div>
@@ -201,6 +250,7 @@ export default function CartPage() {
                     content={'Sách sẽ được xóa khỏi giỏ hàng của bạn!!'}
                 />
             )}
+            <Footer />
         </div>
     );
 }

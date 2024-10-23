@@ -12,13 +12,23 @@ export const sum = (input, property = null) => {
     if (property) {
         arr = arr.map((item) => {
             if (property === 'cart') return item[property].quantity;
-            else return parseFloat(item[property]);
+            else
+                return {
+                    cost: parseFloat(item[property]),
+                    quantity: item.cart.quantity,
+                };
         });
     }
 
-    return arr.reduce((total, current) => {
-        return (total += current) && total;
-    }, 0);
+    if (property === 'cart') {
+        return arr.reduce((total, current) => {
+            return (total += current) && total;
+        }, 0);
+    } else {
+        return arr.reduce((total, current) => {
+            return (total += current.cost * current.quantity) && total;
+        }, 0);
+    }
 };
 
 export const convertPriceToString = (price) => {
