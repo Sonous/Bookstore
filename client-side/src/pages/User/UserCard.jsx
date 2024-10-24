@@ -11,12 +11,21 @@ import { UserContext } from '~/context/UserContextProvider';
 import request, { imageUrl } from '~/config/axios.config';
 
 import userApi from '~/apis/userApi';
+import addressApi from '~/apis/addressApi';
 
 function UserCard() {
-    // console.log(UserData);
     const { user, setUser } = useContext(UserContext);
     const [newAvatar, setNewAvatar] = useState(null);
-
+    const [addressId, setAddressId] = useState(null);
+    const [address, setAddress] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [addressData, setAddressData] = useState({
+        address_id: '',
+        address_house_number: '',
+        address_ward: '',
+        address_district: '',
+        address_province: '',
+    });
     const [formData, setFormData] = useState({
         user_name: '',
         user_email: '',
@@ -29,15 +38,40 @@ function UserCard() {
     const [ward, setWard] = useState();
     const [message, setMessage] = useState('');
     useEffect(() => {
-        if ( user) {
-            setFormData({
-                user_name: user.user_name || '',
-                user_email: user.user_email || '',
-                user_phone: user.user_phone || '',
-            });
-        }
-    }, [user]);
+        const fetchData = async () => {
+            if (user) {
+                setFormData({
+                    user_name: user.user_name || '',
+                    user_email: user.user_email || '',
+                    user_phone: user.user_phone || '',
+                });
 
+                try {
+                    const addressData = await addressApi.getAddressByUser(user.user_id);
+                    if (Array.isArray(addressData) && addressData.length > 0) {
+                        const fetchedAddress = addressData[0].address; // Ensure this is correct
+                        setAddressData({
+                            address_id: addressData[0].address_id,
+                            address_house_number: fetchedAddress.address_house_number || '',
+                            address_ward: fetchedAddress.address_ward || '',
+                            address_district: fetchedAddress.address_district || '',
+                            address_province: fetchedAddress.address_province || '',
+                        });
+                        // console.log(addressData);
+                        // console.log(fetchedAddress);
+                    } else {
+                        console.error('Address data not found');
+                    }
+                } catch (error) {
+                    console.error('Error fetching user address:', error);
+                } finally {
+                    setLoading(false); // Set loading to false after fetching
+                }
+            }
+        };
+
+        fetchData();
+    }, [user]);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -64,74 +98,53 @@ function UserCard() {
             });
         }
     };
-    
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
 
-    const handleAvatarChange = (e) => {
-        const file = e.target.files[0];
+    const handleAvatarChange = (event) => {
+        const file = event.target.files[0];
         if (file) {
             setNewAvatar(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-            };
-            reader.readAsDataURL(file);
         }
     };
 
     const uploadAvatar = async () => {
-        if (!newAvatar) {
-            message.error('Please select an image to upload.');
-            return;
-        }
+        if (!newAvatar) return;
 
         const formData = new FormData();
         formData.append('avatar', newAvatar);
 
         try {
-            const token = localStorage.getItem('token'); // Get the token from localStorage
-            const userId = user.user_id; // Ensure this matches your user structure
-
-            const response = await axios.put(`http://localhost:5000/api/user/${userId}/avatar`, formData, {
-                headers: {
-                    'x-access-token': token,
-                },
-            });
-
-            if (response.status === 200) {
-                message.success('Avatar updated successfully!');
-                // Optionally, refresh user data to get the new avatar
-            } else {
-                message.error('Failed to update avatar.');
-            }
+            const updatedUser = await userApi.updateUserAvatar(user.user_id, formData);
+            setUser(updatedUser); // Update context with new avatar
+            setMessage('Avatar updated successfully!');
+            console.log('Avatar uploaded successfully');
         } catch (error) {
             console.error('Error uploading avatar:', error);
-            message.error('Error uploading avatar.');
+            setMessage('An error occurred while uploading the avatar.');
         }
     };
 
     const deleteAvatar = async () => {
         try {
-            const token = localStorage.getItem('token'); // Get the token from localStorage
-            const userId = user.user_id; // Ensure this matches your user structure
+            const token = localStorage.getItem('token');
+            const userId = user.user_id;
 
-            const response = await axios.delete(`http://localhost:5000/api/user/${userId}/avatar`, {
+            const response = await axios.delete(`http://localhost:5000/api/user/${userId}/user_avatar_url`, {
                 headers: {
                     'x-access-token': token,
                 },
             });
 
             if (response.status === 200) {
-
+                setUser({ ...user, user_avatar_url: null }); // Clear the avatar URL
+                setMessage('Avatar deleted successfully!');
             } else {
+                console.error('Failed to delete avatar');
             }
         } catch (error) {
             console.error('Error deleting avatar:', error);
         }
     };
-
 
     const getCity = async () => {
         const response = await axios.get('https://provinces.open-api.vn/api/');
@@ -169,12 +182,39 @@ function UserCard() {
         });
         setWard(dataWard);
     };
+    const handleChangeCity = async (value) => {
+        setDistrict([]); // Reset districts and wards
+        setWard([]);
+        await getDistrict(value); // Fetch districts for selected city
+    };
+
+    const handleChangeDistrict = async (value) => {
+        setWard([]); // Reset wards
+        await getWards(value); // Fetch wards for selected district
+    };
+
+    const onFinish = async (values) => {
+        console.log('Address update values:', values);
+        try {
+            const updatedAddress = {
+                address_house_number: values.address,
+                address_ward: values.ward,
+                address_district: values.district,
+                address_province: values.city,
+                address_description: 'Your address description here',
+            };
+
+            await addressApi.updateAddress(user.user_id, addressId, updatedAddress);
+            setMessage('Address updated successfully!');
+        } catch (error) {
+            console.error('Error updating address:', error);
+            setMessage('An error occurred while updating the address.');
+        }
+    };
 
     useEffect(() => {
         getCity();
-       
     }, []);
-
     // Your JSX code here
 
     return (
@@ -195,7 +235,8 @@ function UserCard() {
                                 <div className=" w-32 h-32 2xl:w-40 2xl:h-40 rounded-full bg-cover ring-2 ring-indigo-300" 
                                  style={{
                                     backgroundImage: `url(${imageUrl}/${user.user_avatar_url})`, // Use the first image
-                                }}></div>
+                                }}
+                                onClick={() => document.getElementById('avatar-upload').click()} ></div>
                                 <div className="flex flex-col space-y-2 lg:ml-8">
                                 <input
                                     type="file"
@@ -228,6 +269,7 @@ function UserCard() {
                                         />
                                     </div>
                                 </div>
+                                
                                 <div className="mb-6">
                                     <p className="block mb-2 text-sm font-medium text-indigo-900">Your Email</p>
                                     <input
@@ -268,85 +310,72 @@ function UserCard() {
 
                 <div className="right w-full lg:w-3/12 mx-auto">
                     <div className="right-address bg-white rounded-xl px-5 lg:px-5 mx-5 mt-5">
-                        <h1 className="text-2xl font-bold lg:text-xl text-center py-5 border-b border-blue-500">
-                            Address
-                        </h1>
-                        <Form
-                            form={form}
-                            className="flex flex-col h-full justify-between my-4 w-full"
-                            name="basic"
-                            onFinish={onFinish}
-                            autoComplete="off"
-                            initialValues={{ username: `${formData.user_name}` }}
-                        >
-                            <Form.Item
-                                label={<p className="min-w-[130px] text-start text-sm ">Họ và tên</p>}
-                                name="username"
-                            >
-                                <div className="w-full font-semibold" >{formData.user_name}</div>
-                            </Form.Item>
+                    <h1 className="text-2xl font-bold lg:text-xl text-center py-5 border-b border-blue-500">
+                        Address
+                    </h1>
+                    <Form
+                        className="flex flex-col h-full justify-between my-4 w-full"
+                        onSubmit={onFinish}
+                        autoComplete="off"
+                    >
+                        <div className="mb-4">
+                            <label className="min-w-[130px] text-start text-sm">Họ và tên</label>
+                            <div className="w-full font-semibold">{formData.user_name}</div>
+                        </div>
 
-                            <Form.Item
-                                label={<p className="min-w-[130px] text-start text-sm">Tỉnh/Thành Phố:</p>}
-                                name="city"
-                                rules={[{ required: true, message: 'Vui lòng chọn tỉnh/thành phố' }]}
-                            >
-                                <Select
-                                    placeholder="Chọn tỉnh/thành phố"
-                                    style={{ width: '120%' }}
-                                    onChange={(e) => {
-                                        getDistrict(e);
-                                        form.setFieldsValue({ district: null, ward: null });
-                                        setValidateAddress((prev) => ['city']);
-                                    }}
-                                    options={city}
-                                />
-                            </Form.Item>
-
-                            <Form.Item
-                                label={<p className="min-w-[130px] text-start text-sm">Quận/Huyện:</p>}
-                                name="district"
-                                rules={[{ required: true, message: 'Vui lòng chọn quận' }]}
-                            >
-                                <Select
-                                    disabled={validateAddress.includes('city') ? false : true}
-                                    placeholder="Chọn quận/huyện"
-                                    style={{ width: '120%' }}
-                                    onChange={(e) => {
-                                        getWards(e);
-                                        form.setFieldsValue({ ward: null });
-                                        setValidateAddress((prev) => ['city', 'district']);
-                                    }}
-                                    options={district}
-                                />
-                            </Form.Item>
-
-                            <Form.Item
-                                label={<p className="min-w-[130px] text-start text-sm">Phường/Xã:</p>}
-                                name="ward"
-                                rules={[{ required: true, message: 'Vui lòng chọn phường/xã' }]}
-                            >
-                                <Select
-                                    disabled={validateAddress.includes('district') ? false : true}
-                                    placeholder="Chọn phường/xã"
-                                    style={{ width: '120%' }}
-                                    onChange={() => {
-                                        setValidateAddress((prev) => [...prev, 'ward']);
-                                    }}
-                                    options={ward}
-                                />
-                            </Form.Item>
-
-                            <Form.Item className='items-end'
-                                label={<p className="w-[120px] text-start text-sm">Địa chỉ nhận hàng:</p>}
-                                name="address"
-                                rules={[{ required: true, message: 'Vui lòng nhập số địa chỉ nhận hàng' }]}
+                        <div className="mb-4">
+                            <label className="min-w-[130px] text-start text-sm">Tỉnh/Thành Phố:</label>
+                            <input
+                                type="text"
+                                style={{ width: '100%' }} // Adjust width as needed
+                                defaultValue={addressData.address_province}
                                 
-                            >
-                                <Input className="w-[150px] " placeholder="Enter your address" />
-                            </Form.Item>
-                        </Form>
-                        <Button className="mb-5 items-center" type="submit">Save Address</Button>
+                                placeholder="Nhập tỉnh/thành phố"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="min-w-[130px] text-start text-sm">Quận/Huyện:</label>
+                            <input
+                                type="text"
+                                placeholder="Nhập quận/huyện"
+                                style={{ width: '100%' }}
+                                defaultValue={addressData.address_district}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="min-w-[130px] text-start text-sm">Phường/Xã:</label>
+                            <input
+                                type="text"
+                                placeholder="Nhập phường/xã"
+                                style={{ width: '100%' }}
+                                defaultValue={addressData.address_ward}
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="min-w-[130px] text-start text-sm">Địa chỉ nhận hàng:</label>
+                            <input
+                                type="text"
+                                className="w-[150px]"
+                                placeholder="Enter your address"
+                                defaultValue={addressData.address_house_number}
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <button className="mb-5 items-center" type="submit">
+                                Save Address
+                            </button>
+                        </div>
+                    </Form>
+                 
+
                     </div>
                 </div>
             </section>

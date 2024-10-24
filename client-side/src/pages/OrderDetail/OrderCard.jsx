@@ -4,14 +4,16 @@ import { searchResult } from '~/dataTemorary'
 import ProductTable from './ProductTable'
 
 function OrderCard({ OrderData }) {
-    // Ensure we have valid order data before proceeding
+   
+    // console.log('OrderCard', OrderData);
     if (!OrderData) {
       return <p>No Order Data</p>;
     }
     const isCancel = OrderData.order_status === 'Hủy';
   
-    // Sample test data for products (replace this with real product data from OrderData)
-    const products = OrderData.books || [];
+   
+    const products = OrderData.order_books|| [];
+    // console.log('Products in OrderCard', products);
   
     return (
       <div className='border rounded-xl flex flex-col py-8'>

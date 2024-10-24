@@ -116,4 +116,41 @@ Order.belongsTo(User, {
     foreignKey: 'user_id',
 });
 
+// Associate between Address and Order
+Address.hasMany(Order, {
+    foreignKey: 'address_id',
+});
+
+Order.belongsTo(Address, {
+    foreignKey: 'address_id',
+});
+
+// Associate between Book and Order
+Book.belongsToMany(Order, {
+    through: 'bookorder',
+    foreignKey: 'book_id',
+    otherKey: 'order_id',
+});
+
+Order.belongsToMany(Book, {
+    through: 'bookorder',
+    foreignKey: 'order_id',
+    otherKey: 'book_id',
+});
+
+// Associate between PayingMethod and Order
+PayingMethod.hasMany(Order, {
+    foreignKey: 'pay_method_id',
+});
+
+Order.belongsTo(PayingMethod, {
+    foreignKey: 'pay_method_id',
+});
+
+User.hasMany(RatingBook, { foreignKey: 'user_id', as: 'ratings' });
+Book.hasMany(RatingBook, { foreignKey: 'book_id', as: 'bookRatings' });
+
+RatingBook.belongsTo(User, { foreignKey: 'user_id', as: 'User' });
+RatingBook.belongsTo(Book, { foreignKey: 'book_id', as: 'Book' });
+
 export { Book, BookImage, Genre, Category, BlogType, Blog, User, Address, Order, PayingMethod };

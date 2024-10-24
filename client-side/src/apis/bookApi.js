@@ -24,7 +24,7 @@ const bookApi = {
 
     getGenreOfBook: async (id) => {
         try {
-            const response = await axios.get(`${BASE_URL}/book/${id}/genre`); // Adjusted endpoint
+            const response = await axios.get(`${BASE_URL}/book/${id}/genre`); // Adjusted endpoint // Log the fetched data
             return response.data; // Return the genre data
         } catch (error) {
             console.error('Error fetching genres of book:', error);

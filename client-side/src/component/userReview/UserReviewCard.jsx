@@ -1,12 +1,13 @@
 import React from 'react'
 import Rating from '../Rating/Rating'
 
+
 const UserReviewCard = ({
     img,
     name,
     rating,
     since,
-    desc,
+    review,
    
 }) => {
   return (
@@ -28,7 +29,7 @@ const UserReviewCard = ({
             </div>
         </div>
         <div className="desc">
-            {desc}
+            {review}
         </div>
         
     </div>

@@ -382,8 +382,10 @@ function BookDetail() {
                                     Câu hỏi và trả lời
                                 </h1>
                             </div>
-                            <div className="content">{activeHeader === 'Đánh giá' && <UserReview />}</div>
-                            <div className="content">{activeHeader === 'Câu hỏi và trả lời' && <CommentList />}</div>
+                            <div className="content">{activeHeader === 'Đánh giá' && <UserReview book={book} />}</div>
+                            <div className="content">{activeHeader === 'Câu hỏi và trả lời' && <CommentList/>}
+                              
+                            </div>
                         </div>
                     </div>
                     <div className="same-author text-center items-center w-full lg:w-3/12 bg-white rounded-xl border mb-5">
