@@ -17,7 +17,6 @@ function UserCard() {
     const { user, setUser } = useContext(UserContext);
     const [newAvatar, setNewAvatar] = useState(null);
     const [addressId, setAddressId] = useState(null);
-    const [address, setAddress] = useState(null);
     const [loading, setLoading] = useState(true);
     const [addressData, setAddressData] = useState({
         address_id: '',
@@ -31,11 +30,9 @@ function UserCard() {
         user_email: '',
         user_phone: '',
     });
+ 
     const [validateAddress, setValidateAddress] = useState([]);
     const [form] = Form.useForm();
-    const [city, setCity] = useState();
-    const [district, setDistrict] = useState();
-    const [ward, setWard] = useState();
     const [message, setMessage] = useState('');
     useEffect(() => {
         const fetchData = async () => {
@@ -48,19 +45,19 @@ function UserCard() {
 
                 try {
                     const addressData = await addressApi.getAddressByUser(user.user_id);
+                    console.log('Fetched address data:', addressData);
                     if (Array.isArray(addressData) && addressData.length > 0) {
-                        const fetchedAddress = addressData[0].address; // Ensure this is correct
+                        const fetchedAddress = addressData[0]; // Adjust this based on your API response
                         setAddressData({
-                            address_id: addressData[0].address_id,
+                            address_id: fetchedAddress.address_id,
                             address_house_number: fetchedAddress.address_house_number || '',
                             address_ward: fetchedAddress.address_ward || '',
                             address_district: fetchedAddress.address_district || '',
                             address_province: fetchedAddress.address_province || '',
                         });
-                        // console.log(addressData);
-                        // console.log(fetchedAddress);
                     } else {
-                        console.error('Address data not found');
+                        console.error('No address data found for this user');
+                        setMessage('No address data found for this user');
                     }
                 } catch (error) {
                     console.error('Error fetching user address:', error);
@@ -107,91 +104,91 @@ function UserCard() {
         }
     };
 
-    const uploadAvatar = async () => {
-        if (!newAvatar) return;
+    // const uploadAvatar = async () => {
+    //     if (!newAvatar) return;
 
-        const formData = new FormData();
-        formData.append('avatar', newAvatar);
+    //     const formData = new FormData();
+    //     formData.append('avatar', newAvatar);
 
-        try {
-            const updatedUser = await userApi.updateUserAvatar(user.user_id, formData);
-            setUser(updatedUser); // Update context with new avatar
-            setMessage('Avatar updated successfully!');
-            console.log('Avatar uploaded successfully');
-        } catch (error) {
-            console.error('Error uploading avatar:', error);
-            setMessage('An error occurred while uploading the avatar.');
-        }
-    };
+    //     try {
+    //         const updatedUser = await userApi.updateUserAvatar(user.user_id, formData);
+    //         setUser(updatedUser); // Update context with new avatar
+    //         setMessage('Avatar updated successfully!');
+    //         console.log('Avatar uploaded successfully');
+    //     } catch (error) {
+    //         console.error('Error uploading avatar:', error);
+    //         setMessage('An error occurred while uploading the avatar.');
+    //     }
+    // };
 
-    const deleteAvatar = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const userId = user.user_id;
+    // const deleteAvatar = async () => {
+    //     try {
+    //         const token = localStorage.getItem('token');
+    //         const userId = user.user_id;
 
-            const response = await axios.delete(`http://localhost:5000/api/user/${userId}/user_avatar_url`, {
-                headers: {
-                    'x-access-token': token,
-                },
-            });
+    //         const response = await axios.delete(`http://localhost:5000/api/user/${userId}/user_avatar_url`, {
+    //             headers: {
+    //                 'x-access-token': token,
+    //             },
+    //         });
 
-            if (response.status === 200) {
-                setUser({ ...user, user_avatar_url: null }); // Clear the avatar URL
-                setMessage('Avatar deleted successfully!');
-            } else {
-                console.error('Failed to delete avatar');
-            }
-        } catch (error) {
-            console.error('Error deleting avatar:', error);
-        }
-    };
+    //         if (response.status === 200) {
+    //             setUser({ ...user, user_avatar_url: null }); // Clear the avatar URL
+    //             setMessage('Avatar deleted successfully!');
+    //         } else {
+    //             console.error('Failed to delete avatar');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error deleting avatar:', error);
+    //     }
+    // };
 
-    const getCity = async () => {
-        const response = await axios.get('https://provinces.open-api.vn/api/');
-        const dataCity = [];
-        response.data.map((city, idx) => {
-            dataCity.push({
-                label: city.name,
-                value: city.code,
-            });
-        });
-        setCity(dataCity);
-    };
+    // const getCity = async () => {
+    //     const response = await axios.get('https://provinces.open-api.vn/api/');
+    //     const dataCity = [];
+    //     response.data.map((city, idx) => {
+    //         dataCity.push({
+    //             label: city.name,
+    //             value: city.code,
+    //         });
+    //     });
+    //     setCity(dataCity);
+    // };
 
-    const getDistrict = async (e) => {
-        const response = await axios.get(`https://provinces.open-api.vn/api/p/${e}?depth=2`);
-        const dataDistrict = [];
-        response.data.districts.map((district, idx) => {
-            dataDistrict.push({
-                label: district.name,
-                value: district.code,
-            });
-        });
-        setDistrict(dataDistrict);
-    };
+    // const getDistrict = async (e) => {
+    //     const response = await axios.get(`https://provinces.open-api.vn/api/p/${e}?depth=2`);
+    //     const dataDistrict = [];
+    //     response.data.districts.map((district, idx) => {
+    //         dataDistrict.push({
+    //             label: district.name,
+    //             value: district.code,
+    //         });
+    //     });
+    //     setDistrict(dataDistrict);
+    // };
 
-    const getWards = async (e) => {
-        const response = await axios.get(`https://provinces.open-api.vn/api/d/${e}?depth=2`);
+    // const getWards = async (e) => {
+    //     const response = await axios.get(`https://provinces.open-api.vn/api/d/${e}?depth=2`);
 
-        const dataWard = [];
-        response.data.wards.map((ward, idx) => {
-            dataWard.push({
-                label: ward.name,
-                value: ward.code,
-            });
-        });
-        setWard(dataWard);
-    };
-    const handleChangeCity = async (value) => {
-        setDistrict([]); // Reset districts and wards
-        setWard([]);
-        await getDistrict(value); // Fetch districts for selected city
-    };
+    //     const dataWard = [];
+    //     response.data.wards.map((ward, idx) => {
+    //         dataWard.push({
+    //             label: ward.name,
+    //             value: ward.code,
+    //         });
+    //     });
+    //     setWard(dataWard);
+    // };
+    // const handleChangeCity = async (value) => {
+    //     setDistrict([]); // Reset districts and wards
+    //     setWard([]);
+    //     await getDistrict(value); // Fetch districts for selected city
+    // };
 
-    const handleChangeDistrict = async (value) => {
-        setWard([]); // Reset wards
-        await getWards(value); // Fetch wards for selected district
-    };
+    // const handleChangeDistrict = async (value) => {
+    //     setWard([]); // Reset wards
+    //     await getWards(value); // Fetch wards for selected district
+    // };
 
     const onFinish = async (values) => {
         console.log('Address update values:', values);
@@ -212,9 +209,9 @@ function UserCard() {
         }
     };
 
-    useEffect(() => {
-        getCity();
-    }, []);
+    // useEffect(() => {
+    //     getCity();
+    // }, []);
     // Your JSX code here
 
     return (
@@ -245,14 +242,14 @@ function UserCard() {
                                     className="hidden"
                                     id="avatar-upload" // Associate with label
                                 />
-                                <label htmlFor="avatar-upload">
+                                {/* <label htmlFor="avatar-upload">
                                     <Button className="font-medium hover:bg-slate-800" onClick={uploadAvatar}>
                                         Change Avatar
                                     </Button>
-                                </label>
-                                <Button className="font-medium bg-white text-black hover:bg-slate-300" onClick={deleteAvatar}>
+                                </label> */}
+                                {/* <Button className="font-medium bg-white text-black hover:bg-slate-300" onClick={deleteAvatar}>
                                     Delete Avatar
-                                </Button>
+                                </Button> */}
                                 </div>
                             </div>
                             {/* Update Info */}
@@ -329,7 +326,6 @@ function UserCard() {
                                 type="text"
                                 style={{ width: '100%' }} // Adjust width as needed
                                 defaultValue={addressData.address_province}
-                                
                                 placeholder="Nhập tỉnh/thành phố"
                                 required
                             />
@@ -369,9 +365,9 @@ function UserCard() {
                         </div>
 
                         <div>
-                            <button className="mb-5 items-center" type="submit">
+                            {/* <button className="mb-5 items-center" type="submit">
                                 Save Address
-                            </button>
+                            </button> */}
                         </div>
                     </Form>
                  
