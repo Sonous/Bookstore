@@ -29,13 +29,13 @@ const OrderDetailPage = () => {
             try {
                 const [orderData, addressData] = await Promise.all([
                     orderApi.getOrderByUser(user.user_id),
-                    // addressApi.getAddressByUser(user.user_id),
+                    addressApi.getAddressByUser(user.user_id),
                 ]);
                 setOrders(orderData);
-                // setAddress(addressData);
+                setAddress(addressData);
 
                 // console.log('Fetched Orders:', orderData); // Log fetched orders
-                // console.log('Fetched Address:', addressData); // Log fetched address
+                console.log('Fetched Address:', addressData); // Log fetched address
             } catch (error) {
                 console.error('Error fetching orders or addresses:', error);
                 // Optionally, show a user-friendly error message
@@ -59,10 +59,10 @@ const OrderDetailPage = () => {
         return <p>No orders found.</p>;
     }
 
-    // if (!address || address.length === 0) {
-    //     return <p>Địa chỉ không có sẵn</p>;
-    // }
-    // const userAddress = address[0]?.address;
+    if (!address || address.length === 0) {
+        return <p>Địa chỉ không có sẵn</p>;
+    }
+    const userAddress = address.length > 0 ? address[0] : null;
     return (
         <div>
             <Header />
@@ -105,8 +105,8 @@ const OrderDetailPage = () => {
                                     <div className="address flex gap-2 items-center">
                                         <FaHouse />
                                         <p>
-                                            {/* {userAddress.address_house_number}, {userAddress.address_ward},{' '}
-                                            {userAddress.address_district}, {userAddress.address_province} */}
+                                            {userAddress.address_house_number}, {userAddress.address_ward},{' '}
+                                            {userAddress.address_district}, {userAddress.address_province}
                                         </p>
                                     </div>
                                 </div>
