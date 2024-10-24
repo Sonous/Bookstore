@@ -1,8 +1,11 @@
 import express from 'express';
-import { getUserRatings } from '../controllers/rating.controller.js';
+import { getBookRatings, getUserRatings } from '../controllers/rating.controller.js';
 
 const ratingRouter = express.Router();
 
-ratingRouter.get('/:userId', getUserRatings);
+
+ratingRouter.get('/user/:userId', getUserRatings);
+
+ratingRouter.get('/book/:bookId', getBookRatings);
 
 export default ratingRouter;

@@ -20,20 +20,27 @@ const OrderDetailPage = () => {
 
     useEffect(() => {
         const fetchOrder = async () => {
-            if (!user) return;
+            if (!user) {
+                setLoading(false); // Set loading to false if no user is present
+                return;
+            }
+            setLoading(true);
 
             try {
-                const orderData = await orderApi.getOrderByUser(user.user_id);
+                const [orderData, addressData] = await Promise.all([
+                    orderApi.getOrderByUser(user.user_id),
+                    // addressApi.getAddressByUser(user.user_id),
+                ]);
                 setOrders(orderData);
-                console.log('Set Address:', orderData); // Log what is set in state
+                // setAddress(addressData);
 
-                const addressData = await addressApi.getAddressByUser(user.user_id);
-                setAddress(addressData);
-                console.log('Set Address:', addressData); // Log what is set in state
+                // console.log('Fetched Orders:', orderData); // Log fetched orders
+                // console.log('Fetched Address:', addressData); // Log fetched address
             } catch (error) {
                 console.error('Error fetching orders or addresses:', error);
+                // Optionally, show a user-friendly error message
             } finally {
-                setLoading(false);
+                setLoading(false); // Set loading to false when done
             }
         };
 
@@ -52,10 +59,10 @@ const OrderDetailPage = () => {
         return <p>No orders found.</p>;
     }
 
-    if (!address || address.length === 0) {
-        return <p>Địa chỉ không có sẵn</p>;
-    }
-    const userAddress = address[0]?.address;
+    // if (!address || address.length === 0) {
+    //     return <p>Địa chỉ không có sẵn</p>;
+    // }
+    // const userAddress = address[0]?.address;
     return (
         <div>
             <Header />
@@ -98,15 +105,15 @@ const OrderDetailPage = () => {
                                     <div className="address flex gap-2 items-center">
                                         <FaHouse />
                                         <p>
-                                            {userAddress.address_house_number}, {userAddress.address_ward},{' '}
-                                            {userAddress.address_district}, {userAddress.address_province}
+                                            {/* {userAddress.address_house_number}, {userAddress.address_ward},{' '}
+                                            {userAddress.address_district}, {userAddress.address_province} */}
                                         </p>
                                     </div>
                                 </div>
                                 {/* Payment Method */}
                                 <div className="payment-method border rounded-xl flex flex-col p-5 w-full md:w-1/5 text-center shadow-sm hover:shadow-lg">
                                     <p className="pb-4 font-semibold text-lg">Phương thức thanh toán</p>
-                                    <p>{order.payingMethod?.pay_method_name || 'Phương thức không có sẵn'}</p>
+                                    <p>{order.pay_method_name || 'Phương thức không có sẵn'}</p>
                                 </div>
                                 {/* Total Amount */}
                                 <div className="total border rounded-xl flex flex-col p-5 w-full md:w-2/5 text-center shadow-sm hover:shadow-lg">
@@ -117,7 +124,7 @@ const OrderDetailPage = () => {
                                     </div>
                                     <div className="flex justify-between">
                                         <p className="text-gray-500">Phí vận chuyển</p>
-                                        <p>{order.transportMethod?.transport_cost}d</p>
+                                        <p>{order.transport_cost}d</p>
                                     </div>
                                     <div className="flex justify-between">
                                         <p className="font-semibold text-lg">Tổng tiền (bao gồm VAT): </p>
@@ -130,7 +137,7 @@ const OrderDetailPage = () => {
                                 {/* Transport Type */}
                                 <div className="transportType border rounded-xl flex flex-col p-5 w-full md:w-1/2 shadow-sm hover:shadow-lg">
                                     <p className="pb-4 font-semibold text-lg">Phương thức vận chuyển</p>
-                                    <p>{order.transportMethod?.transport_name}</p>
+                                    <p>{order.transport_name}</p>
                                 </div>
                                 {/* Notes */}
                                 <div className="note border rounded-xl flex flex-col p-5 w-full md:w-1/2 shadow-sm hover:shadow-lg">

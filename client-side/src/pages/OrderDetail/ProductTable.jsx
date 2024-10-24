@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProductTable = ({ products }) => {
-  console.log('Book', products);
+  // console.log('Book', products);
   
   const productCount = products.length; // Count the number of products
   

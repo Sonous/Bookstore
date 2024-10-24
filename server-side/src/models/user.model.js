@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
+import RatingBook from './ratingBook.model.js';
 
 const User = sequelize.define(
     'user',
