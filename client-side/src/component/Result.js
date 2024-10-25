@@ -18,7 +18,8 @@ const prices = [
     {
         label: 'Nhỏ hơn 100,000₫',
         value: {
-            maxPrice: 150000,
+            minPrice: 0,
+            maxPrice: 100000,
         },
     },
     {
@@ -53,6 +54,7 @@ const prices = [
         label: 'Lớn hơn 500,000₫',
         value: {
             minPrice: 500000,
+            maxPrice: 99999999999,
         },
     },
 ];
@@ -66,15 +68,28 @@ function Result({ category, selectedGenres, searchPage = false, data = [], setSe
     const [genres, setGenres] = useState([]);
     const [checkedPrice, setCheckedPrice] = useState('');
 
-    // console.log(
-    //     prices.find((price) => {
-    //         return price.label === checkedPrice;
-    //     }).value,
-    // );
-
     useEffect(() => {
-        setBooks(data);
-    }, [data]);
+        if (!checkedPrice) {
+            setSortedSelection(sortedList[0]);
+            setBooks(() => {
+                data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                return data;
+            });
+            return;
+        }
+
+        const priceCondition = prices.find((price) => {
+            return price.label === checkedPrice;
+        });
+
+        const filteredBooks = data.filter((book) => {
+            const price = parseFloat(book.book_end_cost);
+
+            return price >= priceCondition.value.minPrice && price <= priceCondition.value.maxPrice;
+        });
+
+        setBooks(filteredBooks);
+    }, [data, checkedPrice]);
 
     useEffect(() => {
         if (category) {
@@ -88,7 +103,48 @@ function Result({ category, selectedGenres, searchPage = false, data = [], setSe
         title: item.title,
     }));
 
+    useEffect(() => {
+        setSortedSelection(sortedList[0]);
+        setCheckedPrice('');
+    }, [data]);
+
     const handleSelection = (info) => {
+        switch (parseInt(info.key)) {
+            case 0:
+                setBooks((prev) => {
+                    prev.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    return prev;
+                });
+                break;
+            case 1:
+                setBooks((prev) => {
+                    prev.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                    return prev;
+                });
+                break;
+            case 2:
+                setBooks((prev) => {
+                    prev.sort((a, b) => parseFloat(a.book_end_cost) - parseFloat(b.book_end_cost));
+                    return prev;
+                });
+                break;
+            case 3:
+                setBooks((prev) => {
+                    prev.sort((a, b) => parseFloat(b.book_end_cost) - parseFloat(a.book_end_cost));
+                    return prev;
+                });
+                break;
+            case 4:
+                setBooks((prev) => {
+                    prev.sort((a, b) => b.book_sold - a.book_sold);
+                    return prev;
+                });
+                break;
+
+            default:
+                break;
+        }
+
         setSortedSelection({ key: info.key, title: info.item.props.title });
     };
 
