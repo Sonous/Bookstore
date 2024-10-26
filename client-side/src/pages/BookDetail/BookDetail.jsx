@@ -34,7 +34,6 @@ function BookDetail() {
 
     const [rating, setRating] = useState(0);
     const [ratingContent, setRatingContent] = useState('');
-    const [refreshRating, setRefreshRating] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -213,7 +212,7 @@ function BookDetail() {
             });
             setRatingContent('');
             setRating(0);
-            setRefreshRating((prev) => !prev);
+            window.location.reload();
         }
     };
     return (
@@ -249,7 +248,7 @@ function BookDetail() {
                                 <div className="rating flex items-center justify-between text-center">
                                     <div className="rating flex items-center gap-5">
                                         <Rating rating={book.book_star_rating} />
-                                        <h1 className="2xl:text-lg">{book.book_star_rating}</h1>
+                                        <h1 className="2xl:text-lg">{book.book_star_rating}/5</h1>
                                     </div>
                                     <a className="text-right">
                                         Tác giả: <span className="font-semibold">{book.book_author}</span>
@@ -391,7 +390,7 @@ function BookDetail() {
                                 ) : (
                                     <div className="comment-form py-3 flex flex-col gap-3">
                                         <div className="top-comment  flex justify-between items-center">
-                                            <h3>0 bình luận</h3>
+                                            <h3>{book.book_rating_num} bình luận</h3>
                                             <Dropdown overlay={dropDownmenu} trigger={['click']}>
                                                 <Button>
                                                     Sắp xếp theo<span>▼</span>
@@ -439,7 +438,8 @@ function BookDetail() {
                         <div className="rating border-gray-600 mt-5 border px-5 rounded-xl py-5">
                             <h1 className="text-2xl">Đánh giá sản phẩm</h1>
                             <h1 className="flex items-center gap-5">
-                                Rating: <Rating rating={book.book_star_rating} /> {book.book_star_rating || 'N/A'}
+                                Rating: <Rating rating={book.book_star_rating} />{' '}
+                                {book.book_star_rating + '/5' || '0/0'}
                             </h1>
                             <div className="danhgia flex">
                                 <h1
@@ -450,21 +450,10 @@ function BookDetail() {
                                 >
                                     Đánh giá
                                 </h1>
-                                <h1
-                                    className={`ml-4 cursor-pointer ${
-                                        activeHeader === 'Câu hỏi và trả lời' ? 'font-bold underline' : ''
-                                    }`}
-                                    onClick={handleCauHoiClick}
-                                >
-                                    Câu hỏi và trả lời
-                                </h1>
                             </div>
                             <div className="content">
-                                {activeHeader === 'Đánh giá' && (
-                                    <UserReview bookId={book.book_id} refreshRating={refreshRating} />
-                                )}
+                                {activeHeader === 'Đánh giá' && <UserReview bookId={book.book_id} />}
                             </div>
-                            <div className="content">{activeHeader === 'Câu hỏi và trả lời' && <CommentList />}</div>
                         </div>
                     </div>
                     <div className="same-author text-center items-center w-full lg:w-3/12 bg-white rounded-xl border mb-5">
