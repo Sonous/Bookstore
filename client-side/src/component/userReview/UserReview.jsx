@@ -33,7 +33,7 @@ const ReviewData = [
         desc: 'Sách rất hay, mọi người nên đọc!',
     },
 ];
-const UserReview = ({ bookId, refreshRating }) => {
+const UserReview = ({ bookId }) => {
     const [showAll, setShowAll] = useState(false);
     const reviewsToShow = showAll ? ReviewData : ReviewData.slice(0, 2);
     const [ratings, setRatings] = useState([]);
@@ -47,7 +47,7 @@ const UserReview = ({ bookId, refreshRating }) => {
         if (bookId) {
             getAllRatings();
         }
-    }, [bookId, refreshRating]);
+    }, [bookId]);
     return (
         <div className="flex flex-col gap-[10px]">
             <div className="content flex flex-col gap-[10px]">
