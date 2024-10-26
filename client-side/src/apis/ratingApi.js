@@ -4,16 +4,26 @@ const reviewApi = {
     // Get user reviews
     getUserReviews: async (userId) => {
         try {
-            const data = await request.get(`/rating/user/${userId}`);
+            const data = await request.get(`/rating/${userId}`);
             return data || []; // Return the reviews data or an empty array if no data
         } catch (error) {
             throw new Error(error.message);
         }
     },
-    getBookReviews: async (bookId) => {
+    addRating: async (data) => {
         try {
-            const data = await request.get(`/rating/book/${bookId}`);
-            return data || []; 
+            const response = await request.post(`/rating`, data);
+            return response;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getAllRating: async (bookId) => {
+        try {
+            const response = await request.post(`/rating/getAllRatings`, {
+                bookId,
+            });
+            return response;
         } catch (error) {
             throw new Error(error.message);
         }

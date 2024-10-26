@@ -17,6 +17,10 @@ import DropdownButton from 'antd/es/dropdown/dropdown-button';
 import CommentList from '~/component/userReview/CommentList';
 import transportApi from '~/apis/transportApi';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
+import reviewApi from '~/apis/ratingApi';
 function BookDetail() {
     const { name } = useParams(); // Extract the book name from the URL
     const [activeHeader, setActiveHeader] = useState('Đánh giá');
@@ -28,6 +32,9 @@ function BookDetail() {
     const { user, alertExpiredLogin, setIsReloadCart, isReloadCart } = useContext(UserContext);
     const [transportMethod, setTransportMethod] = useState('');
 
+    const [rating, setRating] = useState(0);
+    const [ratingContent, setRatingContent] = useState('');
+    const [refreshRating, setRefreshRating] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -163,7 +170,52 @@ function BookDetail() {
         localStorage.setItem('order', JSON.stringify(order));
         navigate('/paying/directly');
     };
-
+    const handleRating = async () => {
+        if (!user.user_id || !book.book_id || rating === 0 || ratingContent === '') {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+            });
+            Toast.fire({
+                icon: 'error',
+                title: 'Vui lòng nhập đủ thông tin',
+            });
+            return;
+        }
+        const response = await reviewApi.addRating({
+            userId: user.user_id,
+            bookId: book.book_id,
+            rating: rating,
+            rating_content: ratingContent,
+        });
+        if (response?.status === 'success') {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+            });
+            Toast.fire({
+                icon: 'success',
+                title: response.message,
+            });
+            setRatingContent('');
+            setRating(0);
+            setRefreshRating((prev) => !prev);
+        }
+    };
     return (
         <div>
             <div className="0 rounded-xl flex flex-col">
@@ -340,20 +392,45 @@ function BookDetail() {
                                     <div className="comment-form py-3 flex flex-col gap-3">
                                         <div className="top-comment  flex justify-between items-center">
                                             <h3>0 bình luận</h3>
-
                                             <Dropdown overlay={dropDownmenu} trigger={['click']}>
                                                 <Button>
                                                     Sắp xếp theo<span>▼</span>
                                                 </Button>
                                             </Dropdown>
                                         </div>
-
+                                        <div className="flex gap-2">
+                                            {[1, 2, 3, 4, 5].map((el, idx) => {
+                                                return (
+                                                    <div key={idx}>
+                                                        <FontAwesomeIcon
+                                                            icon={rating < el ? faStar : faStarSolid}
+                                                            onClick={() => setRating(el)}
+                                                            className={`${
+                                                                rating < el ? 'text-gray-500' : 'text-yellow-500'
+                                                            } text-2xl text-gray-500 cursor-pointer`}
+                                                        />
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                         {/* Example form elements */}
                                         <div className="form w-full">
                                             <textarea
+                                                value={ratingContent}
+                                                onChange={(e) => {
+                                                    setRatingContent(e.target.value);
+                                                }}
                                                 placeholder="Write your comment here..."
-                                                className="border p-2 w-full"
+                                                className="border h-[150px] p-2 w-full"
                                             />
+                                        </div>
+                                        <div
+                                            onClick={() => {
+                                                handleRating();
+                                            }}
+                                            className="w-[100px] text-center cursor-pointer text-white font-semibold py-2 bg-primary-color inline-block rounded-md "
+                                        >
+                                            Đánh giá
                                         </div>
                                     </div>
                                 )}
@@ -382,10 +459,12 @@ function BookDetail() {
                                     Câu hỏi và trả lời
                                 </h1>
                             </div>
-                            <div className="content">{activeHeader === 'Đánh giá' && <UserReview book={book} />}</div>
-                            <div className="content">{activeHeader === 'Câu hỏi và trả lời' && <CommentList/>}
-                              
+                            <div className="content">
+                                {activeHeader === 'Đánh giá' && (
+                                    <UserReview bookId={book.book_id} refreshRating={refreshRating} />
+                                )}
                             </div>
+                            <div className="content">{activeHeader === 'Câu hỏi và trả lời' && <CommentList />}</div>
                         </div>
                     </div>
                     <div className="same-author text-center items-center w-full lg:w-3/12 bg-white rounded-xl border mb-5">
