@@ -45,7 +45,7 @@ function UserCard() {
 
                 try {
                     const addressData = await addressApi.getAddressByUser(user.user_id);
-                    console.log('Fetched address data:', addressData);
+                    // console.log('Fetched address data:', addressData);
                     if (Array.isArray(addressData) && addressData.length > 0) {
                         const fetchedAddress = addressData[0]; // Adjust this based on your API response
                         setAddressData({
