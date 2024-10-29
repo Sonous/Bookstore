@@ -19,8 +19,8 @@ const routes = {
 
     user: '/user',
     usercheck: '/check',
-    orderDetail: '/orderdetail',
-    order: '/order',
+    orderDetail: '/order/',
+    // order: '/order',
     results: '/results',
 
     favoritebooks: '/favoritebooks',

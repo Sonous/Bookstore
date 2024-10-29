@@ -16,7 +16,20 @@ const orderApi = {
             throw new Error(error.message);
         }
     },
-
+    getOrderById: async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const data = await request.get(`/order/${id}`,{
+                headers: {
+                    'x-access-token': token,
+                },
+            },);
+            return data || [];
+        } catch (error) {
+            console.error('Error fetching user order:', error);
+            throw new Error(error.message);
+        }
+    },
     // async saveOrder(order) {
     //     try {
     //         if (order) {

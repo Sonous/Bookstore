@@ -43,7 +43,7 @@ function UserHeading() {
                                 </h1>
                             </div>
                         </Link>
-                        <Link to={routes.order}>
+                        <Link to={routes.orderDetail}>
                             <div className="flex justify-between items-center py-2 border-b border-b-orange-200 px-5 hover:scale-105 cursor-pointer transition-all duration-200 bg-white  rounded-xl">
                                 <h1 className="text-base sm:text-lg font-semibold text-gray-700">Đơn hàng của tôi</h1>
                             </div>

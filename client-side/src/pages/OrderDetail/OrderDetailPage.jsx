@@ -11,13 +11,19 @@ import { UserContext } from '~/context/UserContextProvider';
 import orderApi from '~/apis/orderApi';
 import addressApi from '~/apis/addressApi';
 import { formatDate } from '~/utils/functions/formatDate';
+import { FaAngleUp } from 'react-icons/fa';
+import OrderStatus from '~/component/Order/OrderStatus';
+import Footer from '~/layouts/Footer/Footer';
+const statusList = ['Tất Cả','Hoàn tất', 'Hủy'];
 
 const OrderDetailPage = () => {
     const { user } = useContext(UserContext);
     const [loading, setLoading] = useState(true);
     const [orders, setOrders] = useState([]);
     const [address, setAddress] = useState([]);
-
+    const [expandedOrders, setExpandedOrders] = useState({});
+    const [orderQuantities, setOrderQuantities] = useState({});
+    const [currentStatus, setCurrentStatus] = useState('Tất Cả');
     useEffect(() => {
         const fetchOrder = async () => {
             if (!user) {
@@ -33,20 +39,35 @@ const OrderDetailPage = () => {
                 ]);
                 setOrders(orderData);
                 setAddress(addressData);
+                calculateOrderQuantities(orderData);
 
                 // console.log('Fetched Orders:', orderData); // Log fetched orders
-                console.log('Fetched Address:', addressData); // Log fetched address
+                // console.log('Fetched Address:', addressData); // Log fetched address
             } catch (error) {
                 console.error('Error fetching orders or addresses:', error);
-                // Optionally, show a user-friendly error message
+          
             } finally {
-                setLoading(false); // Set loading to false when done
+                setLoading(false);
             }
         };
 
         fetchOrder();
     }, [user]);
+    const calculateOrderQuantities = (orders) => {
+        const quantities = orders.reduce((acc, order) => {
+            acc[order.order_status] = (acc[order.order_status] || 0) + 1; // Count orders by status
+            return acc;
+        }, {});
 
+        quantities['Tất Cả'] = orders.length; // Total count for 'Tất Cả'
+        setOrderQuantities(quantities); // Update state with the calculated quantities
+    };
+    const toggleOrderDetails = (orderId, status) => {
+        setExpandedOrders((prev) => ({
+            ...prev,
+            [`${orderId}-${status}`]: !prev[`${orderId}-${status}`],
+        }));
+    };
     if (!user) {
         return <p>Loading...</p>;
     }
@@ -63,17 +84,37 @@ const OrderDetailPage = () => {
         return <p>Địa chỉ không có sẵn</p>;
     }
     const userAddress = address.length > 0 ? address[0] : null;
+    const filteredOrders = currentStatus === 'Tất Cả' ? orders : orders.filter(order => order.order_status === currentStatus);
     return (
         <div>
             <Header />
             <UserHeading />
-            {orders.map((order) => {
-                const isCancel = order.order_status === 'Hủy'; // Move this declaration outside of JSX
+            <div className="bg-main-bg-color py-5 flex flex-col gap-2">
+                <div className="bg-white rounded-xl sm:p-5 mx-5 ">
+                    <span className="text-xl font-semibold">Đơn hàng của tôi</span>
+                    <div className="flex justify-between px-10 mt-5">
+                        {statusList.map((status, index) => {
+                            return (
+                                <OrderStatus
+                                    status={status}
+                                    orderQuantity={orderQuantities[status] || 0}
+                                    currentStatus={currentStatus === status}
+                                    setCurrentStatus={setCurrentStatus}
+                                    key={index}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+            {filteredOrders.map((order) => {
+                const isCancel = order.order_status === 'Hủy'; 
+                const isExpanded = expandedOrders[`${order.order_id}-${order.order_status}`];
                 return (
-                    <div className="" key={order.order_id}>
-                        <div className="order mt-10 mx-20 border rounded-xl px-5 py-5 flex flex-col gap-5">
-                            <div className="topOrder flex text-center items-center justify-between">
-                                <div className="orderID flex gap-10 text-center items-center">
+                    <div className=" mb-5  justify-center " key={order.order_id}>
+                        <div className="order mt-10 mx-20 border rounded-xl px-5 py-5 flex flex-col gap-5 hover:shadow-md">
+                            <div className="topOrder flex text-center items-center justify-between ">
+                                <div className="orderID flex gap-10 text-center items-center ">
                                     <h1 className="font-bold text-2xl">Mã đơn hàng #{order.order_id}</h1>
                                     <div
                                         className={
@@ -88,7 +129,16 @@ const OrderDetailPage = () => {
                                 <div className="date">
                                     <h1>Ngày mua: {formatDate(order.created_at)}</h1>
                                 </div>
+                                <button
+                                    onClick={() => toggleOrderDetails(order.order_id, order.order_status)}
+                                    className="flex items-center text-blue-500"
+                                >
+                                    {isExpanded ? 'Close Details' : 'View Details'}
+                                    {isExpanded ? <FaAngleUp /> : <FaAngleDown />}
+                                </button>
                             </div>
+                            {isExpanded && (
+                            <>
                             <div className="process">
                                 <Process
                                     isCancel={isCancel} // Pass the isCancel variable
@@ -165,10 +215,13 @@ const OrderDetailPage = () => {
                             </div>
 
                             <OrderCard OrderData={order} />
+                            </>
+                        )}
                         </div>
                     </div>
                 );
             })}
+            <Footer/>
         </div>
     );
 };

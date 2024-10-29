@@ -97,6 +97,66 @@ const getOrderByUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+const getOrderById = async (req, res) => {
+    const orderId = req.params.orderId;
+    try {
+        const order = await Order.findOne({
+            where: { order_id: orderId },
+            attributes: [
+                'order_id',
+                'order_address_info',
+                'order_books',
+                'order_status',
+                'books_total_prices',
+                'transport_name',
+                'transport_cost',
+                'pay_method_name',
+                'order_total_cost',
+                'created_at',
+                'updated_at',
+            ],
+        });
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        // Parse JSON fields to return them as objects
+        const parsedBooks = JSON.parse(order.order_books);
+
+        // Fetch book images based on the book_ids from parsedBooks
+        const booksWithImages = await Promise.all(parsedBooks.map(async (book) => {
+            const bookImages = await BookImage.findAll({
+                where: { book_id: book.book_id },
+                attributes: ['book_image_url'],
+            });
+
+            return {
+                ...book,
+                images: bookImages.map(image => image.book_image_url),
+            };
+        }));
+
+        const parsedOrder = {
+            order_id: order.order_id,
+            order_address_info: JSON.parse(order.order_address_info),
+            order_books: booksWithImages,
+            order_status: order.order_status,
+            books_total_prices: order.books_total_prices,
+            transport_name: order.transport_name,
+            transport_cost: order.transport_cost,
+            pay_method_name: order.pay_method_name,
+            order_total_cost: order.order_total_cost,
+            createdAt: order.created_at,
+            updatedAt: order.updated_at,
+        };
+
+        res.status(200).json(parsedOrder);
+    } catch (error) {
+        console.error('Error fetching order by ID:', error);
+        res.status(500).json({ error: error.message });
+    }
+};
 
  const saveOrder = async (req, res) => {
     try {
@@ -121,4 +181,4 @@ const getOrderByUser = async (req, res) => {
     }
 };
 
-export { getOrderByUser, saveOrder };
+export { getOrderByUser, saveOrder, getOrderById };
