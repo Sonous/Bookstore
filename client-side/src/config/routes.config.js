@@ -20,7 +20,7 @@ const routes = {
     user: '/user',
     usercheck: '/check',
     orderDetail: '/order/',
-    // order: '/order',
+    order: '/order',
     results: '/results',
 
     favoritebooks: '/favoritebooks',

@@ -37,17 +37,17 @@ const UserReview = ({ bookId }) => {
     const [showAll, setShowAll] = useState(false);
     const reviewsToShow = showAll ? ReviewData : ReviewData.slice(0, 2);
     const [ratings, setRatings] = useState([]);
-    const getAllRatings = async () => {
-        const response = await reviewApi.getAllRating(bookId);
-        if (response.status === 'success') {
-            setRatings(response.data);
-        }
-    };
-    useEffect(() => {
-        if (bookId) {
-            getAllRatings();
-        }
-    }, [bookId]);
+    // const getAllRatings = async () => {
+    //     const response = await reviewApi.getAllRating(bookId);
+    //     if (response.status === 'success') {
+    //         setRatings(response.data);
+    //     }
+    // };
+    // useEffect(() => {
+    //     if (bookId) {
+    //         getAllRatings();
+    //     }
+    // }, [bookId]);
     return (
         <div className="flex flex-col gap-[10px]">
             <div className="content flex flex-col gap-[10px]">

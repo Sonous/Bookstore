@@ -8,6 +8,7 @@ const AdminContext = createContext();
 const AdminContextProvider = ({ children }) => {
     const [admin, setAdmin] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [page, setPage] = useState('');
 
     useEffect(() => {
         getAdminInfo();
@@ -28,12 +29,16 @@ const AdminContextProvider = ({ children }) => {
 
     const getAdminInfo = async () => {
         try {
-            setIsLoading(true);
+            const token = localStorage.getItem('token');
 
-            const adminInfo = await adminApi.getAdminByToken();
+            if (token) {
+                setIsLoading(true);
 
-            setAdmin(adminInfo);
-            setIsLoading(false);
+                const adminInfo = await adminApi.getAdminByToken(token);
+
+                setAdmin(adminInfo);
+                setIsLoading(false);
+            }
         } catch (error) {
             alertExpiredLogin();
         }
@@ -52,6 +57,8 @@ const AdminContextProvider = ({ children }) => {
                 logout,
                 setIsLoading,
                 alertExpiredLogin,
+                page,
+                setPage,
             }}
         >
             {isLoading ? (

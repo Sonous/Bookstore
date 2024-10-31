@@ -150,7 +150,7 @@ CREATE TABLE `Order` (
     order_id CHAR(36) NOT NULL,
     order_address_info text  NOT NULL,
     order_books text  NOT NULL,
-    order_status nvarchar(50)  NOT NULL,
+    order_status ENUM('Chờ thanh toán', 'Đang xử lý', 'Đang giao', 'Hoàn tất', 'Bị hủy', 'Đổi trả') DEFAULT 'Chờ thanh toán',
     books_total_prices decimal(20,2)  NOT NULL,
     transport_name nvarchar(255)  NOT NULL,
     transport_cost decimal(20,2)  NOT NULL,
@@ -178,13 +178,15 @@ CREATE TABLE TransportMethod (
 
 -- Table: RatingBook
 CREATE TABLE RatingBook (
+    review_id int PRIMARY KEY AUTO_INCREMENT,
     user_id int  NOT NULL,
     book_id int  NOT NULL,
     rating_star int  NOT NULL,
     rating_content text  NOT NULL,
+    review_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    likes_count int DEFAULT 0,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT RatingBook_pk PRIMARY KEY (user_id,book_id)
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 );
 
 -- Table: User
@@ -195,11 +197,25 @@ CREATE TABLE User (
     user_email varchar(255)  NOT NULL,
     user_password varchar(255)  NOT NULL,
     user_avatar_url varchar(255)  NOT NULL,
+    notification text,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     address_id int,
     CONSTRAINT User_pk PRIMARY KEY (user_id)
 );
+
+CREATE TABLE notification (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL, -- ID của người dùng nhận thông báo
+    title NVARCHAR(255) NOT NULL, -- Tiêu đề thông báo
+    message TEXT NOT NULL, -- Nội dung chi tiết của thông báo
+    type VARCHAR(255), -- Loại thông báo
+    status ENUM('Unread', 'Read') DEFAULT 'Unread', -- Trạng thái đã đọc hay chưa
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(user_id) -- Ràng buộc khoá ngoại tới bảng users
+);
+
 
 -- foreign keys
 -- Reference: Blog_BlogType (table: Blog)
@@ -1411,8 +1427,8 @@ INSERT INTO FavoriteBook (user_id, book_id) VALUES
 (10001, 60005);
 
 -- RatingBook
-INSERT INTO RatingBook (user_id, book_id, rating_star, rating_content) VALUES
- (10001, 60001, 5, N'Sách hay, tuyệt vời'),
- (10001, 60002, 4, N'Tình tiết truyện cuốn hút'),
- (10001, 60003, 5, N'Hóng tập tiếp theo');
+INSERT INTO RatingBook (review_id, user_id, book_id, rating_star, rating_content, review_status) VALUES
+ (150001, 10001, 60001, 5, N'Sách hay, tuyệt vời', 'approved'),
+ (150002, 10001, 60002, 4, N'Tình tiết truyện cuốn hút', 'approved'),
+ (150003, 10001, 60003, 5, N'Hóng tập tiếp theo', 'approved');
  

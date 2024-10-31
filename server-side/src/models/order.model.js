@@ -14,7 +14,10 @@ const Order = sequelize.define(
         },
         order_address_info: DataTypes.TEXT,
         order_books: DataTypes.TEXT,
-        order_status: DataTypes.STRING,
+        order_status: {
+            type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+            defaultValue: 'pending',
+        },
         books_total_prices: DataTypes.DECIMAL(20, 2),
         transport_name: DataTypes.STRING,
         transport_cost: DataTypes.DECIMAL(20, 2),

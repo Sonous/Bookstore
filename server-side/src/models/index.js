@@ -11,6 +11,7 @@ import PayingMethod from './payingMethod.model.js';
 import FavoriteBook from './favoriteBook.model.js';
 import Cart from './cart.model.js';
 import RatingBook from './ratingBook.model.js';
+import Notification from './notification.model.js';
 
 // Associate between Book and BookImage
 Book.hasMany(BookImage, {
@@ -147,10 +148,19 @@ Order.belongsTo(PayingMethod, {
     foreignKey: 'pay_method_id',
 });
 
-User.hasMany(RatingBook, { foreignKey: 'user_id', as: 'ratings' });
-Book.hasMany(RatingBook, { foreignKey: 'book_id', as: 'bookRatings' });
+// Associate between Notification and User
+User.hasMany(Notification, {
+    foreignKey: 'user_id',
+});
 
-RatingBook.belongsTo(User, { foreignKey: 'user_id', as: 'User' });
-RatingBook.belongsTo(Book, { foreignKey: 'book_id', as: 'Book' });
+Notification.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+// User.hasMany(RatingBook, { foreignKey: 'user_id', as: 'ratings' });
+// Book.hasMany(RatingBook, { foreignKey: 'book_id', as: 'bookRatings' });
+
+// RatingBook.belongsTo(User, { foreignKey: 'user_id', as: 'User' });
+// RatingBook.belongsTo(Book, { foreignKey: 'book_id', as: 'Book' });
 
 export { Book, BookImage, Genre, Category, BlogType, Blog, User, Address, Order, PayingMethod };

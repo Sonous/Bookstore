@@ -1,9 +1,7 @@
 import { request } from '~/configs';
 
 const adminApi = {
-    async getAdminByToken() {
-        const token = localStorage.getItem('token');
-
+    async getAdminByToken(token) {
         try {
             const admin = await request.get('/admin', {
                 headers: {
