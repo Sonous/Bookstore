@@ -150,4 +150,25 @@ const updateUser = async (req, res) => {
     }
 };
 
-export { getUserById, getUserByToken, getCartItems, addBookToCart, updateUser};
+const getAddressOfUser = (req, res) => {
+    const { userId } = req.params;
+
+    User.findByPk(userId, {
+        attributes: ['user_name', 'user_phone'],
+        include: {
+            model: Address,
+            attributes: {
+                exclude: ['address_id', 'address_description'],
+            },
+            required: true,
+        },
+    })
+        .then((address) => res.status(200).json(address))
+        .catch((err) =>
+            res.status(StatusCodes.NOT_FOUND).json({
+                message: err.message,
+            }),
+        );
+};
+
+export { getUserById, getUserByToken, getCartItems, addBookToCart, updateUser, getAddressOfUser };
