@@ -2,7 +2,8 @@ import RatingBook from '../models/ratingBook.model.js'; // Adjust paths as neces
 import User from '../models/user.model.js'; // Example for User model
 import Book from '../models/book.model.js'; // Example for Book model
 import BookImage from '../models/bookImage.model.js'; // Example for BookImage model
-import { where } from 'sequelize';
+import { Op, where } from 'sequelize';
+import Notification from '../models/notification.model.js';
 
 const getUserRatings = async (req, res) => {
     const userId = req.params.userId;
@@ -46,7 +47,7 @@ const getBookRatings = async (req, res) => {
 };
 export const addRating = async (req, res) => {
     try {
-        const { bookId, userId, rating, rating_content } = req.body;
+        const { bookId, userId, rating, rating_content, create_at } = req.body;
 
         // Check if the user has already rated the book
         const existingRating = await RatingBook.findOne({
@@ -60,6 +61,7 @@ export const addRating = async (req, res) => {
             rating_star: rating,
             rating_content,
             review_status: 'pending',
+            create_at: create_at
         });
 
         // Fetch all ratings for the book to calculate the new average
@@ -139,7 +141,15 @@ const approveRating = async (req, res) => {
         const rating = await RatingBook.findByPk(reviewId); // Find the rating by its ID
         if (rating) {
             rating.review_status = 'approved'; // Set the status to approved
-            await rating.save(); // Save the changes
+            await rating.save();
+
+            await Notification.create({
+                user_id: rating.user_id,
+                title: 'Rating Approved',
+                message: `Your rating for the book "${rating.book_id}" has been approved.`,
+                type: 'Approval',
+                created_at: new Date(),
+            });
 
             res.status(200).json({ message: 'Rating approved successfully' });
         } else {
@@ -180,7 +190,15 @@ const rejectRating = async (req, res) => {
         const rating = await RatingBook.findByPk(reviewId); // Find the rating by its ID
         if (rating) {
             rating.review_status = 'rejected'; // Set the status to rejected
-            await rating.save(); // Save the changes
+            await rating.save();
+
+            await Notification.create({
+                user_id: rating.user_id,
+                title: 'Rating Rejected',
+                message: `Your rating for the book "${rating.book_id}" has been rejected.`,
+                type: 'Rejection',
+                created_at: new Date(),
+            });
 
             res.status(200).json({ message: 'Rating rejected successfully' });
         } else {
@@ -213,5 +231,26 @@ const getRejectedRatings = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+const getAllRatingAdmin = async (req, res) => {
+    try {
+        const ratings = await RatingBook.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_id', 'user_name', 'user_email', 'user_avatar_url'],
+                },
+                {
+                    model: Book,
+                    attributes: ['book_id', 'book_name'],
+                },
+            ],
+        });
 
-export { getUserRatings, getBookRatings, approveRating, rejectRating, getPendingRatings, getApprovedRatings, getRejectedRatings };
+        res.status(200).json({ status: 'success', data: ratings });
+    } catch (error) {
+        console.error('Error fetching admin ratings:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+export { getUserRatings, getBookRatings, approveRating, rejectRating, getPendingRatings, getApprovedRatings, getRejectedRatings, getAllRatingAdmin };
