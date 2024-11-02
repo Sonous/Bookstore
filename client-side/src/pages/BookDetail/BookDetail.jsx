@@ -195,24 +195,24 @@ function BookDetail() {
             rating_content: ratingContent,
         });
         if (response?.status === 'success') {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                },
-            });
-            Toast.fire({
-                icon: 'success',
-                title: response.message,
-            });
-            setRatingContent('');
-            setRating(0);
-            window.location.reload();
+            // const Toast = Swal.mixin({
+            //     toast: true,
+            //     position: 'top-end',
+            //     showConfirmButton: false,
+            //     timer: 1500,
+            //     timerProgressBar: true,
+            //     didOpen: (toast) => {
+            //         toast.onmouseenter = Swal.stopTimer;
+            //         toast.onmouseleave = Swal.resumeTimer;
+            //     },
+            // });
+            // Toast.fire({
+            //     icon: 'success',
+            //     title: response.message,
+            // });
+            // setRatingContent('');
+            // setRating(0);
+            // window.location.reload();
         }
     };
     return (

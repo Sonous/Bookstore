@@ -12,6 +12,7 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
         acquire: 30000,
         idle: 10000,
     },
+    logging: false,
 });
 
 export default sequelize;
