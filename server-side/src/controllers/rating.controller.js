@@ -18,7 +18,6 @@ const getUserRatings = async (req, res) => {
                     attributes: ['book_image_url'],
                     as: 'image',
                 },
-                as: 'Book',
             },
         });
 
@@ -36,7 +35,6 @@ const getBookRatings = async (req, res) => {
             include: {
                 model: User, // Include User data with specific attributes
                 attributes: ['user_name', 'user_avatar_url'],
-                as: 'User',
             },
         });
 
@@ -55,26 +53,13 @@ export const addRating = async (req, res) => {
             where: { book_id: bookId, user_id: userId },
         });
 
-        if (existingRating) {
-            // Update the existing rating
-            await RatingBook.update(
-                {
-                    rating_star: rating,
-                    rating_content,
-                },
-                {
-                    where: { book_id: bookId, user_id: userId },
-                },
-            );
-        } else {
-            // Create a new rating entry
-            await RatingBook.create({
-                book_id: bookId,
-                user_id: userId,
-                rating_star: rating,
-                rating_content,
-            });
-        }
+        // Create a new rating entry
+        await RatingBook.create({
+            book_id: bookId,
+            user_id: userId,
+            rating_star: rating,
+            rating_content,
+        });
 
         // Fetch all ratings for the book to calculate the new average
         const ratings = await RatingBook.findAll({
@@ -114,7 +99,6 @@ export const getAllRatings = async (req, res) => {
             include: [
                 {
                     model: User,
-                    as: 'User',
                     attributes: ['user_id', 'user_name', 'user_email', 'user_avatar_url'],
                 },
             ],

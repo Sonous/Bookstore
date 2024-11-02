@@ -84,19 +84,22 @@ Book.belongsToMany(User, {
     as: 'UsersWithCart',
 });
 
-// ratingbook
-User.belongsToMany(Book, {
-    through: RatingBook,
+// Associate between User and RatingBook
+User.hasMany(RatingBook, {
     foreignKey: 'user_id',
-    otherKey: 'book_id',
-    as: 'RatingBook',
 });
 
-Book.belongsToMany(User, {
-    through: RatingBook,
+RatingBook.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+// Associate between Book and RatingBook
+Book.hasMany(RatingBook, {
     foreignKey: 'book_id',
-    otherKey: 'user_id',
-    as: 'UsersWhoRated',
+});
+
+RatingBook.belongsTo(Book, {
+    foreignKey: 'book_id',
 });
 
 // Associate between User and Address
