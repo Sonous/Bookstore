@@ -1,5 +1,5 @@
 import express from 'express';
-import { addRating, approveRating, getAllRatings, getApprovedRatings, getBookRatings, getPendingRatings, getRejectedRatings, getUserRatings, rejectRating } from '../controllers/rating.controller.js';
+import { addRating, approveRating, getAllRatingAdmin, getAllRatings, getApprovedRatings, getBookRatings, getPendingRatings, getRejectedRatings, getUserRatings, rejectRating } from '../controllers/rating.controller.js';
 
 const ratingRouter = express.Router();
 
@@ -14,5 +14,6 @@ ratingRouter.put('/approve/:reviewId', approveRating);
 ratingRouter.put('/reject/:reviewId', rejectRating);   
 ratingRouter.get('/approved', getApprovedRatings);
 ratingRouter.get('/rejected', getRejectedRatings);
+ratingRouter.get('/getAllRatingAdmin', getAllRatingAdmin);
 
 export default ratingRouter;

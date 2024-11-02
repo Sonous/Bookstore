@@ -37,6 +37,7 @@ export default function ReviewDetailModal({ review, setShowRatingIdx, onApprove,
                         </p>
                     </div>
                 </div>
+                {review.review_status === 'pending' && (
                 <div className="w-full flex justify-end gap-4">
                     <div className="px-4 py-2 rounded-md border-[1px] font-semibold cursor-pointer bg-red-500 text-white"
                     onClick={() => {
@@ -53,6 +54,7 @@ export default function ReviewDetailModal({ review, setShowRatingIdx, onApprove,
                         Duyệt
                     </div>
                 </div>
+                )}
             </div>
         </div>
     );

@@ -21,6 +21,10 @@ const RatingBook = sequelize.define(
             defaultValue: 'pending',
         },
         likes_count: DataTypes.INTEGER,
+        created_at: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         timestamps: false,

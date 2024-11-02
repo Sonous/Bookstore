@@ -36,9 +36,18 @@ const adminRatingApi = {
             throw new Error(error.message);
         }
     },
+    
     getRejectedRatings: async () => {
         try {
             const response = await request.get('/rating/rejected');
+            return response || [];
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getAllRatingAdmin: async () => {
+        try {
+            const response = await request.get('/rating/getAllRatingAdmin');
             return response || [];
         } catch (error) {
             throw new Error(error.message);
