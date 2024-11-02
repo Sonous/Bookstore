@@ -40,6 +40,7 @@ const UserContextProvider = ({ children }) => {
                     },
                 })
                 .then((userInfo) => {
+                    console.log(userInfo);
                     setUser(userInfo);
                     setIsLoading(false);
                 })

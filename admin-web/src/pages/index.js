@@ -3,7 +3,7 @@ import { AdminContext } from '~/context/AdminContextProvider';
 import Aside from '~/layouts/Aside';
 import DefaultLayout from '~/layouts/DefaultLayout';
 import Home from './Home';
-import ReviewManagement from './ReviewManagement';
+import ReviewManagement from './ReviewManagement/ReviewManagement';
 
 export default function AdminPage() {
     const { page } = useContext(AdminContext);

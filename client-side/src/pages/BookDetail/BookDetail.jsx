@@ -170,6 +170,7 @@ function BookDetail() {
         navigate('/paying/directly');
     };
     const handleRating = async () => {
+        console.log(user);
         if (!user.user_id || !book.book_id || rating === 0 || ratingContent === '') {
             const Toast = Swal.mixin({
                 toast: true,
