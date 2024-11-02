@@ -59,6 +59,7 @@ export const addRating = async (req, res) => {
             user_id: userId,
             rating_star: rating,
             rating_content,
+            review_status: 'pending',
         });
 
         // Fetch all ratings for the book to calculate the new average
@@ -82,7 +83,7 @@ export const addRating = async (req, res) => {
 
         res.status(200).json({
             status: 'success',
-            message: existingRating ? 'Rating updated successfully' : 'Rating added successfully',
+            message: existingRating ? 'Rating updated successfully' : 'Rating added successfully, pending for approval',
         });
     } catch (error) {
         console.error('Error adding rating:', error);
@@ -94,7 +95,7 @@ export const getAllRatings = async (req, res) => {
     try {
         const { bookId } = req.body;
         const ratings = await RatingBook.findAll({
-            where: { book_id: bookId },
+            where: { book_id: bookId, review_status: 'approved' },
             attributes: ['rating_star', 'rating_content', 'created_at'],
             include: [
                 {
@@ -109,4 +110,108 @@ export const getAllRatings = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
-export { getUserRatings, getBookRatings };
+const getPendingRatings = async (req, res) => {
+    try {
+        const pendingRatings = await RatingBook.findAll({
+            where: { review_status: 'pending' },
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_id', 'user_name', 'user_email', 'user_avatar_url'],
+                },
+                {
+                    model: Book,
+                    attributes: ['book_id', 'book_name'],
+                },
+            ],
+        });
+
+        res.status(200).json({ status: 'success', data: pendingRatings });
+    } catch (error) {
+        console.error('Error fetching pending ratings:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+const approveRating = async (req, res) => {
+    const { reviewId } = req.params; // Get the review ID from the request parameters
+
+    try {
+        const rating = await RatingBook.findByPk(reviewId); // Find the rating by its ID
+        if (rating) {
+            rating.review_status = 'approved'; // Set the status to approved
+            await rating.save(); // Save the changes
+
+            res.status(200).json({ message: 'Rating approved successfully' });
+        } else {
+            res.status(404).json({ message: 'Rating not found' });
+        }
+    } catch (error) {
+        console.error('Error approving rating:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+const getApprovedRatings = async (req, res) => {
+    try {
+        const approvedRatings = await RatingBook.findAll({
+            where: { review_status: 'approved' },
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_name', 'user_avatar_url'],
+                },
+                {
+                    model: Book,
+                    attributes: ['book_id', 'book_name'],
+                },
+            ],
+        });
+
+        res.status(200).json({ status: 'success', data: approvedRatings });
+    } catch (error) {
+        console.error('Error fetching approved ratings:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const rejectRating = async (req, res) => {
+    const { reviewId } = req.params; // Get the review ID from the request parameters
+
+    try {
+        const rating = await RatingBook.findByPk(reviewId); // Find the rating by its ID
+        if (rating) {
+            rating.review_status = 'rejected'; // Set the status to rejected
+            await rating.save(); // Save the changes
+
+            res.status(200).json({ message: 'Rating rejected successfully' });
+        } else {
+            res.status(404).json({ message: 'Rating not found' });
+        }
+    } catch (error) {
+        console.error('Error rejecting rating:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+const getRejectedRatings = async (req, res) => {
+    try {
+        const rejectedRatings = await RatingBook.findAll({
+            where: { review_status: 'rejected' },
+            include: [
+                {
+                    model: User,
+                    attributes: ['user_name', 'user_avatar_url'],
+                },
+                {
+                    model: Book,
+                    attributes: ['book_id', 'book_name'],
+                },
+            ],
+        });
+
+        res.status(200).json({ status: 'success', data: rejectedRatings });
+    } catch (error) {
+        console.error('Error fetching rejected ratings:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+export { getUserRatings, getBookRatings, approveRating, rejectRating, getPendingRatings, getApprovedRatings, getRejectedRatings };
