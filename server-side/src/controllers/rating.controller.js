@@ -93,7 +93,6 @@ export const addRating = async (req, res) => {
 export const getAllRatings = async (req, res) => {
     try {
         const { bookId } = req.body;
-        console.log(bookId);
         const ratings = await RatingBook.findAll({
             where: { book_id: bookId },
             attributes: ['rating_star', 'rating_content', 'created_at'],
