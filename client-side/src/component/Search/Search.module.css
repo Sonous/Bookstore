@@ -68,6 +68,7 @@
 }
 .result-header {
     padding-bottom: 10px;
+    font-weight: 700;
     /* color: var(--main-color); */
 }
 .search-popper {
@@ -77,4 +78,14 @@
     color: #0083f6;
     font-weight: 500;
     cursor: pointer;
+}
+
+@media (max-width: 648px) {
+    .wrapper,
+    .search-container {
+        width: 280px;
+    }
+    .search-btn {
+        margin-left: 5px;
+    }
 }

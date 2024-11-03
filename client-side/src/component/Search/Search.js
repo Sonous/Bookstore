@@ -3,56 +3,55 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
 import TippyHeadless from '@tippyjs/react/headless';
-import mapper from 'object-mapper';
+// import mapper from 'object-mapper';
 
 import styles from './Search.module.css';
 import PopperWrapper from '../Popper/Popper';
 import Book from '../Book/Book';
-import { Link } from 'react-router-dom';
-// import { useDebounce } from '~/hooks';
-// import callApi from '~/apis';
-import { searchResult as result } from '~/dataTemorary';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDebounce } from '~/hooks';
+import { request } from '~/config';
 
 const cx = classNames.bind(styles);
 
-// const map = {
-//     book_id: 'id',
-//     book_name: 'title',
-//     book_end_cost: 'currentPrice',
-//     book_image_name: 'image',
-// };
-
-function Search() {
+function Search({ className }) {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState(() => result.filter((book, index) => index < 4));
+    const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const searchRef = useRef();
 
-    // const debounced = useDebounce(searchValue, 500);
+    const debounced = useDebounce(searchValue, 500);
 
-    // useEffect(() => {
-    //     if (!searchValue.trim()) {
-    //         setSearchResult([]);
-    //         return;
-    //     }
+    useEffect(() => {
+        if (!searchValue.trim()) {
+            setSearchResult([]);
+            return;
+        }
 
-    //     // Call Api
-    //     const fetchApi = async () => {
-    //         setLoading(true);
+        // Call Api
+        const fetchApi = async () => {
+            setLoading(true);
 
-    //         const res = await callApi.search(debounced);
+            const res = await request.get('/book', {
+                params: {
+                    q: debounced,
+                    type: 'search',
+                    limit: 5,
+                },
+            });
 
-    //         setSearchResult(res.map((book) => mapper(book, map)));
+            setSearchResult(res);
 
-    //         setLoading(false);
-    //     };
+            setLoading(false);
+        };
 
-    //     fetchApi();
+        fetchApi();
 
-    //     // eslint-disable-next-line no-use-before-define, react-hooks/exhaustive-deps
-    // }, [debounced]);
+        // eslint-disable-next-line no-use-before-define, react-hooks/exhaustive-deps
+    }, [debounced]);
 
     const handleMouseOver = () => {
         searchRef.current.classList.add(cx('active'));
@@ -60,30 +59,34 @@ function Search() {
     const handleMouseLeave = () => {
         searchRef.current.classList.remove(cx('active'));
     };
+    const handleNavigateToSearchPage = (e) => {
+        if (e.key === 'Enter') {
+            setSearchValue('');
+            setSearchResult([]);
+            navigate(`/results?q=${searchValue}`);
+        }
+    };
 
     return (
-        <div>
+        <div className={className}>
             <TippyHeadless
                 visible={showResult && searchResult.length}
                 interactive
+                // zIndex={49}
                 placement="bottom"
                 render={(attrs) => (
                     <div tabIndex="-1" {...attrs} className={cx('search-container')}>
                         <PopperWrapper className={cx('search-popper')}>
                             <h4 className={cx('result-header')}>Sản phẩm</h4>
-                            {searchResult.map((item, index) => {
-                                return <Book key={index} search {...item} />;
+                            {searchResult.map((book, index) => {
+                                return <Book key={index} search {...book} />;
                             })}
-                            <Link to={`/books/${searchValue}`}>
-                                <span className={cx('more')}>Xem thêm</span>
-                            </Link>
-                            {/* Logic xem thêm khi gọi API */}
                         </PopperWrapper>
                     </div>
                 )}
                 onClickOutside={() => setShowResult(false)}
             >
-                <div className={cx('wrapper')} ref={searchRef}>
+                <div className={cx('wrapper')} ref={searchRef} onKeyDown={handleNavigateToSearchPage}>
                     <button className={cx('search-btn')}>
                         <FontAwesomeIcon icon={faSearch} />
                     </button>

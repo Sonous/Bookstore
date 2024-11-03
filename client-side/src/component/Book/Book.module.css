@@ -1,4 +1,5 @@
 .book {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -7,17 +8,20 @@
 .image {
     height: 80px;
     width: 80px;
+    max-width: none;
+    padding: 5px;
+    object-fit: contain;
 }
 .info {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     padding: 10px 0;
 }
 .title {
     font-weight: 400;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Giới hạn hiển thị trong 2 dòng */
+    line-clamp: 2; /* Giới hạn hiển thị trong 2 dòng */
     -webkit-box-orient: vertical; /* Thiết lập cách chia hộp theo chiều dọc */
     overflow: hidden; /* Ẩn phần văn bản vượt quá */
     text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
@@ -46,4 +50,15 @@
 .collection:hover {
     box-shadow: 0 4px 8px #0000001a;
     transform: translateY(-5px);
+}
+.collection .info {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+.collection .info a {
+    flex: 1;
+}
+.rate {
+    font-size: 14px;
 }

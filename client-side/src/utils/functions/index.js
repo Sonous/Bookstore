@@ -10,14 +10,28 @@
 export const sum = (input, property = null) => {
     let arr = [...input];
     if (property) {
-        arr = arr.map((item) => item[property]);
+        arr = arr.map((item) => {
+            if (property === 'cart') return item[property].quantity;
+            else
+                return {
+                    cost: parseFloat(item[property]),
+                    quantity: item.cart.quantity,
+                };
+        });
     }
 
-    return arr.reduce((total, current) => {
-        return (total += current) && total;
-    }, 0);
+    if (property === 'cart') {
+        return arr.reduce((total, current) => {
+            return (total += current) && total;
+        }, 0);
+    } else {
+        return arr.reduce((total, current) => {
+            return (total += current.cost * current.quantity) && total;
+        }, 0);
+    }
 };
 
 export const convertPriceToString = (price) => {
-    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    let number = parseFloat(price);
+    return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 };

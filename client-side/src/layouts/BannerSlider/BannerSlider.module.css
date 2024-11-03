@@ -1,6 +1,7 @@
 .container {
     position: relative;
-    width: calc(var(--main-content-width) + 200px);
+    /* width: calc(var(--default--layout-width) + 100px); */
+    z-index: 30;
 }
 
 .banner-wrapper img {

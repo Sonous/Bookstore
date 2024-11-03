@@ -1,37 +1,33 @@
 import classNames from 'classnames/bind';
 import { useRef, useEffect, useState } from 'react';
 import { Carousel } from 'antd';
-// import mapper from 'object-mapper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './BannerSlider.module.css';
-import images from '~/assets/images';
-import { bannersSlider } from '~/dataTemorary';
-// import callApi from '~/apis';
+import { request } from '~/config';
+import { imageUrl } from '~/config/axios.config';
 
 const cx = classNames.bind(styles);
 
-// const map = {
-//     banner_id: 'bannerId',
-//     banner_image_name: 'bannerImageName',
-//     book_name: 'book_name',
-// };
-
 function BannerSlider() {
-    const [banners, setBanners] = useState(bannersSlider);
+    const [banners, setBanners] = useState([]);
 
     const sliderRef = useRef();
 
-    // useEffect(() => {
-    //     const fetchApi = async () => {
-    //         const result = await callApi.getBanners();
+    useEffect(() => {
+        const fetchApi = async () => {
+            try {
+                const result = await request.get('/banner');
 
-    //         setBanners(result.map((banner) => mapper(banner, map)));
-    //     };
+                setBanners(result);
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        };
 
-    //     fetchApi();
-    // }, []);
+        fetchApi();
+    }, []);
 
     const Arrows = ({ arrowLeft, arrowRight, handlePrevSlide, handleNextSlide }) => {
         return (
@@ -61,7 +57,7 @@ function BannerSlider() {
                 {banners.map((banner, index) => {
                     return (
                         <div key={index} className={cx('banner-wrapper')}>
-                            <img src={images[banner.title]} alt="banner" />
+                            <img src={`${imageUrl}/${banner.banner_image_url}`} alt={`${banner.banner_image_url}`} />
                         </div>
                     );
                 })}
