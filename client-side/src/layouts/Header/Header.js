@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faUser,faBell } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import TippyHeadless from '@tippyjs/react/headless';
 
@@ -15,14 +15,20 @@ import PopperWrapper from '~/component/Popper/Popper';
 import Book from '~/component/Book/Book';
 import { UserContext } from '~/context/UserContextProvider';
 import request, { imageUrl } from '~/config/axios.config';
+import { notification } from 'antd';
+import Notification from '~/component/Notification';
 
 const cx = classNames.bind(styles);
 
 function Header() {
+
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const navigate = useNavigate();
     const { user, logout, setIsLoading, alertExpiredLogin, cartItems, setCartItems, isReloadCart, setIsReloadCart } =
         useContext(UserContext);
+    const [notifications, setNotifications] = useState([]);
+
+    
 
     useEffect(() => {
         const fetchApi = () => {
@@ -59,7 +65,24 @@ function Header() {
         setTimeout(() => {
             setIsLoading(false);
         }, 50);
+
     };
+
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            
+            try {
+                const response = await request.get(`/notification/${user.user_id}`);
+                setNotifications(response);
+                // console.log("user:", user.user_id);
+                // console.log("Thông báo của user:", notifications);
+            } catch (error) {
+                console.error("Lỗi khi load notification:", error);
+            } 
+        };
+
+        fetchNotifications();
+    }, [user]);
 
     return (
         <header className={cx('wrapper')}>
@@ -76,6 +99,48 @@ function Header() {
                     {user ? (
                         <div className={cx('action')}>
                             <div>
+                            <TippyHeadless
+                                    interactive
+                                    placement="bottom"
+                                    render={() => (
+                                        <PopperWrapper className={cx('cart-popper')}>
+                                            <div className={cx('cart-header')}>
+                                                <span>{`Thông báo (${
+                                                    notifications.length 
+                                                })`}</span>
+                                            </div>
+                                            {notifications.length > 0 ? (
+                                                <div>
+                                                    <div className={cx('cart-items')}>
+                                                        {notifications.map((item, index) => {
+                                                            return <Notification key={index} {...item}  />;
+                                                        })}
+                                                    </div>
+                                                    
+                                                </div>
+                                            ) : (
+                                                <div className="w-72 flex flex-col items-center">
+                                                    <img src={images.nothingIcon} alt="nothing" className="h-32 w-32" />
+                                                    <span>Chưa có thông báo nào...</span>
+                                                </div>
+                                            )}
+                                        </PopperWrapper>
+                                    )}
+                                    hideOnClick={false}
+                                >
+                                    <button className={cx('cart-btn')} >
+                                        <FontAwesomeIcon className={cx('icon')} icon={faBell} />
+                                        {notifications.length > 0 && (
+                                            <div className={cx('quantity')}>
+                                                <span>{notifications.length}</span>
+                                            </div>
+                                        )}
+                                    </button>
+                                </TippyHeadless>
+                                </div>
+                                
+                            <div>
+                                
                                 <TippyHeadless
                                     interactive
                                     placement="bottom"
@@ -131,6 +196,7 @@ function Header() {
                                 </TippyHeadless>
                             </div>
 
+
                             <TippyHeadless
                                 interactive
                                 placement="bottom"
@@ -180,6 +246,7 @@ function Header() {
                             </span>
                         </div>
                     )}
+
                 </div>
             ) : (
                 <div className="flex flex-col items-center w-full p-4">

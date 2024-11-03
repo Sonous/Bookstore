@@ -50,6 +50,7 @@
 .ant-form-item-label label:after {
     display: none;
 }
+
 .parallax {
     /* The image used */
     background-image: url('https://bizweb.dktcdn.net/100/059/162/products/truc-nhu-2.jpg?v=1558576794930');
@@ -63,16 +64,20 @@
 /* css Login */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
 
+
 *,
 *::before,
 *::after {
+
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+
 }
 
 body,
 input {
+
     font-family: 'Poppins', sans-serif;
 }
 
@@ -199,6 +204,7 @@ form.sign-up-form {
 }
 
 /* label {
+>>>>>>> 04e7f8bf2250dc0238924c377a81e4e78e8dcf53
   position: absolute;
   left: 0;
   top: 50%;
@@ -207,6 +213,7 @@ form.sign-up-form {
   color: #bbb;
   pointer-events: none;
   transition: 0.4s;
+
 } */
 
 .input-field.active {
@@ -426,3 +433,4 @@ main.sign-up-mode .carousel {
         padding: 1rem 2rem 1.5rem;
     }
 }
+
