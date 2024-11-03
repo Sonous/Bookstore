@@ -7,7 +7,7 @@ const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [isLoading, setIsLoading] = useState(false);
-
+    const [cartItems, setCartItems] = useState([]);
     useEffect(() => {
         login();
     }, []);
@@ -52,7 +52,7 @@ const UserContextProvider = ({ children }) => {
         setUser(null);
     };
     return (
-        <UserContext.Provider value={{ user, login, logout, setIsLoading, alertExpiredLogin }}>
+        <UserContext.Provider value={{ user, login, logout, setIsLoading, alertExpiredLogin, cartItems, setCartItems }}>
             {isLoading ? (
                 <div className="h-svh flex justify-center items-center">
                     <Loading />
