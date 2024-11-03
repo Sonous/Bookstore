@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
+import BookImage from './bookImage.model.js';
 
 const Book = sequelize.define(
     'book',
@@ -7,6 +8,8 @@ const Book = sequelize.define(
         book_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         book_name: DataTypes.STRING,
         book_cost: DataTypes.DECIMAL(20, 2),
@@ -30,5 +33,8 @@ const Book = sequelize.define(
         freezeTableName: true,
     },
 );
-
+Book.hasOne(BookImage, {
+    foreignKey: 'book_id',
+    as: 'image', // Use this alias in your query
+});
 export default Book;

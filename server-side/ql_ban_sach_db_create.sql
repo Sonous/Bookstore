@@ -2,55 +2,8 @@
 -- Last modification date: 2024-10-10 08:43:15.298
 
 -- create database ql_ban_sach;
-use ql_ban_sach;
+-- use ql_ban_sach;
 -- drop database ql_ban_sach;
-
-
-
-
-
-
-
-INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
-(60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
-  <p><strong>"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2</strong></p>
-  <p><strong>Hé lộ cuộc sống náo nhiệt của dàn nhân vật sau giờ học!</strong></p>
-  <p>Chuỗi ngày nghỉ ngơi tưởng chừng thong thả nhưng lại bắng nhắng vô cùng của Bí ẩn số 7 học viện Kamome - Cậu ma nhà xí Hanako - cùng cô gái hệ tâm linh Yashiro Nene lại tiếp tục!?</p>
-  <p>Ngoài ra, tập này sẽ bật mí kha khá về cuộc sống thường nhật hiếm ai bắt gặp của “người ấy” nữa đó!</p>
-  <p>Mời các bạn cùng thưởng thức tập 2 ngoại truyện, để xem nhóm Hanako đã có những hoạt động thư giãn nào sau giờ học nhé!</p>
-</div>
-', N'Aida Iro', N'bìa mềm', 135, null, N'Còn hàng');
-
-insert into bookimage (book_image_id, book_image_url, book_id)
-	values (70040, 'cau-ma-nha-xi-hanako_sau-gio-hoc_bia_qua-tang-kem_tap-2.webp', 60031);
-    
-    insert into genre (genre_id, genre_name, category_id)
-	values (90036, 'School Life', 100003);
-
-INSERT INTO BookGenre (book_id, genre_id) VALUES 
-(60031, 90014), (60031, 90021), (60031, 90036), (60031, 90015);
-
-
-
-
-INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
-(60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
-  <p><strong>"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2</strong></p>
-  <p><strong>Hé lộ cuộc sống náo nhiệt của dàn nhân vật sau giờ học!</strong></p>
-  <p>Chuỗi ngày nghỉ ngơi tưởng chừng thong thả nhưng lại bắng nhắng vô cùng của Bí ẩn số 7 học viện Kamome - Cậu ma nhà xí Hanako - cùng cô gái hệ tâm linh Yashiro Nene lại tiếp tục!?</p>
-  <p>Ngoài ra, tập này sẽ bật mí kha khá về cuộc sống thường nhật hiếm ai bắt gặp của “người ấy” nữa đó!</p>
-  <p>Mời các bạn cùng thưởng thức tập 2 ngoại truyện, để xem nhóm Hanako đã có những hoạt động thư giãn nào sau giờ học nhé!</p>
-</div>
-', N'Aida Iro', N'bìa mềm', 135, null, N'Còn hàng');
-
-insert into bookimage (book_image_id, book_image_url, book_id)
-	values (70040, 'cau-ma-nha-xi-hanako_sau-gio-hoc_bia_qua-tang-kem_tap-2.webp', 60031);
-
-INSERT INTO BookGenre (book_id, genre_id) VALUES 
-(60031, 90014), (60031, 90021), (60031, 90036), (60031, 90015);
-
-insert into genre (genre_id, genre_name, category_id)
-	values (90036, 'School Life', 100003);
 
 
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
@@ -76,12 +29,11 @@ insert into genre (genre_id, genre_name, category_id)
 -- tables
 -- Table: Address
 CREATE TABLE Address (
-    address_id int  NOT NULL,
+    address_id int  NOT NULL AUTO_INCREMENT,
     address_house_number nvarchar(255)  NOT NULL,
     address_ward nvarchar(50)  NOT NULL,
     address_district nvarchar(50)  NOT NULL,
     address_province nvarchar(50)  NOT NULL,
-    address_description text  NOT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT Address_pk PRIMARY KEY (address_id)
@@ -92,12 +44,15 @@ CREATE TABLE Admin (
    admin_id INT NOT NULL AUTO_INCREMENT,
     admin_username varchar(255)  NOT NULL,
     admin_password varchar(255)  NOT NULL,
+    admin_avatar_url varchar(255)  NOT NULL,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT Admin_pk PRIMARY KEY (admin_id)
 );
 
 -- Table: Banner
 CREATE TABLE Banner (
-    banner_id int  NOT NULL,
+    banner_id int  NOT NULL AUTO_INCREMENT,
     banner_image_url varchar(255)  NOT NULL,
     banner_link varchar(255) ,
     CONSTRAINT Banner_pk PRIMARY KEY (banner_id)
@@ -105,7 +60,7 @@ CREATE TABLE Banner (
 
 -- Table: Blog
 CREATE TABLE Blog (
-    blog_id int  NOT NULL,
+    blog_id int  NOT NULL AUTO_INCREMENT,
     blog_title nvarchar(255)  NOT NULL,
     blog_content text  NOT NULL,
     blog_thumbnail varchar(255)  NOT NULL,
@@ -117,14 +72,14 @@ CREATE TABLE Blog (
 
 -- Table: BlogType
 CREATE TABLE BlogType (
-    type_id int  NOT NULL,
+    type_id int  NOT NULL AUTO_INCREMENT,
     type_name nvarchar(50)  NOT NULL,
     CONSTRAINT BlogType_pk PRIMARY KEY (type_id)
 );
 
 -- Table: Book
 CREATE TABLE Book (
-    book_id int  NOT NULL,
+    book_id int  NOT NULL AUTO_INCREMENT,
     book_name nvarchar(255)  NOT NULL,
     book_cost decimal(20,2)  NOT NULL,
     book_discount decimal(4,2)  NOT NULL,
@@ -154,18 +109,10 @@ CREATE TABLE BookGenre (
 
 -- Table: BookImage
 CREATE TABLE BookImage (
-    book_image_id int  NOT NULL,
+    book_image_id int  NOT NULL AUTO_INCREMENT,
     book_image_url varchar(255)  NOT NULL,
     book_id int  NOT NULL,
     CONSTRAINT BookImage_pk PRIMARY KEY (book_image_id)
-);
-
--- Table: BookOrder
-CREATE TABLE BookOrder (
-    order_id int  NOT NULL,
-    book_id int  NOT NULL,
-    quantity int  NOT NULL,
-    CONSTRAINT BookOrder_pk PRIMARY KEY (order_id,book_id)
 );
 
 -- Table: Cart
@@ -178,7 +125,7 @@ CREATE TABLE Cart (
 
 -- Table: Category
 CREATE TABLE Category (
-    category_id int  NOT NULL,
+    category_id int  NOT NULL AUTO_INCREMENT,
     category_name nvarchar(50)  NOT NULL,
     CONSTRAINT Category_pk PRIMARY KEY (category_id)
 );
@@ -192,7 +139,7 @@ CREATE TABLE FavoriteBook (
 
 -- Table: Genre
 CREATE TABLE Genre (
-    genre_id int  NOT NULL,
+    genre_id int  NOT NULL AUTO_INCREMENT,
     genre_name nvarchar(50)  NOT NULL,
     category_id int  NOT NULL,
     CONSTRAINT Genre_pk PRIMARY KEY (genre_id)
@@ -200,42 +147,46 @@ CREATE TABLE Genre (
 
 -- Table: Order
 CREATE TABLE `Order` (
-    order_id int  NOT NULL,
-    order_status nvarchar(50)  NOT NULL,
+    order_id CHAR(36) NOT NULL,
+    order_address_info text  NOT NULL,
+    order_books text  NOT NULL,
+    order_status ENUM('Chờ thanh toán', 'Đang xử lý', 'Đang giao', 'Hoàn tất', 'Bị hủy', 'Đổi trả') DEFAULT 'Chờ thanh toán',
     books_total_prices decimal(20,2)  NOT NULL,
+    transport_name nvarchar(255)  NOT NULL,
+    transport_cost decimal(20,2)  NOT NULL,
+    pay_method_name nvarchar(255) NOT NULL,
     order_total_cost decimal(20,2)  NOT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     user_id int  NOT NULL,
-    address_id int  NOT NULL,
-    pay_method_id int  NOT NULL,
-    transport_id int NOT NULL,
     CONSTRAINT Order_pk PRIMARY KEY (order_id)
 );
 
 -- Table: PayingMethod
 CREATE TABLE PayingMethod (
-    pay_method_id int  NOT NULL,
+    pay_method_id int  NOT NULL AUTO_INCREMENT,
     pay_method_name nvarchar(255)  NOT NULL,
     CONSTRAINT PayingMethod_pk PRIMARY KEY (pay_method_id)
 );
 
 -- Table: TransportMethod
 CREATE TABLE TransportMethod (
-    transport_id int NOT NULL PRIMARY Key,
+    transport_id int NOT NULL PRIMARY Key AUTO_INCREMENT,
     transport_name nvarchar(255)  NOT NULL,
     transport_cost decimal(20,2)  NOT NULL
 );
 
 -- Table: RatingBook
 CREATE TABLE RatingBook (
+    review_id int PRIMARY KEY AUTO_INCREMENT,
     user_id int  NOT NULL,
     book_id int  NOT NULL,
     rating_star int  NOT NULL,
     rating_content text  NOT NULL,
+    review_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    likes_count int DEFAULT 0,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT RatingBook_pk PRIMARY KEY (user_id,book_id)
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 );
 
 -- Table: User
@@ -246,17 +197,25 @@ CREATE TABLE User (
     user_email varchar(255)  NOT NULL,
     user_password varchar(255)  NOT NULL,
     user_avatar_url varchar(255)  NOT NULL,
+    notification text,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    address_id int,
     CONSTRAINT User_pk PRIMARY KEY (user_id)
 );
 
--- Table: UserAddress
-CREATE TABLE UserAddress (
-    address_id int  NOT NULL,
-    user_id int  NOT NULL,
-    CONSTRAINT UserAddress_pk PRIMARY KEY (address_id,user_id)
+CREATE TABLE notification (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL, -- ID của người dùng nhận thông báo
+    title NVARCHAR(255) NOT NULL, -- Tiêu đề thông báo
+    message TEXT NOT NULL, -- Nội dung chi tiết của thông báo
+    type VARCHAR(255), -- Loại thông báo
+    status ENUM('Unread', 'Read') DEFAULT 'Unread', -- Trạng thái đã đọc hay chưa
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(user_id) -- Ràng buộc khoá ngoại tới bảng users
 );
+
 
 -- foreign keys
 -- Reference: Blog_BlogType (table: Blog)
@@ -279,14 +238,6 @@ ALTER TABLE BookGenre ADD CONSTRAINT BookGenre_Genre FOREIGN KEY BookGenre_Genre
 ALTER TABLE BookImage ADD CONSTRAINT BookImage_Book FOREIGN KEY BookImage_Book (book_id)
     REFERENCES Book (book_id);
 
--- Reference: BookOrder_Book (table: BookOrder)
-ALTER TABLE BookOrder ADD CONSTRAINT BookOrder_Book FOREIGN KEY BookOrder_Book (book_id)
-    REFERENCES Book (book_id);
-
--- Reference: BookOrder_Order (table: BookOrder)
-ALTER TABLE BookOrder ADD CONSTRAINT BookOrder_Order FOREIGN KEY BookOrder_Order (order_id)
-    REFERENCES `Order` (order_id);
-
 -- Reference: Cart_Book (table: Cart)
 ALTER TABLE Cart ADD CONSTRAINT Cart_Book FOREIGN KEY Cart_Book (book_id)
     REFERENCES Book (book_id);
@@ -303,18 +254,6 @@ ALTER TABLE FavoriteBook ADD CONSTRAINT FavoriteBook_Book FOREIGN KEY FavoriteBo
 ALTER TABLE Genre ADD CONSTRAINT Genre_Category FOREIGN KEY Genre_Category (category_id)
     REFERENCES Category (category_id);
 
--- Reference: Order_Address (table: Order)
-ALTER TABLE `Order` ADD CONSTRAINT Order_Address FOREIGN KEY Order_Address (address_id)
-    REFERENCES Address (address_id);
-
--- Reference: Order_PayingMethod (table: Order)
-ALTER TABLE `Order` ADD CONSTRAINT Order_PayingMethod FOREIGN KEY Order_PayingMethod (pay_method_id)
-    REFERENCES PayingMethod (pay_method_id);
-
--- Reference: Order_TransportMethod (table: Order)
-ALTER TABLE `Order` ADD CONSTRAINT Order_TransportMethod FOREIGN KEY Order_TransportMethod (transport_id)
-    REFERENCES TransportMethod (transport_id);
-
 -- Reference: Order_User (table: Order)
 ALTER TABLE `Order` ADD CONSTRAINT Order_User FOREIGN KEY Order_User (user_id)
     REFERENCES User (user_id);
@@ -327,24 +266,15 @@ ALTER TABLE RatingBook ADD CONSTRAINT Table_15_Book FOREIGN KEY Table_15_Book (b
 ALTER TABLE RatingBook ADD CONSTRAINT Table_15_User FOREIGN KEY Table_15_User (user_id)
     REFERENCES User (user_id);
 
--- Reference: User_Address_Address (table: UserAddress)
-ALTER TABLE UserAddress ADD CONSTRAINT User_Address_Address FOREIGN KEY User_Address_Address (address_id)
+-- Reference: User_Address (table: User)
+ALTER TABLE User ADD CONSTRAINT User_Address FOREIGN KEY User_Address (address_id)
     REFERENCES Address (address_id);
-
--- Reference: User_Address_User (table: UserAddress)
-ALTER TABLE UserAddress ADD CONSTRAINT User_Address_User FOREIGN KEY User_Address_User (user_id)
-    REFERENCES User (user_id);
 
 -- End of file.
 
 -- Insert data
 
- -- User
- INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
- (N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg');
- 
- INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url) VALUES 
- (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg');
+
  
  -- Book
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
@@ -648,12 +578,19 @@ INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, b
 ', N'Paulo Coelho', N'bìa mềm', 227, NULL, N'Còn hàng');
 
 -- Address
-INSERT INTO Address (address_id, address_house_number, address_ward, address_district, address_province, address_description) 
-VALUES (20001, N'abc123', N'Phường Tây Thạnh', N'Quận Tân Phú', N'Thành phố Hồ Chí Minh', N'abcxyz123');
+INSERT INTO Address (address_id, address_house_number, address_ward, address_district, address_province) 
+VALUES (20001, N'abc123', N'Phường Tây Thạnh', N'Quận Tân Phú', N'Thành phố Hồ Chí Minh');
+
+  -- User
+ INSERT INTO User (user_id, user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
+ (10001, N'Lâm Quốc Huy', '0123456789', '1234abc@gmail.com', '1234abc@', 'Sonous.jpg', 20001);
+ 
+  INSERT INTO User (user_name, user_phone, user_email, user_password, user_avatar_url, address_id) VALUES 
+ (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg', NULL);
 
 -- Admin
-INSERT INTO Admin (admin_id, admin_username, admin_password) 
-VALUES (1, 'root', '22520545');
+INSERT INTO Admin (admin_id, admin_username, admin_password, admin_avatar_url) 
+VALUES (1, 'root', '22520545', 'Sonous.jpg');
 
 -- Banner
 INSERT INTO Banner (banner_id, banner_image_url, banner_link) 
@@ -1474,40 +1411,24 @@ INSERT INTO PayingMethod (pay_method_id, pay_method_name) VALUES (40001, N'Thanh
 -- TransportMethod
 INSERT INTO TransportMethod (transport_id, transport_name, transport_cost) VALUES (50001, N'Giao hàng tiêu chuẩn', 20000.00);
 
--- Order
-INSERT INTO `Order` (order_id, order_status, books_total_prices, order_total_cost, user_id, address_id, pay_method_id, transport_id) 
-
-VALUES (30001, N'Đã Giao', 82560.00, 102560.00, 1, 20001, 40001, 50001);
-
-VALUES (30001, N'Hoàn tất', 82560.00, 102560.00, 10001, 20001, 40001, 50001);
-
-
--- BookOrder
-INSERT INTO BookOrder (order_id, book_id, quantity) VALUES 
-(30001, 60001, 1), 
-(30001, 60003, 2);
-
 -- Cart
 INSERT INTO Cart (user_id, book_id, quantity) VALUES 
-(1, 60001, 1),
-(1, 60002, 2),
-(1, 60003, 2);
+(10001, 60001, 1),
+(10001, 60002, 2),
+(10001, 60003, 2);
 
 
 -- FavoriteBook
 INSERT INTO FavoriteBook (user_id, book_id) VALUES 
-(1, 60001),
-(1, 60002),
-(1, 60003),
-(1, 60004),
-(1, 60005);
+(10001, 60001),
+(10001, 60002),
+(10001, 60003),
+(10001, 60004),
+(10001, 60005);
 
 -- RatingBook
-INSERT INTO RatingBook (user_id, book_id, rating_star, rating_content) VALUES
- (1, 60001, 5, N'Sách hay, tuyệt vời'),
- (1, 60002, 4, N'Tình tiết truyện cuốn hút'),
- (1, 60003, 5, N'Hóng tập tiếp theo');
+INSERT INTO RatingBook (review_id, user_id, book_id, rating_star, rating_content, review_status) VALUES
+ (150001, 10001, 60001, 5, N'Sách hay, tuyệt vời', 'approved'),
+ (150002, 10001, 60002, 4, N'Tình tiết truyện cuốn hút', 'approved'),
+ (150003, 10001, 60003, 5, N'Hóng tập tiếp theo', 'approved');
  
- -- UserAddress
- INSERT INTO UserAddress (address_id, user_id) VALUES (20001, 1);
-

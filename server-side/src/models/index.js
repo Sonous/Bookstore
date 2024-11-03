@@ -11,6 +11,7 @@ import PayingMethod from './payingMethod.model.js';
 import FavoriteBook from './favoriteBook.model.js';
 import Cart from './cart.model.js';
 import RatingBook from './ratingBook.model.js';
+import Notification from './notification.model.js';
 
 // Associate between Book and BookImage
 Book.hasMany(BookImage, {
@@ -83,32 +84,31 @@ Book.belongsToMany(User, {
     as: 'UsersWithCart',
 });
 
-// ratingbook
-User.belongsToMany(Book, {
-    through: RatingBook,
+// Associate between User and RatingBook
+User.hasMany(RatingBook, {
     foreignKey: 'user_id',
-    otherKey: 'book_id',
-    as: 'RatingBook',
 });
 
-Book.belongsToMany(User, {
-    through: RatingBook,
+RatingBook.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+// Associate between Book and RatingBook
+Book.hasMany(RatingBook, {
     foreignKey: 'book_id',
-    otherKey: 'user_id',
-    as: 'UsersWhoRated',
+});
+
+RatingBook.belongsTo(Book, {
+    foreignKey: 'book_id',
 });
 
 // Associate between User and Address
-User.belongsToMany(Address, {
-    through: 'useraddress',
-    foreignKey: 'user_id',
-    otherKey: 'address_id',
+Address.hasMany(User, {
+    foreignKey: 'address_id',
 });
 
-Address.belongsToMany(User, {
-    through: 'useraddress',
+User.belongsTo(Address, {
     foreignKey: 'address_id',
-    otherKey: 'user_id',
 });
 
 // Associate between User and Order
@@ -150,5 +150,20 @@ PayingMethod.hasMany(Order, {
 Order.belongsTo(PayingMethod, {
     foreignKey: 'pay_method_id',
 });
+
+// Associate between Notification and User
+User.hasMany(Notification, {
+    foreignKey: 'user_id',
+});
+
+Notification.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+// User.hasMany(RatingBook, { foreignKey: 'user_id', as: 'ratings' });
+// Book.hasMany(RatingBook, { foreignKey: 'book_id', as: 'bookRatings' });
+
+// RatingBook.belongsTo(User, { foreignKey: 'user_id', as: 'User' });
+// RatingBook.belongsTo(Book, { foreignKey: 'book_id', as: 'Book' });
 
 export { Book, BookImage, Genre, Category, BlogType, Blog, User, Address, Order, PayingMethod };

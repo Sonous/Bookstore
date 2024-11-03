@@ -20,13 +20,12 @@ const authApi = {
         try {
             const data = await request.post('/auth/register', userDetails);
             if (data?.message === 'Đăng ký thành công!') {
-                return data.user; // 
+                return data.user; //
             }
         } catch (error) {
             throw new Error(error.message);
         }
     },
-
 };
 
 export default authApi;

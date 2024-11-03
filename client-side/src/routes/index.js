@@ -1,6 +1,6 @@
 import { routes } from '~/config';
 
-import CartPage from '~/pages/CartPage';
+import CartPage from '~/pages/CartPage/CartPage';
 import PayingPage from '~/pages/PayingPage/PayingPage';
 import HomePage from '~/pages/HomePage/HomePage';
 import SignInPage from '~/pages/SignInPage';
@@ -19,23 +19,18 @@ import SearchResultPage from '~/pages/SearchResultPage';
 import OrderDetailPage from '~/pages/OrderDetail/OrderDetailPage';
 import BlogLayout from '~/pages/BlogPage/BlogLayout';
 
-
-
-
-
 import FavoriteBooksPage from '~/pages/User/FavoriteBooksPage';
 import PrivateRoute from './PrivateRoute';
 import OrderPage from '~/pages/User/OrderPage';
 import BookDetailPage from '~/pages/BookDetail/BookDetailPage';
 
-
 const Pages = [
     { path: routes.home, Component: HomePage },
     { path: routes.signIn, Component: SignInPage },
     { path: routes.signUp, Component: SignInPage },
-    { path: routes.cart, Component: CartPage },
+    { path: routes.cart, Component: CartPage, PrivateRoute: PrivateRoute },
     { path: routes.bookDetail, Component: BookDetailPage },
-    { path: routes.paying, Component: PayingPage },
+    { path: routes.paying, Component: PayingPage, PrivateRoute: PrivateRoute },
 
     { path: routes.dieuKhoan, Component: DieuKhoan },
     { path: routes.chinhSachBaoMat, Component: ChinhSachBaoMat },
@@ -50,14 +45,10 @@ const Pages = [
 
     { path: routes.results, Component: SearchResultPage },
 
-
-    
-
     { path: routes.user, Component: UserPage, PrivateRoute: PrivateRoute },
     { path: routes.orderDetail, Component: OrderDetailPage, PrivateRoute: PrivateRoute },
     { path: routes.order, Component: OrderPage, PrivateRoute: PrivateRoute },
     { path: routes.favoritebooks, Component: FavoriteBooksPage, PrivateRoute: PrivateRoute },
-
 ];
 
 export default Pages;

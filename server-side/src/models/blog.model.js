@@ -7,6 +7,8 @@ const Blog = sequelize.define(
         blog_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         blog_title: DataTypes.STRING,
         blog_content: DataTypes.TEXT,

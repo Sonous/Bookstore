@@ -1,6 +1,9 @@
+import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js';
 import dotenv from 'dotenv';
+
+import Admin from '../models/admin.model.js';
+import User from '../models/user.model.js';
 
 dotenv.config();
 
@@ -56,4 +59,73 @@ const login = async (req, res) => {
     }
 };
 
-export { register, login };
+const registerAdmin = async (req, res) => {
+    const { admin_username, admin_password } = req.body;
+
+    try {
+        const isExisted = await Admin.findOne({
+            where: {
+                admin_username,
+            },
+        });
+
+        if (isExisted) {
+            return res.status(StatusCodes.CONFLICT).json({
+                message: 'Username has aldready existed!',
+            });
+        }
+
+        const admin = await Admin.create({
+            admin_username,
+            admin_password,
+            admin_avatar_url: '',
+        });
+
+        return res.status(StatusCodes.CREATED).json({
+            message: 'Register successfully!',
+            admin,
+        });
+    } catch (error) {
+        res.status(StatusCodes.NOT_ACCEPTABLE).json({
+            message: error.message,
+        });
+    }
+};
+
+const loginAdmin = async (req, res) => {
+    const { admin_username, admin_password } = req.body;
+
+    try {
+        const admin = await Admin.findOne({
+            where: {
+                admin_username,
+                admin_password,
+            },
+        });
+
+        if (!admin) {
+            return res.status(400).json({ message: 'Wrong email or password!' });
+        }
+
+        const token = jwt.sign(
+            {
+                id: admin.admin_id,
+                admin_username: admin.admin_username,
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '1h',
+            },
+        );
+
+        return res.status(StatusCodes.ACCEPTED).json({
+            token,
+        });
+    } catch (error) {
+        res.status(StatusCodes.NOT_ACCEPTABLE).json({
+            message: error.message,
+        });
+    }
+};
+
+export { register, login, registerAdmin, loginAdmin };

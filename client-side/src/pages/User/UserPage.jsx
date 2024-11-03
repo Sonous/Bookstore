@@ -1,27 +1,26 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserCard from '~/pages/User/UserCard';
+import axios from 'axios';
+
+import { UserContext } from '~/context/UserContextProvider';
 
 const UserPage = () => {
-    const UserData = [
-        {
-            firstname: 'Khoa',
-            lastname: 'Phan',
-            email: 'khoaphan@gmail.com',
-            number: '1235',
-        },
-        {
-            firstname: 'John',
-            lastname: 'Doe',
-            email: 'john.doe@gmail.com',
-            number: '5678',
-        },
-    ];
-    console.log('UserData:', UserData); // Log UserData array
-    console.log('UserData[0]:', UserData[0]); // Log first user data
+    const { user } = useContext(UserContext);
+    
+    const [error, setError] = useState('');
+    // console.log('Nguoi DUng:', user);
+   
+
+    if (error) return <div>{error}</div>;
+    if (!user) return <div>Loading...</div>;
+    
 
     return (
-        <UserCard UserData={UserData[0]} /> // Ensure UserData[0] is passed
+        <div>
+            {user ? <UserCard UserData={user} /> : <div>Loading...</div>} {/* Display user card or loading */}
+        </div>
     );
 };
+
 
 export default UserPage;

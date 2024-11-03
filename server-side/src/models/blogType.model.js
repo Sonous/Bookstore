@@ -7,6 +7,8 @@ const BlogType = sequelize.define(
         type_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+            defaultValue: sequelize.literal('DEFAULT'),
         },
         type_name: DataTypes.STRING,
     },

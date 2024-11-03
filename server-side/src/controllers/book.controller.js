@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { Book, BookImage, Category, Genre } from '../models/index.js';
 import { Op } from 'sequelize';
 import sequelize from '../config/database.js';
+import BookGenre from '../models/bookGenre.model.js';
 
 const properties = {
     attributes: {
@@ -264,4 +265,4 @@ const getBooksByAuthor = (req, res) => {
 
 
 
-export { getGenreOfBook, getAllBooks, getBookByName, getBooksByAuthor };
+export { getGenreOfBook, getAllBooks, getBookByName, getBooksByAuthor};

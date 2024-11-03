@@ -21,7 +21,8 @@ const cx = classNames.bind(styles);
 function Header() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const navigate = useNavigate();
-    const { user, logout, setIsLoading, alertExpiredLogin, cartItems, setCartItems } = useContext(UserContext);
+    const { user, logout, setIsLoading, alertExpiredLogin, cartItems, setCartItems, isReloadCart, setIsReloadCart } =
+        useContext(UserContext);
 
     useEffect(() => {
         const fetchApi = () => {
@@ -34,17 +35,18 @@ function Header() {
                     },
                 })
                 .then((books) => {
-                    if (books.length > 0) {
-                        setCartItems(books[0].Cart);
-                    }
+                    setCartItems(books.length > 0 ? books[0].Cart : []);
+                    setIsReloadCart(false);
                 })
                 .catch((err) => {
-                    alertExpiredLogin();
+                    if (err.message === 'Unauthorized!') {
+                        alertExpiredLogin();
+                    }
                 });
         };
 
         fetchApi();
-    }, [user]);
+    }, [user, isReloadCart]);
 
     window.addEventListener('resize', () => {
         setWindowWidth(window.innerWidth);
@@ -99,7 +101,12 @@ function Header() {
                                                             </span>
                                                         </div>
                                                         <div>
-                                                            <button className={cx('more')}>Xem giỏ hàng</button>
+                                                            <button
+                                                                className={cx('more')}
+                                                                onClick={() => navigate('/cart')}
+                                                            >
+                                                                Xem giỏ hàng
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -113,7 +120,7 @@ function Header() {
                                     )}
                                     hideOnClick={false}
                                 >
-                                    <button className={cx('cart-btn')}>
+                                    <button className={cx('cart-btn')} onClick={() => navigate('/cart')}>
                                         <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
                                         {cartItems.length > 0 && (
                                             <div className={cx('quantity')}>
@@ -139,9 +146,8 @@ function Header() {
                                         </div>
                                         <div className={cx('menu-item')} onClick={() => navigate('/favoritebooks')}>
                                             <img src={images.heartIcon} alt="heart icon" />
-                                            
-                                            <span className={cx('title')}>Xem sách yêu thích</span>                                           
 
+                                            <span className={cx('title')}>Xem sách yêu thích</span>
                                         </div>
                                         <div className={cx('menu-item', 'logout')} onClick={handleLogout}>
                                             <img src={images.logoutIcon} alt="logout icon" />
