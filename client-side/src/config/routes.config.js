@@ -19,7 +19,7 @@ const routes = {
 
     user: '/user',
     usercheck: '/check',
-    orderDetail: '/order/',
+    orderDetail: '/order/:orderId',
     order: '/order',
     results: '/results',
 

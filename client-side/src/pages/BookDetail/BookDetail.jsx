@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
 import reviewApi from '~/apis/ratingApi';
+import userApi from '~/apis/userApi';
 function BookDetail() {
     const { name } = useParams(); // Extract the book name from the URL
     const [activeHeader, setActiveHeader] = useState('Đánh giá');
@@ -82,45 +83,24 @@ function BookDetail() {
     if (error) return <div>{error}</div>;
     if (!book) return <div>Loading...</div>;
 
-    const handleAddBookToCart = () => {
-        const token = localStorage.getItem('token');
+    const handleAddBookToCart = async () => {
+        try {
+            await userApi.addBookToCart(user.user_id, book.book_id, quantity);
 
-        request
-            .post(
-                `/user/${user.user_id}/cart/${book.book_id}`,
-                {
-                    quantity,
-                },
-                {
-                    headers: {
-                        'x-access-token': token,
-                    },
-                },
-            )
-            .then((res) => {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    },
-                });
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Thêm sách vào giỏ hàng thành công!',
-                });
-
-                setIsReloadCart(true);
-            })
-            .catch((err) => {
-                if (err.message === 'Unauthorized!') {
-                    alertExpiredLogin();
-                }
+            await Swal.fire({
+                title: 'Thêm sách vào giỏ hàng thành công!',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
             });
+
+            setIsReloadCart(true);
+        } catch (error) {
+            if (error.message === 'Unauthorized!') {
+                alertExpiredLogin();
+            }
+            console.error(error);
+        }
     };
 
     const collectionDisplay = book && book.book_collection ? book.book_collection : 'Không có';

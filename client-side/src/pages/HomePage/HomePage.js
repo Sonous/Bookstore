@@ -52,7 +52,6 @@ function HomePage() {
             try {
                 const result = await blogApi.getAllBlog();
 
-                console.log(result.blogs);
                 setBlogs(result.blogs);
             } catch (error) {
                 throw new Error(error);
