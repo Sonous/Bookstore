@@ -5,6 +5,7 @@ import PayingPage from '~/pages/PayingPage/PayingPage';
 import HomePage from '~/pages/HomePage/HomePage';
 import SignInPage from '~/pages/SignInPage';
 
+
 import DieuKhoan from '~/pages/InformationPage/DieuKhoan';
 import ChinhSachBaoMat from '~/pages/InformationPage/ChinhSachBaoMat';
 import LienHe from '~/pages/InformationPage/LienHe';
@@ -24,9 +25,11 @@ import PrivateRoute from './PrivateRoute';
 import OrderPage from '~/pages/User/OrderPage';
 import BookDetailPage from '~/pages/BookDetail/BookDetailPage';
 
+
 const Pages = [
     { path: routes.home, Component: HomePage },
     { path: routes.signIn, Component: SignInPage },
+
     { path: routes.signUp, Component: SignInPage },
     { path: routes.cart, Component: CartPage, PrivateRoute: PrivateRoute },
     { path: routes.bookDetail, Component: BookDetailPage },
@@ -49,6 +52,7 @@ const Pages = [
     { path: routes.orderDetail, Component: OrderDetailPage, PrivateRoute: PrivateRoute },
     { path: routes.order, Component: OrderPage, PrivateRoute: PrivateRoute },
     { path: routes.favoritebooks, Component: FavoriteBooksPage, PrivateRoute: PrivateRoute },
+
 ];
 
 export default Pages;

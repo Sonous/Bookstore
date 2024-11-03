@@ -2,7 +2,9 @@ import React, { useState, useRef } from 'react';
 import './ForgetForm.css'; // Tạo file CSS riêng để tùy chỉnh giao diện
 
 
+
 const ForgetForm = ({ onClose }) => {
+
   const [step, setStep] = useState(1); // Quản lý các bước
   const [method, setMethod] = useState(null); // Email hoặc số điện thoại
   const [emailOrPhone, setEmailOrPhone] = useState(''); // Lưu thông tin email hoặc số điện thoại
@@ -135,4 +137,6 @@ const ForgetForm = ({ onClose }) => {
   );
 };
 
+
 export default ForgetForm;
+

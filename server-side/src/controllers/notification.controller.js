@@ -6,4 +6,15 @@ const getAllNotification = (req, res) => {
         .catch((err) => res.json({ message: err }));
 };
 
-export { getAllNotification };
+const getNotificationsByUserId = (req, res) => {
+    const userId = req.params.userId;
+
+    Notification.findAll({
+        where: { user_id: userId },
+        order: [['created_at', 'DESC']], // Sắp xếp theo thời gian tạo
+    })
+        .then((result) => res.json(result))
+        .catch((err) => res.status(500).json({ message: err.message }));
+};
+
+export { getAllNotification, getNotificationsByUserId };
