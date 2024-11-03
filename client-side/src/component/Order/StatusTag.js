@@ -8,6 +8,7 @@ export default function StatusTag({ status }) {
                 '!bg-green-200 !text-green-500': status === 'Hoàn tất',
                 '!bg-red-200 !text-red-500': status === 'Bị hủy',
                 '!bg-gray-200 !text-gray-500': status === 'Đổi trả',
+                '!bg-blue-200 !text-blue-500': status === 'Đang xác nhận',
             })}
         >
             <span>{status}</span>

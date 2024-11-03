@@ -6,7 +6,7 @@ import { request } from '~/config';
 const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [isReloadCart, setIsReloadCart] = useState(false);

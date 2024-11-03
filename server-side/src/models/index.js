@@ -120,37 +120,6 @@ Order.belongsTo(User, {
     foreignKey: 'user_id',
 });
 
-// Associate between Address and Order
-Address.hasMany(Order, {
-    foreignKey: 'address_id',
-});
-
-Order.belongsTo(Address, {
-    foreignKey: 'address_id',
-});
-
-// Associate between Book and Order
-Book.belongsToMany(Order, {
-    through: 'bookorder',
-    foreignKey: 'book_id',
-    otherKey: 'order_id',
-});
-
-Order.belongsToMany(Book, {
-    through: 'bookorder',
-    foreignKey: 'order_id',
-    otherKey: 'book_id',
-});
-
-// Associate between PayingMethod and Order
-PayingMethod.hasMany(Order, {
-    foreignKey: 'pay_method_id',
-});
-
-Order.belongsTo(PayingMethod, {
-    foreignKey: 'pay_method_id',
-});
-
 // Associate between Notification and User
 User.hasMany(Notification, {
     foreignKey: 'user_id',

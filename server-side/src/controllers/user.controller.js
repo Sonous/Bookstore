@@ -5,6 +5,8 @@ import User from '../models/user.model.js';
 import Cart from '../models/cart.model.js';
 import RatingBook from '../models/ratingBook.model.js';
 import Address from '../models/address.model.js';
+import Order from '../models/order.model.js';
+import { Op, where } from 'sequelize';
 
 const getUserById = (req, res) => {
     User.findByPk(req.params.userId)
@@ -171,4 +173,33 @@ const getAddressOfUser = (req, res) => {
         );
 };
 
-export { getUserById, getUserByToken, getCartItems, addBookToCart, updateUser, getAddressOfUser };
+const getOrdersByUser = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { status } = req.query;
+
+        const whereClause = {
+            user_id: userId,
+        };
+
+        if (status !== 'Tất Cả') {
+            whereClause.order_status = status;
+            if (status === 'Đang xử lý') {
+                whereClause.order_status = {
+                    [Op.in]: ['Đang xử lý', 'Đang xác nhận'],
+                };
+            }
+        }
+
+        const userOrders = await Order.findAll({
+            where: whereClause,
+        });
+
+        res.status(200).json(userOrders);
+    } catch (error) {
+        console.error('Error fetching user order:', error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export { getUserById, getUserByToken, getCartItems, addBookToCart, updateUser, getAddressOfUser, getOrdersByUser };

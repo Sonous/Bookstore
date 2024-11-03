@@ -1,61 +1,12 @@
 import { request } from '~/config'; // Ensure the path is correct
 
-const orderApi = {
-    // Get user order
-    getOrderByUser: async (userId) => {
-        try {
-            const token = localStorage.getItem('token');
-            const data = await request.get(`/order/${userId}`,{
-                headers: {
-                    'x-access-token': token,
-                },
-            },);
-            return data || [];
-        } catch (error) {
-            console.error('Error fetching user order:', error);
-            throw new Error(error.message);
-        }
-    },
-    getOrderById: async (id) => {
-        try {
-            const token = localStorage.getItem('token');
-            const data = await request.get(`/order/${id}`,{
-                headers: {
-                    'x-access-token': token,
-                },
-            },);
-            return data || [];
-        } catch (error) {
-            console.error('Error fetching user order:', error);
-            throw new Error(error.message);
-        }
-    },
-    // async saveOrder(order) {
-    //     try {
-    //         if (order) {
-    //             const token = localStorage.getItem('token');
+const token = localStorage.getItem('token');
 
-    //             await request.post(
-    //                 '/order',
-    //                 {
-    //                     order: order,
-    //                 },
-    //                 {
-    //                     headers: {
-    //                         'x-access-token': token,
-    //                     },
-    //                 },
-    //             );
-    //         }
-    //     } catch (error) {
-    //         throw new Error(error.message);
-    //     }
-    // },
+const orderApi = {
     saveOrder: async (order) => {
         try {
             if (!order) throw new Error('Order data is required.');
 
-            const token = localStorage.getItem('token');
             if (!token) throw new Error('No token found. User might not be authenticated.');
 
             const response = await request.post(
@@ -72,6 +23,61 @@ const orderApi = {
         } catch (error) {
             console.error('Error saving order:', error);
             throw new Error(error.message);
+        }
+    },
+    async countOrders(userId, status) {
+        try {
+            const quantity = await request.get(`/order`, {
+                headers: {
+                    'x-access-token': token, // Include the token in headers
+                },
+                params: {
+                    userId,
+                    status,
+                },
+            });
+
+            return quantity;
+        } catch (error) {
+            throw error;
+        }
+    },
+    async updateOrder(orderId, newStatus) {
+        try {
+            const result = await request.post(
+                `/order/${orderId}`,
+                {
+                    status: newStatus,
+                },
+                {
+                    headers: {
+                        'x-access-token': token, // Include the token in headers
+                    },
+                },
+            );
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    },
+    async getOrderById(orderId) {
+        try {
+            const order = await request.get(`/order/${orderId}`, {
+                headers: {
+                    'x-access-token': token, // Include the token in headers
+                },
+            });
+
+            const parseOrders = {
+                ...order,
+                order_address_info: JSON.parse(order.order_address_info),
+                order_books: JSON.parse(order.order_books),
+            };
+
+            return parseOrders;
+        } catch (error) {
+            throw error;
         }
     },
 };

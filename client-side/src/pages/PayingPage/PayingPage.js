@@ -119,7 +119,7 @@ export default function PayingPage() {
             const orderInfo = {
                 ...orderDetail,
                 order_address_info: selectedAddress === 0 ? addressInfo : address,
-                order_status: 'Đang xử lí',
+                order_status: 'Đang xác nhận',
                 user_id: user.user_id,
             };
 

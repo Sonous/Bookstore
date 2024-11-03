@@ -5,6 +5,40 @@
 -- use ql_ban_sach;
 -- drop database ql_ban_sach;
 
+select * from ratingbook;
+
+-- RatingBook
+INSERT INTO RatingBook (review_id, user_id, book_id, rating_star, rating_content, review_status) VALUES
+ (150005, 10001, 60001, 5, N'Sách hay, tuyệt vời', 'pending');
+
+select * from notification;
+
+select * from `order`;
+
+INSERT INTO `order` (
+    order_id,
+    user_id,
+    order_status,
+    books_total_prices,
+    transport_name,
+    transport_cost,
+    pay_method_name,
+    order_total_cost,
+    order_address_info,
+    order_books
+) VALUES (
+    '1730611063350',
+    10001,
+    'Hoàn tất',
+    34560.00,
+    'Giao hàng tiêu chuẩn',
+    20000.00,
+    'Thanh toán khi nhận hàng',
+    54560.00,
+    '{"user_name":"Lâm Quốc Huy","user_phone":"0123456789","address":{"address_house_number":"abc123","address_ward":"Phường Tây Thạnh","address_district":"Quận Tân Phú","address_province":"Thành phố Hồ Chí Minh"}}',
+    '[{\"book_id\":60001,\"book_name\":\"Hồi Kí Vanitas - Tập 10\",\"book_cost\":\"36000.00\",\"book_discount\":\"0.04\",\"book_end_cost\":\"34560.00\",\"book_sold\":40,\"book_star_rating\":4,\"book_status\":\"Còn hàng\",\"created_at\":\"2024-11-02T11:59:34.000Z\",\"updated_at\":\"2024-11-02T05:07:50.000Z\",\"cart\":{\"quantity\":1},\"bookimages\":[{\"book_image_url\":\"hoi_ki_vanitas_10_1.webp\"}]}]'
+);
+
 
 INSERT INTO Book (book_id, book_name, book_cost, book_discount, book_end_cost, book_available, book_sold, book_star_rating, book_rating_num, book_description, book_author, book_format, book_page_num, book_collection, book_status) VALUES 
 (60031, N'"Cậu" Ma Nhà Xí Hanako - Sau Giờ Học - Tập 2 - Tặng Kèm 2 Giấy Nhắn Bập Bênh', 30000.00, 0.05, 28500, 200, 90, 0, 0, N'<div>
@@ -150,7 +184,7 @@ CREATE TABLE `Order` (
     order_id CHAR(36) NOT NULL,
     order_address_info text  NOT NULL,
     order_books text  NOT NULL,
-    order_status ENUM('Chờ thanh toán', 'Đang xử lý', 'Đang giao', 'Hoàn tất', 'Bị hủy', 'Đổi trả') DEFAULT 'Chờ thanh toán',
+    order_status ENUM('Chờ thanh toán', 'Đang xác nhận', 'Đang xử lý', 'Đang giao', 'Hoàn tất', 'Bị hủy', 'Đổi trả') DEFAULT 'Chờ thanh toán',
     books_total_prices decimal(20,2)  NOT NULL,
     transport_name nvarchar(255)  NOT NULL,
     transport_cost decimal(20,2)  NOT NULL,
