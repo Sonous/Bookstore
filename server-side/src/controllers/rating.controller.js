@@ -49,11 +49,6 @@ export const addRating = async (req, res) => {
     try {
         const { bookId, userId, rating, rating_content, create_at } = req.body;
 
-        // Check if the user has already rated the book
-        const existingRating = await RatingBook.findOne({
-            where: { book_id: bookId, user_id: userId },
-        });
-
         // Create a new rating entry
         await RatingBook.create({
             book_id: bookId,
@@ -61,31 +56,12 @@ export const addRating = async (req, res) => {
             rating_star: rating,
             rating_content,
             review_status: 'pending',
-            create_at: create_at
+            create_at: create_at,
         });
-
-        // Fetch all ratings for the book to calculate the new average
-        const ratings = await RatingBook.findAll({
-            where: { book_id: bookId },
-        });
-
-        const totalRatings = ratings.length;
-        const averageRating = ratings.reduce((acc, curr) => acc + curr.rating_star, 0) / totalRatings;
-
-        // Update the book's rating fields
-        await Book.update(
-            {
-                book_star_rating: Math.round(averageRating),
-                book_rating_num: totalRatings,
-            },
-            {
-                where: { book_id: bookId },
-            },
-        );
 
         res.status(200).json({
             status: 'success',
-            message: existingRating ? 'Rating updated successfully' : 'Rating added successfully, pending for approval',
+            message: 'Rating added successfully, pending for approval',
         });
     } catch (error) {
         console.error('Error adding rating:', error);
@@ -139,6 +115,8 @@ const approveRating = async (req, res) => {
 
     try {
         const rating = await RatingBook.findByPk(reviewId); // Find the rating by its ID
+        console.log(rating.book_id);
+
         if (rating) {
             rating.review_status = 'approved'; // Set the status to approved
             await rating.save();
@@ -150,6 +128,25 @@ const approveRating = async (req, res) => {
                 type: 'Approval',
                 created_at: new Date(),
             });
+
+            // Fetch all ratings for the book to calculate the new average
+            const ratings = await RatingBook.findAll({
+                where: { book_id: rating.book_id },
+            });
+
+            const totalRatings = ratings.length;
+            const averageRating = ratings.reduce((acc, curr) => acc + curr.rating_star, 0) / totalRatings;
+
+            // Update the book's rating fields
+            await Book.update(
+                {
+                    book_star_rating: Math.round(averageRating),
+                    book_rating_num: totalRatings,
+                },
+                {
+                    where: { book_id: rating.book_id },
+                },
+            );
 
             res.status(200).json({ message: 'Rating approved successfully' });
         } else {
@@ -253,4 +250,13 @@ const getAllRatingAdmin = async (req, res) => {
     }
 };
 
-export { getUserRatings, getBookRatings, approveRating, rejectRating, getPendingRatings, getApprovedRatings, getRejectedRatings, getAllRatingAdmin };
+export {
+    getUserRatings,
+    getBookRatings,
+    approveRating,
+    rejectRating,
+    getPendingRatings,
+    getApprovedRatings,
+    getRejectedRatings,
+    getAllRatingAdmin,
+};

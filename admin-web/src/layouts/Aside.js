@@ -17,10 +17,10 @@ const tags = [
         type: 'group',
         children: [
             {
-                key: 'gr1-item1',
+                key: 'Tổng quan',
                 icon: <PieChartOutlined style={{ fontSize: 24 }} />,
                 label: 'Tổng quan',
-                page: 'Home',
+                nav: '/',
             },
         ],
     },
@@ -30,39 +30,39 @@ const tags = [
         type: 'group',
         children: [
             {
-                key: 'gr2-item1',
+                key: 'Người dùng',
                 icon: <UserOutlined style={{ fontSize: 24 }} />,
                 label: 'Người dùng',
             },
             {
-                key: 'gr2-item2',
+                key: 'Sách',
                 icon: <BookOutlined style={{ fontSize: 24 }} />,
                 label: 'Sách',
                 children: [
                     {
-                        key: 'gr2-item2-1',
+                        key: 'Quản lí đánh giá',
                         label: 'Quản lí đánh giá',
-                        page: 'ReviewManagement',
+                        nav: '/quan-li-danh-gia',
                     },
                 ],
             },
             {
-                key: 'gr2-item3',
+                key: 'Danh mục',
                 icon: <SlBookOpen size={24} />,
                 label: 'Danh mục',
             },
             {
-                key: 'gr2-item4',
+                key: 'Thể loại',
                 icon: <BiBookAlt size={24} />,
                 label: 'Thể loại',
             },
             {
-                key: 'gr2-item5',
+                key: 'Phương thức thanh toán',
                 icon: <MdOutlinePayment size={24} />,
                 label: 'Phương thức thanh toán',
             },
             {
-                key: 'gr2-item6',
+                key: 'Phương thức vận chuyển',
                 icon: <LiaShippingFastSolid size={24} />,
                 label: 'Phương thức vận chuyển',
             },
@@ -70,7 +70,7 @@ const tags = [
     },
 ];
 
-export default function Aside() {
+export default function Aside({ openedKey, selectedKey }) {
     const { admin, logout, setPage } = useContext(AdminContext);
     const navigate = useNavigate();
 
@@ -91,10 +91,9 @@ export default function Aside() {
                 <Menu
                     items={tags}
                     mode="inline"
-                    onClick={({ item }) => {
-                        setPage(item.props.page);
-                    }}
-                    defaultSelectedKeys={['gr1-item1']}
+                    onClick={({ item }) => (item.props.nav ? navigate(item.props.nav) : navigate('/'))}
+                    defaultOpenKeys={[openedKey]}
+                    defaultSelectedKeys={[selectedKey]}
                 />
             </div>
 

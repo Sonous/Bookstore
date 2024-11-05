@@ -22,6 +22,8 @@ import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
 import reviewApi from '~/apis/ratingApi';
 import userApi from '~/apis/userApi';
+import images from '~/assets/images';
+import classNames from 'classnames';
 function BookDetail() {
     const { name } = useParams(); // Extract the book name from the URL
     const [activeHeader, setActiveHeader] = useState('Đánh giá');
@@ -150,7 +152,6 @@ function BookDetail() {
         navigate('/paying/directly');
     };
     const handleRating = async () => {
-        console.log(user);
         if (!user.user_id || !book.book_id || rating === 0 || ratingContent === '') {
             const Toast = Swal.mixin({
                 toast: true,
@@ -176,24 +177,13 @@ function BookDetail() {
             rating_content: ratingContent,
         });
         if (response?.status === 'success') {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                },
-            });
-            Toast.fire({
+            await Swal.fire({
                 icon: 'success',
-                title: response.message,
+                text: 'Nhận xét của bạn sẽ được kiểm duyệt bởi Người quản trị trước khi hiển thị.',
+                confirmButtonText: 'Đã hiểu',
             });
             setRatingContent('');
             setRating(0);
-            window.location.reload();
         }
     };
     return (
@@ -224,7 +214,7 @@ function BookDetail() {
                     </div>
                     <div className="rightContent px-5 flex flex-col w-full lg:w-7/12 bg-white border border-gray-100 rounded-xl">
                         <div className="top-title py-5 flex justify-between border-b border-b-gray-400">
-                            <div className="title-content flex flex-col text-center justify-center w-full">
+                            <div className="title-content flex flex-col gap-5 justify-center w-full">
                                 <h1 className="font-bold text-xl 2xl:text-2xl">{book.book_name}</h1>
                                 <div className="rating flex items-center justify-between text-center">
                                     <div className="rating flex items-center gap-5">
@@ -235,7 +225,13 @@ function BookDetail() {
                                         Tác giả: <span className="font-semibold">{book.book_author}</span>
                                     </a>
                                 </div>
+                                {book.book_status !== 'Còn hàng' && (
+                                    <div className="border rounded-md px-3 font-bold bg-red-100 text-red-500 ">
+                                        <span>Sản phẩm tạm hết hàng</span>
+                                    </div>
+                                )}
                             </div>
+
                             <div className="heart-icon"></div>
                         </div>
                         <div className="price-content flex justify-start items-center text-center py-5 gap-5">
@@ -324,13 +320,19 @@ function BookDetail() {
                                 </form>
                                 <div className="button-container flex justify-evenly">
                                     <Button
-                                        className="bg-blue-500 text-white font-bold text-lg w-48"
+                                        className={classNames('bg-blue-500 text-white font-bold text-lg w-48', {
+                                            'opacity-80': book.book_status !== 'Còn hàng',
+                                        })}
+                                        disabled={book.book_status !== 'Còn hàng'}
                                         onClick={handleAddBookToCart}
                                     >
                                         Thêm vào giỏ hàng
                                     </Button>
                                     <Button
-                                        className="bg-blue-500 text-white font-bold text-lg w-48"
+                                        className={classNames('bg-blue-500 text-white font-bold text-lg w-48', {
+                                            'opacity-80': book.book_status !== 'Còn hàng',
+                                        })}
+                                        disabled={book.book_status !== 'Còn hàng'}
                                         onClick={handlePurchase}
                                     >
                                         Mua ngay
@@ -368,7 +370,7 @@ function BookDetail() {
                             <div className="desc-text px-5">
                                 {selectedTab === 'desc' ? (
                                     <div className="desc-text">{parse(book.book_description)}</div>
-                                ) : (
+                                ) : user ? (
                                     <div className="comment-form py-3 flex flex-col gap-3">
                                         <div className="top-comment  flex justify-between items-center">
                                             <h3>{book.book_rating_num} bình luận</h3>
@@ -412,6 +414,11 @@ function BookDetail() {
                                         >
                                             Đánh giá
                                         </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center">
+                                        <img src={images.nothingIcon} alt="nothing" className="h-32 w-32" />
+                                        <span>Vui lòng đăng nhập để đánh giá...</span>
                                     </div>
                                 )}
                             </div>
