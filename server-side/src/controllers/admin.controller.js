@@ -3,9 +3,13 @@ import Admin from '../models/admin.model.js';
 
 const getAdminByToken = async (req, res) => {
     const admin_id = req.userId;
+    const role = req.role;
 
     try {
         const admin = await Admin.findByPk(admin_id, {
+            where: {
+                role,
+            },
             attributes: {
                 exclude: ['admin_password'],
             },

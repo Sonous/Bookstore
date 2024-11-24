@@ -44,6 +44,11 @@ const tags = [
                         label: 'Quản lí đánh giá',
                         nav: '/quan-li-danh-gia',
                     },
+                    {
+                        key: 'Quản lí kho hàng',
+                        label: 'Quản lí kho hàng',
+                        nav: '/quan-li-kho-hang',
+                    },
                 ],
             },
             {
@@ -71,7 +76,7 @@ const tags = [
 ];
 
 export default function Aside({ openedKey, selectedKey }) {
-    const { admin, logout, setPage } = useContext(AdminContext);
+    const { admin, logout } = useContext(AdminContext);
     const navigate = useNavigate();
 
     return (
@@ -94,6 +99,7 @@ export default function Aside({ openedKey, selectedKey }) {
                     onClick={({ item }) => (item.props.nav ? navigate(item.props.nav) : navigate('/'))}
                     defaultOpenKeys={[openedKey]}
                     defaultSelectedKeys={[selectedKey]}
+                    style={{ borderWidth: 0 }}
                 />
             </div>
 

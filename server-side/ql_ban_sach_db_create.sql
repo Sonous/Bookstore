@@ -61,6 +61,25 @@ insert into genre (genre_id, genre_name, category_id)
 
 
 -- tables
+-- Table: ImportReceipt
+CREATE TABLE ImportReceipt (
+    id varchar(255)  NOT NULL,
+    createBy nvarchar(255) NOT NULL,
+    store_name nvarchar(255)  NOT NULL,
+    store_address text  NOT NULL,
+    store_phone varchar(255)  NOT NULL,
+    provider_name nvarchar(255)  NOT NULL,
+    provider_address text  NOT NULL,
+    provider_phone varchar(255)  NOT NULL,
+    item_list text  NOT NULL,
+    note text,
+    total_price int  NOT NULL,
+    receipt_status varchar(255)  NOT NULL,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT ImportReceipt_pk PRIMARY KEY (id)
+);
+
 -- Table: Address
 CREATE TABLE Address (
     address_id int  NOT NULL AUTO_INCREMENT,
@@ -249,6 +268,7 @@ CREATE TABLE notification (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(user_id) -- Ràng buộc khoá ngoại tới bảng users
 );
+
 
 
 -- foreign keys

@@ -87,6 +87,19 @@ function BookDetail() {
 
     const handleAddBookToCart = async () => {
         try {
+            if (quantity > book.book_available) {
+                await Swal.fire({
+                    toast: true,
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    position: 'top-end',
+                    text: `Số lượng yêu cầu cho ${quantity} không có sẵn.`,
+                });
+                return;
+            }
+
             await userApi.addBookToCart(user.user_id, book.book_id, quantity);
 
             await Swal.fire({
@@ -225,7 +238,7 @@ function BookDetail() {
                                         Tác giả: <span className="font-semibold">{book.book_author}</span>
                                     </a>
                                 </div>
-                                {book.book_status !== 'Còn hàng' && (
+                                {book.book_status === 'Hết hàng' && (
                                     <div className="border rounded-md px-3 font-bold bg-red-100 text-red-500 ">
                                         <span>Sản phẩm tạm hết hàng</span>
                                     </div>
@@ -321,18 +334,18 @@ function BookDetail() {
                                 <div className="button-container flex justify-evenly">
                                     <Button
                                         className={classNames('bg-blue-500 text-white font-bold text-lg w-48', {
-                                            'opacity-80': book.book_status !== 'Còn hàng',
+                                            'opacity-80': book.book_status === 'Hết hàng',
                                         })}
-                                        disabled={book.book_status !== 'Còn hàng'}
+                                        disabled={book.book_status === 'Hết hàng'}
                                         onClick={handleAddBookToCart}
                                     >
                                         Thêm vào giỏ hàng
                                     </Button>
                                     <Button
                                         className={classNames('bg-blue-500 text-white font-bold text-lg w-48', {
-                                            'opacity-80': book.book_status !== 'Còn hàng',
+                                            'opacity-80': book.book_status === 'Hết hàng',
                                         })}
-                                        disabled={book.book_status !== 'Còn hàng'}
+                                        disabled={book.book_status === 'Hết hàng'}
                                         onClick={handlePurchase}
                                     >
                                         Mua ngay

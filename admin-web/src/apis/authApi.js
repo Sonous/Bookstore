@@ -1,11 +1,12 @@
 const { request } = require('~/configs');
 
 const authApi = {
-    async login(admin_username, admin_password) {
+    async login(admin_username, admin_password, role) {
         try {
             const data = await request.post('/auth/admin/login', {
                 admin_username,
                 admin_password,
+                role,
             });
 
             return data.token;
@@ -14,11 +15,13 @@ const authApi = {
         }
     },
 
-    async regiter(admin_username, admin_password) {
+    async regiter(admin_username, admin_password, admin_name, role) {
         try {
             const data = await request.post('/auth/admin/register', {
                 admin_username,
                 admin_password,
+                admin_name,
+                role,
             });
 
             return data.admin;

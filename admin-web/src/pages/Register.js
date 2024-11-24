@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import authApi from '~/apis/authApi';
 import Swal from 'sweetalert2';
@@ -13,13 +13,17 @@ export default function Register() {
 
     const onFinish = async (values) => {
         try {
-            const adminInfo = await authApi.regiter(values.username, values.password);
+            const adminInfo = await authApi.regiter(values.username, values.password, values.name, values.role);
 
-            const token = await authApi.login(adminInfo.admin_username, adminInfo.admin_password);
+            const token = await authApi.login(adminInfo.admin_username, adminInfo.admin_password, adminInfo.role);
 
             localStorage.setItem('token', token);
             getAdminInfo();
-            navigate('/');
+            if (values.role === 'admin') {
+                navigate('/');
+            } else {
+                navigate('/provider');
+            }
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -48,18 +52,52 @@ export default function Register() {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your Username!',
+                                message: 'Please input your username!',
                             },
                         ]}
                     >
                         <Input prefix={<UserOutlined />} placeholder="Username" />
                     </Form.Item>
                     <Form.Item
+                        name="name"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your name!',
+                            },
+                        ]}
+                    >
+                        <Input prefix={<UserOutlined />} placeholder="Your name" />
+                    </Form.Item>
+                    <Form.Item
+                        name="role"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please select your role!',
+                            },
+                        ]}
+                    >
+                        <Select
+                            options={[
+                                {
+                                    value: 'admin',
+                                    label: 'admin',
+                                },
+                                {
+                                    value: 'provider',
+                                    label: 'provider',
+                                },
+                            ]}
+                            placeholder="Select your role"
+                        />
+                    </Form.Item>
+                    <Form.Item
                         name="password"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your Password!',
+                                message: 'Please input your password!',
                             },
                         ]}
                     >
