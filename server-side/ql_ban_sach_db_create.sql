@@ -7,6 +7,8 @@
 
 select * from ratingbook;
 
+select * from user
+
 -- RatingBook
 INSERT INTO RatingBook (review_id, user_id, book_id, rating_star, rating_content, review_status) VALUES
  (150005, 10001, 60001, 5, N'Sách hay, tuyệt vời', 'pending');
@@ -59,12 +61,17 @@ INSERT INTO BookGenre (book_id, genre_id) VALUES
 insert into genre (genre_id, genre_name, category_id)
 	values (90036, 'School Life', 100003);
 
+select * from ImportReceipt;
+
+select * from admin;
+
+SELECT @@global.time_zone, @@session.time_zone;
 
 -- tables
--- Table: ImportReceipt
+-- Table: ImportReceipt trong lần đầu tiên nó render thì nó nhảy vào render ra cái jsx trước r mới nhảy vô useEffect để thực hiện call api r setState lại á a 
 CREATE TABLE ImportReceipt (
     id varchar(255)  NOT NULL,
-    createBy nvarchar(255) NOT NULL,
+    createBy nvarchar(255) not null,
     store_name nvarchar(255)  NOT NULL,
     store_address text  NOT NULL,
     store_phone varchar(255)  NOT NULL,
@@ -79,6 +86,8 @@ CREATE TABLE ImportReceipt (
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT ImportReceipt_pk PRIMARY KEY (id)
 );
+
+drop table ImportReceipt
 
 -- Table: Address
 CREATE TABLE Address (
@@ -98,6 +107,8 @@ CREATE TABLE Admin (
     admin_username varchar(255)  NOT NULL,
     admin_password varchar(255)  NOT NULL,
     admin_avatar_url varchar(255)  NOT NULL,
+	admin_name nvarchar(255) not null,
+    role varchar(255) not null,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT Admin_pk PRIMARY KEY (admin_id)
@@ -209,6 +220,7 @@ CREATE TABLE `Order` (
     transport_cost decimal(20,2)  NOT NULL,
     pay_method_name nvarchar(255) NOT NULL,
     order_total_cost decimal(20,2)  NOT NULL,
+    note text,
     created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     user_id int  NOT NULL,
@@ -268,7 +280,6 @@ CREATE TABLE notification (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(user_id) -- Ràng buộc khoá ngoại tới bảng users
 );
-
 
 
 -- foreign keys
@@ -643,8 +654,9 @@ VALUES (20001, N'abc123', N'Phường Tây Thạnh', N'Quận Tân Phú', N'Thà
  (N'Lê Nguyễn Thùy Dương', '0123456789', 'duong@gmail.com', 'duong', 'anh.jpg', NULL);
 
 -- Admin
-INSERT INTO Admin (admin_id, admin_username, admin_password, admin_avatar_url) 
-VALUES (1, 'root', '22520545', 'Sonous.jpg');
+INSERT INTO Admin (admin_id, admin_username, admin_password, admin_avatar_url, admin_name, role) 
+VALUES (1, 'root', '22520545', 'Sonous.jpg', N'Lâm Huy', 'admin');
+
 
 -- Banner
 INSERT INTO Banner (banner_id, banner_image_url, banner_link) 
