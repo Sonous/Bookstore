@@ -210,28 +210,32 @@ const getBookByName = (req, res) => {
             },
         ],
     })
-    .then((book) => {
-        // console.log('Fetched book:', book); // Log the fetched book
-        if (!book) {
-            return res.status(StatusCodes.NOT_FOUND).json({
-                message: 'Book not found',
+        .then((book) => {
+            // console.log('Fetched book:', book); // Log the fetched book
+            if (!book) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: 'Book not found',
+                });
+            }
+            res.status(StatusCodes.OK).json(book);
+        })
+        .catch((err) => {
+            console.error('Error fetching book:', err); // Log error for debugging
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: err.message,
             });
-        }
-        res.status(StatusCodes.OK).json(book);
-    })
-    .catch((err) => {
-        console.error('Error fetching book:', err); // Log error for debugging
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            message: err.message,
         });
-    });
 };
 const getBooksByAuthor = (req, res) => {
     const author = req.params.author; // Get the author's name from the route parameter
 
     Book.findAll({
         where: {
-            book_author: sequelize.where(sequelize.fn('LOWER', sequelize.col('book_author')), 'LIKE', author.toLowerCase()),
+            book_author: sequelize.where(
+                sequelize.fn('LOWER', sequelize.col('book_author')),
+                'LIKE',
+                author.toLowerCase(),
+            ),
         },
         include: [
             {
@@ -245,24 +249,52 @@ const getBooksByAuthor = (req, res) => {
             },
         ],
     })
-    .then((books) => {
-        if (!books || books.length === 0) {
-            return res.status(StatusCodes.NOT_FOUND).json({
-                message: 'No books found for this author',
+        .then((books) => {
+            if (!books || books.length === 0) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: 'No books found for this author',
+                });
+            }
+            res.status(StatusCodes.OK).json(books);
+        })
+        .catch((err) => {
+            console.error('Error fetching books by author:', err); // Log error for debugging
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: err.message,
             });
-        }
-        res.status(StatusCodes.OK).json(books);
-    })
-    .catch((err) => {
-        console.error('Error fetching books by author:', err); // Log error for debugging
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            message: err.message,
         });
-    });
 };
 
+export const updateBook = async (req, res) => {
+    try {
+        const { bookId } = req.params;
+        const { data } = req.body;
 
+        const book = await Book.findByPk(bookId);
 
+        if (!book) {
+            return res.status(404).json({
+                message: 'Sách không tồn tại!',
+            });
+        }
 
+        await Book.update(
+            {
+                ...data,
+            },
+            {
+                where: {
+                    book_id: bookId,
+                },
+            },
+        );
 
-export { getGenreOfBook, getAllBooks, getBookByName, getBooksByAuthor};
+        res.status(200).json({ message: 'success' });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: error.message,
+        });
+    }
+};
+
+export { getGenreOfBook, getAllBooks, getBookByName, getBooksByAuthor };

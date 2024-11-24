@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import authApi from '~/apis/authApi';
 import Swal from 'sweetalert2';
@@ -13,21 +13,29 @@ export default function Login() {
 
     const onFinish = async (values) => {
         try {
-            const token = await authApi.login(values.username, values.password);
+            const token = await authApi.login(values.username, values.password, values.role);
 
             localStorage.setItem('token', token);
             getAdminInfo();
-            navigate('/');
+            if (values.role === 'admin') {
+                navigate('/');
+            } else {
+                navigate('/provider');
+            }
         } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: error.message,
-                toast: true,
-                timer: 2500,
-                timerProgressBar: true,
-                position: 'top-end',
-                showConfirmButton: false,
-            });
+            if (error.message === 'Wrong email or password!') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sai email, role hoặc mật khẩu!',
+                    toast: true,
+                    timer: 2500,
+                    timerProgressBar: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                });
+                return;
+            }
+            console.error(error.message);
         }
     };
     return (
@@ -51,6 +59,29 @@ export default function Login() {
                         ]}
                     >
                         <Input prefix={<UserOutlined />} placeholder="Username" />
+                    </Form.Item>
+                    <Form.Item
+                        name="role"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please select your role!',
+                            },
+                        ]}
+                    >
+                        <Select
+                            options={[
+                                {
+                                    value: 'admin',
+                                    label: 'admin',
+                                },
+                                {
+                                    value: 'provider',
+                                    label: 'provider',
+                                },
+                            ]}
+                            placeholder="Select your role"
+                        />
                     </Form.Item>
                     <Form.Item
                         name="password"

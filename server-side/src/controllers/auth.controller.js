@@ -60,7 +60,7 @@ const login = async (req, res) => {
 };
 
 const registerAdmin = async (req, res) => {
-    const { admin_username, admin_password } = req.body;
+    const { admin_username, admin_password, admin_name, role } = req.body;
 
     try {
         const isExisted = await Admin.findOne({
@@ -79,6 +79,8 @@ const registerAdmin = async (req, res) => {
             admin_username,
             admin_password,
             admin_avatar_url: '',
+            admin_name,
+            role,
         });
 
         return res.status(StatusCodes.CREATED).json({
@@ -93,24 +95,26 @@ const registerAdmin = async (req, res) => {
 };
 
 const loginAdmin = async (req, res) => {
-    const { admin_username, admin_password } = req.body;
+    const { admin_username, admin_password, role } = req.body;
 
     try {
         const admin = await Admin.findOne({
             where: {
                 admin_username,
                 admin_password,
+                role,
             },
         });
 
         if (!admin) {
-            return res.status(400).json({ message: 'Wrong email or password!' });
+            return res.status(404).json({ message: 'Wrong email or password!' });
         }
 
         const token = jwt.sign(
             {
                 id: admin.admin_id,
                 admin_username: admin.admin_username,
+                role: role,
             },
             process.env.JWT_SECRET,
             {

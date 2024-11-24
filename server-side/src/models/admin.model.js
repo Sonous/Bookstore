@@ -13,6 +13,8 @@ const Admin = sequelize.define(
         admin_username: DataTypes.STRING,
         admin_password: DataTypes.STRING,
         admin_avatar_url: DataTypes.STRING,
+        admin_name: DataTypes.STRING,
+        role: DataTypes.STRING,
     },
     {
         timestamps: false,
